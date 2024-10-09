@@ -1,10 +1,10 @@
-import 'dart:async';
-
+import 'package:base/features/home/presentation/widget/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:base/features/home/presentation/widget/action_button.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
 
 @RoutePage()
 class HomeScreen extends HookConsumerWidget {
@@ -21,27 +21,8 @@ class HomeScreen extends HookConsumerWidget {
       'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
     ];
 
+    // Declare _currentPage state variable
     final _currentPage = useState(0);
-    final _pageController = usePageController();
-
-    useEffect(() {
-      final timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-        if (_currentPage.value < imgList.length - 1) {
-          _pageController.nextPage(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeIn,
-          );
-        } else {
-          _pageController.animateToPage(
-            0,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeIn,
-          );
-        }
-      });
-
-      return () => timer.cancel();
-    }, []);
 
     return Scaffold(
       body: SafeArea(
@@ -68,7 +49,9 @@ class HomeScreen extends HookConsumerWidget {
                             style: TextStyle(color: Colors.black),
                           ),
                           Text(
-                            "userName".split(' ').last,
+                            "userName"
+                                .split(' ')
+                                .last, // Tách và lấy từ đầu tiên
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 12,
@@ -89,35 +72,38 @@ class HomeScreen extends HookConsumerWidget {
                   ],
                 ),
               ),
-              // PageView
-              SizedBox(
-                height: 200,
-                child: PageView.builder(
-                  controller: _pageController,
-                  itemCount: imgList.length,
-                  onPageChanged: (index) {
-                    _currentPage.value = index;
-                  },
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          imgList[index],
-                          fit: BoxFit.cover,
-                        ),
+              // Carousel Slider
+              Center(
+                child: Column(
+                  children: [
+                    CarouselSlider(
+                      items: imgList
+                          .map((e) => ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  e,
+                                  fit: BoxFit.cover,
+                                  width: 1500,
+                                ),
+                              ))
+                          .toList(),
+                      options: CarouselOptions(
+                        initialPage: 0,
+                        autoPlay: true,
+                        autoPlayInterval: const Duration(seconds: 3),
+                        enlargeCenterPage: true,
+                        enlargeFactor: 0.3,
+                        onPageChanged: (value, _) {
+                          _currentPage.value = value; // Update _currentPage
+                        },
                       ),
-                    );
-                  },
+                    ),
+                    const SizedBox(height: 30),
+                    buildCarouselIndicator(imgList.length, _currentPage.value),
+                  ],
                 ),
               ),
               const SizedBox(height: 20),
-              Center(
-                child: buildPageIndicator(imgList.length, _currentPage.value),
-              ),
-              const SizedBox(height: 20),
-              // Action Buttons
               Stack(
                 children: [
                   Container(
@@ -131,7 +117,7 @@ class HomeScreen extends HookConsumerWidget {
                   ),
                 ],
               ),
-              // Packages Title
+              // Tiêu đề Packages
               Container(
                 margin: const EdgeInsets.only(left: 35, right: 35),
                 child: Row(
@@ -146,7 +132,12 @@ class HomeScreen extends HookConsumerWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Navigate to packages page
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) =>
+                        //           EntryPoint(selectedIndex: 1)),
+                        // );
                       },
                       child: const Text(
                         "See All",
@@ -161,19 +152,19 @@ class HomeScreen extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              // Grid of Cards
+              // GridView cho card
               Padding(
                 padding: const EdgeInsets.only(top: 16.0, left: 18, right: 18),
                 child: GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 1,
+                    crossAxisCount: 2, // Số cột
+                    crossAxisSpacing: 8, // Khoảng cách giữa các cột
+                    mainAxisSpacing: 10, // Khoảng cách giữa các hàng
+                    childAspectRatio: 1, // Tỷ lệ khung hình
                   ),
-                  itemCount: 4,
+                  itemCount: 4, // Số lượng card
                   itemBuilder: (context, index) {
                     return buildCard(
                       index == 0
@@ -192,24 +183,6 @@ class HomeScreen extends HookConsumerWidget {
       ),
     );
   }
-}
-
-Widget buildPageIndicator(int length, int currentIndex) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: List.generate(
-      length,
-      (index) => Container(
-        width: 8,
-        height: 8,
-        margin: const EdgeInsets.symmetric(horizontal: 4),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: currentIndex == index ? Colors.blue : Colors.grey,
-        ),
-      ),
-    ),
-  );
 }
 
 Widget buildCard(String title, String imageUrl) {
@@ -257,5 +230,25 @@ Widget buildCard(String title, String imageUrl) {
         ),
       ],
     ),
+  );
+}
+
+Widget buildCarouselIndicator(int length, int currentIndex) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      for (int i = 0; i < length; i++)
+        Container(
+          width: i == currentIndex ? 7 : 5,
+          height: i == currentIndex ? 7 : 5,
+          margin: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: i == currentIndex
+                ? const Color(0xff1C3A4D)
+                : const Color(0xffBDBDBD),
+          ),
+        ),
+    ],
   );
 }
