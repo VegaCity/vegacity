@@ -15,12 +15,14 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    // ContactScreenRoute.name: (routeData) {
-    //   return AutoRoutePage<dynamic>(
-    //     routeData: routeData,
-    //     child: const ContactScreen(),
-    //   );
-    // },
+
+    ContactScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ContactScreen(),
+      );
+    },
+
     HomeScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,

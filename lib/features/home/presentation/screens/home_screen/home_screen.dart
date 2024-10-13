@@ -1,3 +1,4 @@
+
 import 'package:base/features/home/presentation/widget/action_button.dart';
 
 import 'dart:async';
@@ -13,14 +14,22 @@ import 'package:base/models/request/paging_model.dart';
 import 'package:base/utils/commons/widgets/custom_circular.dart';
 import 'package:base/utils/commons/widgets/no_more_content.dart';
 
+
+import 'dart:async';
+
+
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:base/features/home/presentation/widget/action_button.dart';
 import 'package:base/utils/constants/asset_constant.dart';
+
+import 'package:base/features/home/presentation/widget/action_button.dart';
+
 
 @RoutePage()
 class HomeScreen extends HookConsumerWidget {
@@ -76,8 +85,27 @@ class HomeScreen extends HookConsumerWidget {
       'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
     ];
 
-    // Declare _currentPage state variable
     final _currentPage = useState(0);
+    final _pageController = usePageController();
+
+    useEffect(() {
+      final timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+        if (_currentPage.value < imgList.length - 1) {
+          _pageController.nextPage(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeIn,
+          );
+        } else {
+          _pageController.animateToPage(
+            0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeIn,
+          );
+        }
+      });
+
+      return () => timer.cancel();
+    }, []);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -105,7 +133,9 @@ class HomeScreen extends HookConsumerWidget {
                             style: TextStyle(color: Colors.black),
                           ),
                           Text(
+
                             '${user.fullName}'.split(' ').last,
+
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 18,
@@ -126,41 +156,37 @@ class HomeScreen extends HookConsumerWidget {
                   ],
                 ),
               ),
-              // Carousel Slider
-              // Center(
-              //   child: Column(
-              //     children: [
-              //     itemCount: imgList.length,
-              //     onPageChanged: (index) {
-              //       _currentPage.value = index;
-              //     },
-              //     itemBuilder: (context, index) {
-              //       return Container(
-              //         margin: const EdgeInsets.symmetric(horizontal: 10),
-              //         decoration: BoxDecoration(
-              //           border: Border.all(
-              //             color: Colors.black, // Màu viền đen đậm
-              //             width: 3, // Độ dày viền
-              //           ),
-              //           borderRadius: BorderRadius.circular(10), // Bo tròn viền
-              //         ),
-              //         child: ClipRRect(
-              //           borderRadius: BorderRadius.circular(10),
-              //           child: Padding(
-              //             padding: const EdgeInsets.all(
-              //                 12.0), // Khoảng cách giữa ảnh và viền
-              //             child: Image.network(
-              //               imgList[index],
-              //               fit: BoxFit.cover,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //       const SizedBox(height: 30),
-              //       buildCarouselIndicator(imgList.length, _currentPage.value),
-              //   ),
-              // ),
+
+              // PageView
+              SizedBox(
+                height: 200,
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: imgList.length,
+                  onPageChanged: (index) {
+                    _currentPage.value = index;
+                  },
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          imgList[index],
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
               const SizedBox(height: 20),
+              Center(
+                child: buildPageIndicator(imgList.length, _currentPage.value),
+              ),
+              const SizedBox(height: 20),
+              // Action Buttons
               Stack(
                 children: [
                   Container(
@@ -174,7 +200,7 @@ class HomeScreen extends HookConsumerWidget {
                   ),
                 ],
               ),
-              // Tiêu đề Packages
+              // Packages Title
               Container(
                 margin: const EdgeInsets.only(left: 35, right: 35),
                 child: Row(
@@ -189,12 +215,7 @@ class HomeScreen extends HookConsumerWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           EntryPoint(selectedIndex: 1)),
-                        // );
+                        // Navigate to packages page
                       },
                       child: const Text(
                         "See All",
@@ -208,6 +229,7 @@ class HomeScreen extends HookConsumerWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 15),
               // Grid of Cards
               Padding(
@@ -241,6 +263,24 @@ class HomeScreen extends HookConsumerWidget {
       ),
     );
   }
+}
+
+Widget buildPageIndicator(int length, int currentIndex) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: List.generate(
+      length,
+      (index) => Container(
+        width: 8,
+        height: 8,
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: currentIndex == index ? Colors.blue : Colors.grey,
+        ),
+      ),
+    ),
+  );
 }
 
 Widget buildCard(String title, String imageUrl) {
@@ -290,3 +330,4 @@ Widget buildCard(String title, String imageUrl) {
     ),
   );
 }
+
