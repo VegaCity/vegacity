@@ -15,6 +15,12 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    // ContactScreenRoute.name: (routeData) {
+    //   return AutoRoutePage<dynamic>(
+    //     routeData: routeData,
+    //     child: const ContactScreen(),
+    //   );
+    // },
     HomeScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -44,6 +50,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: PrivacyPolicyScreen(key: args.key),
+      );
+    },
+    ProfileDetailsScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfileDetailsScreen(),
       );
     },
     ProfileScreenRoute.name: (routeData) {
@@ -101,6 +113,20 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [ContactScreen]
+class ContactScreenRoute extends PageRouteInfo<void> {
+  const ContactScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          ContactScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ContactScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -203,6 +229,20 @@ class PrivacyPolicyScreenRouteArgs {
   String toString() {
     return 'PrivacyPolicyScreenRouteArgs{key: $key}';
   }
+}
+
+/// generated route for
+/// [ProfileDetailsScreen]
+class ProfileDetailsScreenRoute extends PageRouteInfo<void> {
+  const ProfileDetailsScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileDetailsScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileDetailsScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

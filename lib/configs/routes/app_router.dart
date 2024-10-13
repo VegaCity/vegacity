@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:base/configs/routes/guard/auth_guard.dart';
+
 import 'package:base/features/scanner/scanner_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +14,8 @@ import 'package:base/features/auth/presentation/screens/sign_up/sign_up_screen.d
 import 'package:base/features/auth/presentation/screens/privacy_term/privacy_screen.dart';
 import 'package:base/features/auth/presentation/screens/privacy_term/term_screen.dart';
 import 'package:base/features/auth/presentation/screens/otp_verification/otp_verification_screen.dart';
+import 'package:base/features/history/presentation/screen/history_screen/history_screen.dart';
+import 'package:base/features/profile/presentation/screens/profile_detail_screen/profile_detail_screen.dart';
 
 // screen-home
 import 'package:base/features/home/presentation/screens/home_screen/home_screen.dart';
@@ -65,12 +68,16 @@ class AppRouter extends _$AppRouter {
             AutoRoute(page: HomeScreenRoute.page),
             AutoRoute(page: PackageScreenRoute.page),
             AutoRoute(page: ScannerScreenRoute.page),
+            // AutoRoute(page: HistoryScreenRoute.page),
             AutoRoute(page: ProfileScreenRoute.page),
             // AutoRoute(page: TestScreenRoute.page),
           ],
         ),
         AutoRoute(
           page: HomeScreenRoute.page,
+        ),
+        AutoRoute(
+          page: ProfileDetailsScreenRoute.page,
         ),
 
         AutoRoute(page: TestScreenRoute.page),
