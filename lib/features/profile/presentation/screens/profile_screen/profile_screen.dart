@@ -1,6 +1,7 @@
+import 'package:base/configs/routes/app_router.dart';
 import 'package:base/features/profile/domain/entities/profile_entity.dart';
 import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
-import 'package:base/features/profile/presentation/widgets/menu.item.dart';
+import 'package:base/features/profile/presentation/widgets/menu_item.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:base/utils/commons/widgets/widgets_common_export.dart';
 import 'package:base/utils/constants/asset_constant.dart';
@@ -117,7 +118,9 @@ class ProfileScreen extends HookConsumerWidget {
                   SizedBox(height: 20),
                   // Edit Profile Button
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.router.push(ProfileDetailsScreenRoute());
+                    },
                     style: OutlinedButton.styleFrom(
                       backgroundColor: Color(0xFFFFCC00), // Màu nền
                       side: BorderSide(
@@ -198,9 +201,14 @@ class ProfileScreen extends HookConsumerWidget {
                     ),
                     SizedBox(height: 10),
                     // Logout Menu Item
-                    MenuItem(
-                      icon: FontAwesomeIcons.signOutAlt,
-                      title: ' Logout',
+                    InkWell(
+                      onTap: () {
+                        context.router.push(SignInScreenRoute());
+                      },
+                      child: MenuItem(
+                        icon: FontAwesomeIcons.signOutAlt,
+                        title: 'Logout',
+                      ),
                     ),
                   ],
                 ),

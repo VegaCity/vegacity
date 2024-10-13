@@ -106,38 +106,43 @@ class PackageScreen extends HookConsumerWidget {
                       )
                     : Expanded(
                         child: Container(
-                          // color: Colors.blue, // Thẻ màu xanh
-                          child: GridView.builder(
-                            itemCount: fetchReslut.items.length + 1,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            controller: scrollController,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AssetsConstants.defaultPadding - 5.0,
-                            ),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 20.0,
-                              mainAxisSpacing: 10.0,
-                              childAspectRatio: 0.8,
-                            ),
-                            itemBuilder: (_, index) {
-                              if (index == fetchReslut.items.length) {
-                                if (fetchReslut.isFetchingData) {
-                                  return const CustomCircular();
-                                }
-                                return fetchReslut.isLastPage
-                                    ? const Center(
-                                        child: NoMoreContent(),
-                                      )
-                                    : Container();
-                              }
-                              return PackageItem(
-                                package: fetchReslut.items[index],
-                                onCallback: fetchReslut.refresh,
-                              );
-                            },
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: GridView.builder(
+                                  itemCount: fetchReslut.items.length,
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  controller: scrollController,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal:
+                                        AssetsConstants.defaultPadding - 5.0,
+                                  ),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 20.0,
+                                    mainAxisSpacing: 10.0,
+                                    childAspectRatio: 0.75,
+                                  ),
+                                  itemBuilder: (_, index) {
+                                    return PackageItem(
+                                      package: fetchReslut.items[index],
+                                      onCallback: fetchReslut.refresh,
+                                    );
+                                  },
+                                ),
+                              ),
+                              if (fetchReslut.isLastPage) ...[
+                                const NoMoreContent(),
+                                const SizedBox(
+                                    height:
+                                        20.0), // khoảng cách dưới cùng nếu cần
+                              ] else if (fetchReslut.isFetchingData) ...[
+                                const CustomCircular(),
+                              ],
+                            ],
                           ),
                         ),
                       ),

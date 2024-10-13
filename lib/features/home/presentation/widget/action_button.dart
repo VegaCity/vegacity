@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:flutter_application_1/View/dasboard/statistics_screen.dart';
 // import 'package:flutter_application_1/View/map/map_screen.dart';
 // import 'package:flutter_application_1/View/transfer/transfer_screen.dart';
@@ -31,28 +32,28 @@ class ActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 35.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,
         height: 100,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3), // Màu và độ mờ của bóng
-              spreadRadius: 0.5, // Độ lan tỏa của bóng
-              blurRadius: 3, // Độ mờ của bóng
-              offset: const Offset(0, 0.5), // Độ lệch của bóng (x,y)
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 0.2,
+              blurRadius: 2,
+              offset: const Offset(0, 0.2),
             ),
           ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            ActionButton(
-              icon: Icons.credit_card,
+            IconButtonWithLabel(
+              icon: Icon(Icons.credit_card),
               label: 'E-tag',
               onPressed: () {
                 // Navigator.push(
@@ -62,8 +63,9 @@ class ActionButtons extends StatelessWidget {
                 // );
               },
             ),
-            ActionButton(
-              icon: Icons.attach_money,
+            IconButtonWithLabel(
+              icon:
+                  FaIcon(FontAwesomeIcons.moneyBillTransfer), // Sử dụng FaIcon
               label: 'Transfer',
               onPressed: () {
                 // Navigator.push(
@@ -72,8 +74,8 @@ class ActionButtons extends StatelessWidget {
                 // );
               },
             ),
-            ActionButton(
-              icon: Icons.map_outlined,
+            IconButtonWithLabel(
+              icon: Icon(Icons.map_outlined),
               label: 'Map',
               onPressed: () {
                 // Navigator.push(
@@ -82,8 +84,8 @@ class ActionButtons extends StatelessWidget {
                 // );
               },
             ),
-            ActionButton(
-              icon: Icons.bar_chart,
+            IconButtonWithLabel(
+              icon: Icon(Icons.bar_chart),
               label: 'Dashboard',
               onPressed: () {
                 // Navigator.push(
@@ -99,15 +101,15 @@ class ActionButtons extends StatelessWidget {
   }
 }
 
-class ActionButton extends StatelessWidget {
-  const ActionButton({
+class IconButtonWithLabel extends StatelessWidget {
+  const IconButtonWithLabel({
     super.key,
     required this.icon,
     required this.label,
     this.onPressed,
   });
 
-  final IconData icon;
+  final Widget icon; // Duy trì kiểu Widget để hỗ trợ FaIcon và Icon
   final String label;
   final void Function()? onPressed;
 
@@ -116,17 +118,19 @@ class ActionButton extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: onPressed,
-          icon: Icon(
-            icon,
-            color: const Color.fromARGB(255, 30, 144, 255),
+        GestureDetector(
+          onTap: onPressed,
+          child: Container(
+            width: 50, // Kích thước vòng tròn
+            height: 50, // Kích thước vòng tròn
+            alignment: Alignment.center,
+            child: icon, // Hiển thị biểu tượng (có thể là Icon hoặc FaIcon)
           ),
         ),
         const SizedBox(height: 8),
         Text(
           label,
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          style: const TextStyle(fontSize: 14),
         ),
       ],
     );
