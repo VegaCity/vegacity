@@ -26,7 +26,7 @@ class TabViewScreen extends ConsumerWidget {
           HomeScreenRoute(),
           PackageScreenRoute(),
           ScannerScreenRoute(),
-          // HistoryScreenRoute(),
+          HistoryScreenRoute(),
           ProfileScreenRoute(),
         ],
         bottomNavigationBuilder: (_, tabsRouter) =>

@@ -4,6 +4,7 @@ class PackageEntities {
   final String id;
   final String name;
   final String description;
+  final String imageUrl;
   final int price;
 
   // final String? bookingId;
@@ -12,6 +13,7 @@ class PackageEntities {
     required this.id,
     required this.name,
     required this.description,
+    required this.imageUrl,
     required this.price,
     // this.bookingId,
   });
@@ -23,6 +25,7 @@ class PackageEntities {
     result.addAll({"name": name});
     result.addAll({"description": description});
     result.addAll({"price": price});
+    result.addAll({"ImageUrl": imageUrl});
     // result.addAll({"bookingId": bookingId});
 
     return result;
@@ -34,6 +37,7 @@ class PackageEntities {
       name: map["name"] ?? '',
       description: map["description"] ?? '',
       price: map["price"]?.toInt() ?? 0,
+      imageUrl: map["imageUrl"],
       //  bookingId: map["bookingId"] ?? '',
     );
   }

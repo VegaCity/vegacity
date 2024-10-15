@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:base/configs/routes/guard/auth_guard.dart';
+import 'package:base/features/payment/presentation/screen/transfer_screen.dart';
 import 'package:base/features/scanner/scanner_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,8 +46,9 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
         // auth
-        AutoRoute(page: SignInScreenRoute.page, 
-        // initial: true
+        AutoRoute(
+          page: SignInScreenRoute.page,
+          initial: true,
         ),
         AutoRoute(
           page: SignUpScreenRoute.page,
@@ -63,13 +65,13 @@ class AppRouter extends _$AppRouter {
           // initial: true,
           guards: [
             // OnboardingGuard(ref: _ref),
-            AuthGuard(ref: _ref)
+            // AuthGuard(ref: _ref)
           ],
           children: [
             AutoRoute(page: HomeScreenRoute.page),
             AutoRoute(page: PackageScreenRoute.page),
             AutoRoute(page: ScannerScreenRoute.page),
-            // AutoRoute(page: HistoryScreenRoute.page),
+            AutoRoute(page: HistoryScreenRoute.page),
             AutoRoute(page: ProfileScreenRoute.page),
             // AutoRoute(page: TestScreenRoute.page),
           ],
@@ -78,13 +80,12 @@ class AppRouter extends _$AppRouter {
           page: HomeScreenRoute.page,
         ),
         AutoRoute(
-
           page: ProfileDetailsScreenRoute.page,
         ),
 
-
-          page: ContactScreenRoute.page,
-          initial: true,
+        AutoRoute(
+          page: TransferScreenRoute.page,
+          // initial: true,
         ),
 
         AutoRoute(page: TestScreenRoute.page),

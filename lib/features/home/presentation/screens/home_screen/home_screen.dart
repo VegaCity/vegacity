@@ -1,4 +1,3 @@
-
 import 'package:base/features/home/presentation/widget/action_button.dart';
 
 import 'dart:async';
@@ -14,22 +13,20 @@ import 'package:base/models/request/paging_model.dart';
 import 'package:base/utils/commons/widgets/custom_circular.dart';
 import 'package:base/utils/commons/widgets/no_more_content.dart';
 
-
 import 'dart:async';
-
 
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:base/features/home/presentation/widget/action_button.dart';
 import 'package:base/utils/constants/asset_constant.dart';
 
 import 'package:base/features/home/presentation/widget/action_button.dart';
-
+import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 
 @RoutePage()
 class HomeScreen extends HookConsumerWidget {
@@ -75,6 +72,13 @@ class HomeScreen extends HookConsumerWidget {
           child: Text('No data found')); // Thông báo không có dữ liệu
     }
     final user = useFetchResult.data!.user;
+
+    final _animationController = useAnimationController(
+      duration: const Duration(milliseconds: 500),
+    )..repeat(reverse: true); // Lặp lại hiệu ứng nhấp nháy
+
+    final _animation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
 
     final List<String> imgList = [
       'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -133,9 +137,7 @@ class HomeScreen extends HookConsumerWidget {
                             style: TextStyle(color: Colors.black),
                           ),
                           Text(
-
                             '${user.fullName}'.split(' ').last,
-
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 18,
@@ -159,32 +161,30 @@ class HomeScreen extends HookConsumerWidget {
 
               // PageView
               SizedBox(
-                height: 200,
-                child: PageView.builder(
-                  controller: _pageController,
-                  itemCount: imgList.length,
-                  onPageChanged: (index) {
-                    _currentPage.value = index;
-                  },
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          imgList[index],
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              const SizedBox(height: 20),
-              Center(
-                child: buildPageIndicator(imgList.length, _currentPage.value),
-              ),
+                  height: 200,
+                  child: Swiper(
+                    layout: SwiperLayout.STACK,
+                    itemWidth: 320,
+                    itemHeight: 500,
+                    duration: 500,
+                    loop: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 6,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        width: 500,
+                        height: 500,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            image: DecorationImage(
+                                image: NetworkImage(imgList[index]),
+                                fit: BoxFit.cover)),
+                      );
+                    },
+                  )),
+              // Center(
+              //   child: buildPageIndicator(imgList.length, _currentPage.value),
+              // ),
               const SizedBox(height: 20),
               // Action Buttons
               Stack(
@@ -204,25 +204,24 @@ class HomeScreen extends HookConsumerWidget {
               Container(
                 margin: const EdgeInsets.only(left: 35, right: 35),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Text(
-                      "Packages new",
+                      "Packages",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigate to packages page
-                      },
+                    const SizedBox(width: 5),
+                    FadeTransition(
+                      opacity: _animation,
                       child: const Text(
-                        "See All",
+                        "new",
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.normal,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red, // Thêm màu đỏ cho nổi bật
                         ),
                       ),
                     ),
@@ -248,7 +247,7 @@ class HomeScreen extends HookConsumerWidget {
                       crossAxisCount: 2, // Số cột
                       crossAxisSpacing: 8, // Khoảng cách giữa các cột
                       mainAxisSpacing: 10, // Khoảng cách giữa các hàng
-                      childAspectRatio: 1, // Tỷ lệ khung hình
+                      childAspectRatio: 0.65, // Tỷ lệ khung hình
                     ),
                     itemBuilder: (context, index) {
                       return HomeItem(
@@ -330,4 +329,3 @@ Widget buildCard(String title, String imageUrl) {
     ),
   );
 }
-

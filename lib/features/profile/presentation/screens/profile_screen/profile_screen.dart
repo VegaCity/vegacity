@@ -1,6 +1,8 @@
 import 'package:base/configs/routes/app_router.dart';
 import 'package:base/features/profile/domain/entities/profile_entity.dart';
 import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
+import 'package:base/features/profile/presentation/widgets/item/listsection.dart';
+import 'package:base/features/profile/presentation/widgets/item/section.dart';
 import 'package:base/features/profile/presentation/widgets/menu_item.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:base/utils/commons/widgets/widgets_common_export.dart';
@@ -42,177 +44,151 @@ class ProfileScreen extends HookConsumerWidget {
     final user = useFetchResult.data!.user;
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start, // Căn nội dung lên trên
-          children: [
-            // Header
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                children: [
-                  FaIcon(
-                    FontAwesomeIcons.arrowLeft,
-                    color: Color(0xFF00aaff),
-                    size: 24,
-                  ),
-                  Spacer(),
-                  Text(
-                    'Profile',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Spacer(),
+      backgroundColor: Color(0xFFF0F4F8),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(160.0), // Adjust height if needed
+        child: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF0052CC), // Blue
+                  Color(0xFF00AAFF), // Light Blue
+                  Color.fromARGB(255, 111, 194, 208),
+                  Color.fromARGB(255, 116, 240, 231), // Pastel Light Purple
                 ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
             ),
-            // Profile Section
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Column(
-                children: [
-                  // Profile Picture
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 3,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xFF00aaff),
-                          spreadRadius: 3,
-                        ),
-                      ],
-                    ),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        'https://storage.googleapis.com/a1aa/image/cAfqWbLEB03HAC0iASxIRqzRRR5NCbjqFcZzuqyBAmDaxYyJA.jpg',
-                      ),
-                      radius: 40,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  // Full Name
-                  Text(
-                    '${user.fullName}',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Center(
+                  child: Text(
+                    'Tài khoản',
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  // Role
-                  Text(
-                    '${user.email}',
-                    style: TextStyle(
-                      color: Colors.grey,
                       fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  // Edit Profile Button
-                  OutlinedButton(
-                    onPressed: () {
-                      context.router.push(ProfileDetailsScreenRoute());
-                    },
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: Color(0xFFFFCC00), // Màu nền
-                      side: BorderSide(
-                        color: Colors.black, // Màu viền
-                        width: 2, // Độ dày của viền
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    ),
-                    child: Text(
-                      'Edit Profile',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Menu Section
-            Expanded(
-              // Dùng Expanded để ngăn khoảng trống ở phía dưới
-              child: Container(
-                padding: const EdgeInsets.only(
-                    top: 40, right: 30, left: 30, bottom: 20),
-                decoration: BoxDecoration(
-                  color: Color(0xFF00aaff),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                  ),
-                  border: Border.all(
-                    // Thêm border ở đây
-                    color: Colors.black, // Màu viền
-                    width: 2, // Độ dày của viền
                   ),
                 ),
-                child: Column(
+                const SizedBox(height: 20),
+                Row(
                   children: [
-                    // Privacy Menu Item
-                    MenuItem(
-                      icon: FontAwesomeIcons.lock,
-                      title: 'Privacy',
-                      titleStyle: TextStyle(
-                        fontWeight: FontWeight.bold, // Đặt chữ in đậm
-                        fontSize: 16,
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage: const NetworkImage(
+                        'https://storage.googleapis.com/a1aa/image/ZlZz8xYKewVVZSKLqQmruw0BPEyzE4h4PjjXuHhRcotfekMnA.jpg',
                       ),
                     ),
-                    SizedBox(height: 10),
-                    // Information App Menu Item
-                    MenuItem(
-                      icon: FontAwesomeIcons.infoCircle,
-                      title: 'Information App',
-                      titleStyle: TextStyle(
-                        fontWeight: FontWeight.bold, // Đặt chữ in đậm
-                        fontSize: 16,
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                '${user.fullName}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(width: 7),
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                            ],
+                          ),
+                          Text(
+                            '${user.phoneNumber}',
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                          const SizedBox(height: 8),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 10),
-                    // Change Password Menu Item
-                    MenuItem(
-                      icon: FontAwesomeIcons.key,
-                      title: 'Change Password',
-                      titleStyle: TextStyle(
-                        fontWeight: FontWeight.bold, // Đặt chữ in đậm
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    // Address Menu Item
-                    MenuItem(
-                      icon: FontAwesomeIcons.mapMarkerAlt,
-                      title: ' Address',
-                      titleStyle: TextStyle(
-                        fontWeight: FontWeight.bold, // Đặt chữ in đậm
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    // Logout Menu Item
-                    InkWell(
-                      onTap: () {
-                        context.router.push(SignInScreenRoute());
+                    IconButton(
+                      icon: const Icon(Icons.edit, color: Colors.white),
+                      onPressed: () {
+                        // Navigate to edit profile page
+                        context.router.push(const ProfileDetailsScreenRoute());
                       },
-                      child: MenuItem(
-                        icon: FontAwesomeIcons.signOutAlt,
-                        title: 'Logout',
-                      ),
                     ),
                   ],
                 ),
-              ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildSection(
+              title: '',
+              children: [
+                buildListItem(
+                  icon: Icons.qr_code,
+                  title: 'Quản lý mã',
+                  subtitle: 'Quản lý các mã QR quan trọng của bạn',
+                ),
+                buildListItem(
+                  icon: Icons.star,
+                  title: 'Zalopay Priority',
+                  subtitle: 'Thành viên',
+                ),
+              ],
+            ),
+            buildSection(
+              title: 'Ưu đãi',
+              children: [
+                buildListItem(
+                  icon: Icons.card_giftcard,
+                  title: 'Quà của tôi',
+                  subtitle: '4 ưu đãi',
+                  showArrow: true,
+                ),
+                buildListItem(
+                  icon: Icons.monetization_on,
+                  title: 'Xu tích lũy',
+                  subtitle: '10 xu',
+                  showArrow: true,
+                ),
+              ],
+            ),
+            buildSection(
+              title: 'Quản lý tài chính',
+              children: [
+                buildListItem(
+                  icon: Icons.account_balance_wallet,
+                  title: 'Nguồn tiền',
+                  showArrow: true,
+                ),
+                buildListItem(
+                  icon: Icons.visibility_off,
+                  title: 'Số dư hiện có',
+                  showArrow: true,
+                ),
+                buildListItem(
+                  icon: Icons.wallet_giftcard,
+                  title: 'Ví Zalopay',
+                  subtitle: '********',
+                  showArrow: true,
+                ),
+                 ],
             ),
           ],
         ),

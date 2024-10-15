@@ -4,10 +4,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+@RoutePage()
 class HistoryScreen extends HookConsumerWidget {
   const HistoryScreen({super.key});
 
-  @RoutePage()
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(

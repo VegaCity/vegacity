@@ -19,13 +19,7 @@ import 'package:base/utils/constants/asset_constant.dart';
 import 'package:base/utils/enums/enums_export.dart';
 import 'package:base/utils/extensions/scroll_controller.dart';
 
-final testDateFrom = StateProvider.autoDispose<String>(
-  (ref) => getDateTimeNow(),
-);
-
-final testDateTo = StateProvider.autoDispose<String>(
-  (ref) => getDateTimeNow(),
-);
+final searchQueryProvider = StateProvider.autoDispose<String>((ref) => '');
 
 @RoutePage()
 class PackageScreen extends HookConsumerWidget {
@@ -33,117 +27,137 @@ class PackageScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Init
     final size = MediaQuery.sizeOf(context);
     final scrollController = useScrollController();
     final state = ref.watch(packageControllerProvider);
+    final searchQuery = ref.watch(searchQueryProvider);
 
-    // list
-    print(ref.read(filterSystemStatus).type);
     final fetchReslut = useFetch<PackageEntities>(
       function: (model, context) => ref
           .read(packageControllerProvider.notifier)
           .getPackages(model, context),
-      initialPagingModel: PagingModel(
-          // ví dụ ở đây và trong widgetshowCustomButtom ở widget test floder luôn
-
-          // filterContent: ref.read(filterSystemStatus).type
-          // filterSystemContent: ref.read(filterSystemStatus).type,
-          // filterContent: ref.read(filterPartnerStatus).type,
-          // searchDateFrom: dateFrom,
-          // searchDateTo: dateTo,
-          ),
+      initialPagingModel: PagingModel(),
       context: context,
     );
 
     useEffect(() {
       scrollController.onScrollEndsListener(fetchReslut.loadMore);
-
-      //  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      //   if (message.data['screen'] == OrderDetailScreenRoute.name) {
-      //     fetchResult.refresh();
-      //   }
-
       return scrollController.dispose;
     }, const []);
 
-    // Hàm ở ref listen ở đây vinh tính đường binh khi thay đổi trong trang detail thì sẽ sử dụng  (TODO)
-
-    // ref.listen<bool>(
-    //   refreshTestList,
-    //   (_, __) => fetchReslut.refresh(),
-    // );
-    // onCallBackSecond: () => {
-    //   //show filter bottom or tom
-    // },
-    // onCallBackSecond: () => showCustomBottomSheet(
-    //   context: context,
-    //   size: size,
-    //   onCallback: fetchReslut.refresh,
-    // ),
+    // Lọc danh sách gói dịch vụ dựa trên từ khóa tìm kiếm
+    final filteredItems = fetchReslut.items.where((item) {
+      return item.name.toLowerCase().contains(searchQuery.toLowerCase());
+    }).toList();
 
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Package',
-        iconFirst: Icons.refresh_rounded,
-        backgroundColor: AssetsConstants.blue2,
-        iconSecond: Icons.filter_list_alt,
-        onCallBackFirst: fetchReslut.refresh,
+      appBar: PreferredSize(
+        preferredSize:
+            const Size.fromHeight(200), // Chiều cao tùy chỉnh cho AppBar
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF0052CC), // Blue
+                Color(0xFF00AAFF), // Light Blue
+                Color.fromARGB(255, 111, 194, 208),
+                Color.fromARGB(255, 116, 240, 231), // Pastel Light Purple
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: Column(
+            children: [
+              AppBar(
+                backgroundColor: Colors.transparent, // AppBar trong suốt
+                elevation: 0,
+                centerTitle: true,
+                title: const Text(
+                  'Package',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 16.0,
+                ),
+                child: Column(
+                  children: [
+                    // Thanh tìm kiếm
+                    TextField(
+                      onChanged: (value) {
+                        ref.read(searchQueryProvider.notifier).state =
+                            value; // Cập nhật từ khóa tìm kiếm
+                      },
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: 'Tìm kiếm gói dịch vụ...',
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        contentPadding: const EdgeInsets.all(10),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Tổng hợp các gói dịch vụ trong Vegacity',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 48.0),
+        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
         child: Column(
           children: [
-            SizedBox(height: size.height * 0.02),
+            // SizedBox(height: size.height * 0.02),
             (state.isLoading && fetchReslut.items.isEmpty)
-                ? const Center(
-                    child: HomeShimmer(amount: 4),
-                  )
-                : fetchReslut.items.isEmpty
+                ? const Center(child: HomeShimmer(amount: 4))
+                : filteredItems.isEmpty
                     ? const Align(
                         alignment: Alignment.topCenter,
-                        child: EmptyBox(title: 'list ko có dữ liệu'),
+                        child: EmptyBox(title: 'Không có dữ liệu'),
                       )
                     : Expanded(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: GridView.builder(
-                                  itemCount: fetchReslut.items.length,
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  controller: scrollController,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal:
-                                        AssetsConstants.defaultPadding - 5.0,
-                                  ),
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 20.0,
-                                    mainAxisSpacing: 10.0,
-                                    childAspectRatio: 0.75,
-                                  ),
-                                  itemBuilder: (_, index) {
-                                    return PackageItem(
-                                      package: fetchReslut.items[index],
-                                      onCallback: fetchReslut.refresh,
-                                    );
-                                  },
-                                ),
-                              ),
-                              if (fetchReslut.isLastPage) ...[
-                                const NoMoreContent(),
-                                const SizedBox(
-                                    height:
-                                        20.0), // khoảng cách dưới cùng nếu cần
-                              ] else if (fetchReslut.isFetchingData) ...[
-                                const CustomCircular(),
-                              ],
-                            ],
+                        child: GridView.builder(
+                          itemCount: filteredItems
+                              .length, // Sử dụng số lượng gói đã lọc
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          controller: scrollController,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AssetsConstants.defaultPadding - 5.0,
                           ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 20.0,
+                            mainAxisSpacing: 10.0,
+                            childAspectRatio: 0.6,
+                          ),
+                          itemBuilder: (_, index) {
+                            return PackageItem(
+                              package: filteredItems[index], // Gói đã lọc
+                              onCallback: fetchReslut.refresh,
+                            );
+                          },
                         ),
                       ),
           ],

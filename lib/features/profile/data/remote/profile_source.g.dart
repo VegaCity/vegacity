@@ -14,7 +14,7 @@ class _ProfileSource implements ProfileSource {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://14.225.204.144:8000/api/v1';
+    baseUrl ??= 'http://api.vegacity.id.vn/api/v1';
   }
 
   final Dio _dio;

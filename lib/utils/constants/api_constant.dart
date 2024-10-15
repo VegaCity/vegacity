@@ -1,5 +1,5 @@
 class APIConstants {
-  static const baseUrl = "http://14.225.204.144:8000/api/v1";
+  static const baseUrl = "http://api.vegacity.id.vn/api/v1";
   static const contentType = 'application/json';
   static const contentHeader = 'Content-Type';
   static const authHeader = 'Authorization';
@@ -15,15 +15,12 @@ class APIConstants {
   static const reGenerateToken = '/auth/refresh-token';
 
   // user
-  static const user = '/user';  
+  static const user = '/user';
 
   // package
   static const packages = '/packages';
 
-
   static const trucks = '/packages';
-
-
 
   // error
   static const Map<String, String> errorTrans = {

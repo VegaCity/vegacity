@@ -15,14 +15,12 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-
-    ContactScreenRoute.name: (routeData) {
+    HistoryScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ContactScreen(),
+        child: const HistoryScreen(),
       );
     },
-
     HomeScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -114,19 +112,25 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const TestScreen(),
       );
     },
+    TransferScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TransferScreen(),
+      );
+    },
   };
 }
 
 /// generated route for
-/// [ContactScreen]
-class ContactScreenRoute extends PageRouteInfo<void> {
-  const ContactScreenRoute({List<PageRouteInfo>? children})
+/// [HistoryScreen]
+class HistoryScreenRoute extends PageRouteInfo<void> {
+  const HistoryScreenRoute({List<PageRouteInfo>? children})
       : super(
-          ContactScreenRoute.name,
+          HistoryScreenRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'ContactScreenRoute';
+  static const String name = 'HistoryScreenRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -400,6 +404,20 @@ class TestScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'TestScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TransferScreen]
+class TransferScreenRoute extends PageRouteInfo<void> {
+  const TransferScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          TransferScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TransferScreenRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

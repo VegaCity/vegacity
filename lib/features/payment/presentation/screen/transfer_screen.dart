@@ -5,8 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 @RoutePage()
-class ContactScreen extends HookConsumerWidget {
-  const ContactScreen({super.key});
+class TransferScreen extends HookConsumerWidget {
+  const TransferScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
