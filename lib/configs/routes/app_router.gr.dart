@@ -15,6 +15,18 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    CardScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CardScreen(),
+      );
+    },
+    ChangePasswordScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ChangePasswordScreen(),
+      );
+    },
     HistoryScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -44,6 +56,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const PackageScreen(),
       );
     },
+    PolicyPrivacyScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PolicyPrivacyScreen(),
+      );
+    },
     PrivacyPolicyScreenRoute.name: (routeData) {
       final args = routeData.argsAs<PrivacyPolicyScreenRouteArgs>(
           orElse: () => const PrivacyPolicyScreenRouteArgs());
@@ -62,6 +80,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const ProfileScreen(),
+      );
+    },
+    QrScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const QrScreen(),
       );
     },
     ScannerScreenRoute.name: (routeData) {
@@ -118,7 +142,41 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const TransferScreen(),
       );
     },
+    TransferSuccessRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TransferSuccess(),
+      );
+    },
   };
+}
+
+/// generated route for
+/// [CardScreen]
+class CardScreenRoute extends PageRouteInfo<void> {
+  const CardScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          CardScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CardScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ChangePasswordScreen]
+class ChangePasswordScreenRoute extends PageRouteInfo<void> {
+  const ChangePasswordScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          ChangePasswordScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChangePasswordScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -208,6 +266,20 @@ class PackageScreenRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PolicyPrivacyScreen]
+class PolicyPrivacyScreenRoute extends PageRouteInfo<void> {
+  const PolicyPrivacyScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          PolicyPrivacyScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PolicyPrivacyScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [PrivacyPolicyScreen]
 class PrivacyPolicyScreenRoute
     extends PageRouteInfo<PrivacyPolicyScreenRouteArgs> {
@@ -261,6 +333,20 @@ class ProfileScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ProfileScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [QrScreen]
+class QrScreenRoute extends PageRouteInfo<void> {
+  const QrScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          QrScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'QrScreenRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -418,6 +504,20 @@ class TransferScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'TransferScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TransferSuccess]
+class TransferSuccessRoute extends PageRouteInfo<void> {
+  const TransferSuccessRoute({List<PageRouteInfo>? children})
+      : super(
+          TransferSuccessRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TransferSuccessRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

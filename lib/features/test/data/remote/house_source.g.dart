@@ -14,7 +14,7 @@ class _HouseSource implements HouseSource {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://api.vegacity.id.vn/api/v1';
+    baseUrl ??= 'https://api.vegacity.id.vn/api/v1';
   }
 
   final Dio _dio;

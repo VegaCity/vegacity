@@ -2,6 +2,7 @@ import 'package:base/features/package/data/model/response/packages_response.dart
 import 'package:base/features/package/data/remote/package_source.dart';
 import 'package:base/features/package/data/repositories/package_type_repository_impl.dart';
 import 'package:base/features/profile/data/models/response/profile_response.dart';
+import 'package:base/features/profile/data/models/response/wallet_response.dart';
 import 'package:base/features/profile/data/remote/profile_source.dart';
 import 'package:base/features/profile/data/repositories/profile_repository_impl.dart';
 
@@ -15,6 +16,7 @@ abstract class ProfileRepository {
   Future<ProfileResponse> getProfile({
     required String accessToken,
   });
+
 }
 
 @Riverpod(keepAlive: true)

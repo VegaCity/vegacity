@@ -1,3 +1,4 @@
+import 'package:base/features/auth/data/models/request/order_request.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -11,6 +12,7 @@ import 'package:base/features/auth/data/models/request/sign_up_request.dart';
 import 'package:base/features/auth/data/models/request/otp_verify_request.dart';
 import 'package:base/features/auth/data/models/request/sign_in_request.dart';
 import 'package:base/features/auth/data/models/response/account_response.dart';
+import 'package:base/features/auth/data/models/request/change_password_request.dart';
 
 // utils
 import 'package:base/utils/constants/api_constant.dart';
@@ -31,6 +33,12 @@ abstract class AuthSource {
   @POST(APIConstants.register)
   Future<HttpResponse<SuccessModel>> signUp(
     @Body() SignUpRequest request,
+    @Header(APIConstants.contentHeader) String contentType,
+  );
+
+  @POST(APIConstants.changePassword)
+  Future<HttpResponse<SuccessModel>> changePassword(
+    @Body() ChangePasswordRequest request,
     @Header(APIConstants.contentHeader) String contentType,
   );
 

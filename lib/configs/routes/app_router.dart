@@ -1,7 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:base/configs/routes/guard/auth_guard.dart';
+import 'package:base/features/e-tag/presentation/screen/card_screen.dart';
 import 'package:base/features/payment/presentation/screen/transfer_screen.dart';
+import 'package:base/features/payment/presentation/screen/transfer_success_screen.dart';
+import 'package:base/features/profile/presentation/screens/change_password/change_password_screen.dart';
 import 'package:base/features/scanner/scanner_screen.dart';
+import 'package:base/features/profile/presentation/screens/privacy_policy/policy_privacy_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,6 +21,7 @@ import 'package:base/features/auth/presentation/screens/privacy_term/term_screen
 import 'package:base/features/auth/presentation/screens/otp_verification/otp_verification_screen.dart';
 import 'package:base/features/history/presentation/screen/history_screen/history_screen.dart';
 import 'package:base/features/profile/presentation/screens/profile_detail_screen/profile_detail_screen.dart';
+import 'package:base/features/scanner1/manage_scanner_screen.dart';
 
 // screen-home
 import 'package:base/features/home/presentation/screens/home_screen/home_screen.dart';
@@ -27,6 +33,7 @@ import 'package:base/features/package/presentation/screens/package_screen/packag
 
 import 'package:base/splash_screen.dart';
 import 'package:base/tab_screen.dart';
+
 // import 'package:base/onboarding_screen.dart';
 
 // model
@@ -46,14 +53,8 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
         // auth
-        AutoRoute(
-          page: SignInScreenRoute.page,
-          initial: true,
-        ),
-        AutoRoute(
-          page: SignUpScreenRoute.page,
-          // initial: true,
-        ),
+        AutoRoute(page: SignInScreenRoute.page),
+        AutoRoute(page: SignUpScreenRoute.page),
         AutoRoute(page: OTPVerificationScreenRoute.page),
 
         // Màn hình Onboarding
@@ -62,10 +63,10 @@ class AppRouter extends _$AppRouter {
         // Màn hình chính
         AutoRoute(
           page: TabViewScreenRoute.page,
-          // initial: true,
+          initial: true,
           guards: [
             // OnboardingGuard(ref: _ref),
-            // AuthGuard(ref: _ref)
+            AuthGuard(ref: _ref)
           ],
           children: [
             AutoRoute(page: HomeScreenRoute.page),
@@ -79,15 +80,32 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           page: HomeScreenRoute.page,
         ),
+
+        AutoRoute(
+          page: ScannerScreenRoute.page,
+        ),
         AutoRoute(
           page: ProfileDetailsScreenRoute.page,
         ),
-
+        AutoRoute(
+          page: ChangePasswordScreenRoute.page,
+          // initial: true,
+        ),
+        AutoRoute(
+          page: TransferSuccessRoute.page,
+          // initial: true,
+        ),
+        AutoRoute(
+          page: PolicyPrivacyScreenRoute.page,
+          // initial: true,
+        ),
         AutoRoute(
           page: TransferScreenRoute.page,
           // initial: true,
         ),
-
+        AutoRoute(
+          page: CardScreenRoute.page,
+        ),
         AutoRoute(page: TestScreenRoute.page),
       ];
 }

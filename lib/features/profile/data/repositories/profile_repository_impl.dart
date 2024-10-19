@@ -1,7 +1,9 @@
 // import local
 
 import 'package:base/features/profile/data/models/response/profile_response.dart';
+import 'package:base/features/profile/data/models/response/wallet_response.dart';
 import 'package:base/features/profile/data/remote/profile_source.dart';
+import 'package:base/features/profile/domain/entities/wallet_entity.dart';
 import 'package:base/features/profile/domain/repositories/profile_repository.dart';
 
 import 'package:base/models/request/paging_model.dart';
@@ -36,4 +38,7 @@ class ProfileRepositoryImpl extends RemoteBaseRepository
       ),
     );
   }
+
+    
+
 }

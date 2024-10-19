@@ -274,7 +274,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                                         const TextStyle(color: Colors.white),
                                   ),
                                   child: const Text(
-                                    'Save',
+                                    'Edit',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ),

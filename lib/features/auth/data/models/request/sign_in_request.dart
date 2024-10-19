@@ -2,11 +2,10 @@ import 'dart:convert';
 
 class SignInRequest {
   final String email;
-
   final String password;
 
   SignInRequest({
-     required this.email,
+    required this.email,
     required this.password,
   });
 
@@ -28,7 +27,7 @@ class SignInRequest {
 
   String toJson() => json.encode(toMap());
 
-  @override 
+  @override
   String toString() {
     return 'SignUpRequest(email: $email , password: $password)';
   }

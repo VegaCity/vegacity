@@ -236,7 +236,7 @@ class HomeScreen extends HookConsumerWidget {
                       top: 16.0, left: 12, right: 12, bottom: 10),
                   child: GridView.builder(
                     itemCount: fetchReslut.items.length, // Giữ lại dòng này
-                    physics: const AlwaysScrollableScrollPhysics(),
+                    // physics: const AlwaysScrollableScrollPhysics(),
                     shrinkWrap: true,
                     controller: scrollController,
                     padding: const EdgeInsets.symmetric(

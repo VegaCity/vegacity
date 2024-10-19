@@ -41,6 +41,10 @@ dependencies:
   firebase_messaging: ^14.7.6
   firebase_auth: ^4.0.0
 
+  #payment-link
+  url_launcher: ^6.1.10
+  uni_links: ^0.5.1
+  
   #Icon
   icons_plus:
     ^4.0.0
@@ -88,6 +92,9 @@ dev_dependencies:
   plugin_platform_interface: ^2.1.7
   freezed: ^2.5.7
   json_serializable: ^6.8.0
+  # Payment-link
+  url_launcher: ^6.1.10
+  uni_links: ^0.5.1
 
 flutter:
   uses-material-design: true

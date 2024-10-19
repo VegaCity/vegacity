@@ -1,4 +1,5 @@
 // rest API
+import 'package:base/features/profile/data/models/response/wallet_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -22,6 +23,7 @@ abstract class ProfileSource {
     @Header(APIConstants.authHeader) String accessToken,
     @Path('id') String id,
   );
+
 }
 
 @riverpod

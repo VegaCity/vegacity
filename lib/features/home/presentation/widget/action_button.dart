@@ -31,13 +31,15 @@ class ActionButtons extends StatelessWidget {
             IconButtonWithLabel(
               imagePath: 'assets/images/id-card.png',
               label: 'E-tag',
-              onPressed: () => _showUnderDevelopmentDialog(context),
+              onPressed: () {
+                context.router.push(const CardScreenRoute());
+              },
             ),
             IconButtonWithLabel(
               imagePath: 'assets/images/cash-back.png',
               label: 'Transfer',
               onPressed: () {
-                context.router.push(TransferScreenRoute());
+                context.router.push(const TransferScreenRoute());
               },
             ),
             IconButtonWithLabel(
@@ -61,11 +63,21 @@ class ActionButtons extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Thông báo'),
-          content: const Text('Tính năng đang phát triển'),
+          backgroundColor: Colors.white, // Đặt nền trắng cho AlertDialog
+          title: const Text(
+            'Thông báo',
+            style: TextStyle(color: Colors.black), // Màu chữ tiêu đề
+          ),
+          content: const Text(
+            'Tính năng đang phát triển',
+            style: TextStyle(color: Colors.black87), // Màu chữ nội dung
+          ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Đóng'),
+              child: const Text(
+                'Đóng',
+                style: TextStyle(color: Colors.blue), // Màu chữ nút Đóng
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
