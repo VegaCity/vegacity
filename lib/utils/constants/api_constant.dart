@@ -21,6 +21,8 @@ class APIConstants {
   static const order = '/etag/charge-money';
   // wallet
   static const wallet = '/wallet';
+  // wallet etag
+    static const etag = '/etag';
   // package
   static const packages = '/packages';
   // etags

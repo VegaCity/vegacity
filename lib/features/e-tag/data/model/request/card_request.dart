@@ -9,6 +9,7 @@ class CardRequest {
   final int page;
   final int size;
   
+  
 
   CardRequest({
     // this.systemStatus,

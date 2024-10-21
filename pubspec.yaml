@@ -49,6 +49,12 @@ dependencies:
   icons_plus:
     ^4.0.0
 
+  # Map
+  vietmap_flutter_gl: ^3.0.0
+  vietmap_flutter_navigation: ^3.1.1
+  vietmap_flutter_plugin: ^0.3.0
+  vietmap_gl_platform_interface: ^0.2.0
+
   # Animation
   lottie: ^2.7.0
   flag: ^7.0.0

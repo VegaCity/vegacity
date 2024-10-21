@@ -1,9 +1,11 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:dio/dio.dart';
+import 'package:base/configs/routes/app_router.dart';
+import 'package:base/features/scanner/scanner_result.dart';
+import 'package:base/tab_screen.dart';
 import 'package:flutter/material.dart';
+
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
-import 'scanner_result.dart';
+import 'package:auto_route/auto_route.dart';
 
 @RoutePage()
 class ScannerScreen extends StatefulWidget {
@@ -25,55 +27,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
     });
   }
 
-  Future<void> _checkQRCode(String code) async {
-    try {
-      // Gọi API để kiểm tra mã QR
-      final response = await Dio().get(
-        'https://api.vegacity.id.vn/api/v1/etags',
-        queryParameters: {'qrCode': code},
-      );
-
-      if (response.statusCode == 200 && response.data != null) {
-        // Nếu mã hợp lệ, chuyển sang màn hình QRResult
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => QRResult(
-              data: response.data,
-              closeScreen: closeScreen,
-            ),
-          ),
-        );
-      } else {
-        _showErrorDialog('Mã QR không hợp lệ hoặc không tìm thấy dữ liệu.');
-      }
-    } catch (e) {
-      _showErrorDialog('Lỗi khi gọi API: $e');
-    }
-  }
-
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Lỗi'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-    setState(() {
-      isScanCompleted = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final tabsRouter = AutoTabsRouter.of(context);
+    final tabsRouter = AutoTabsRouter.of(context); // Lấy tabsRouter
 
     return Scaffold(
       body: Stack(
@@ -85,7 +41,15 @@ class _ScannerScreenState extends State<ScannerScreen> {
               if (!isScanCompleted) {
                 isScanCompleted = true;
                 String code = barcode.rawValue ?? "---";
-                _checkQRCode(code); // Gọi API sau khi quét mã QR
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QRResult(
+                      code: code,
+                      closeScreen: closeScreen,
+                    ),
+                  ),
+                );
               }
             },
           ),
@@ -98,21 +62,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
             scanAreaWidth: 320,
           ),
           Positioned(
-            top: 45,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Text(
-                'Scanner',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
             top: 40,
             left: 10,
             child: IconButton(
@@ -122,8 +71,56 @@ class _ScannerScreenState extends State<ScannerScreen> {
                 color: Color.fromARGB(255, 30, 144, 255),
               ),
               onPressed: () {
-                tabsRouter.setActiveIndex(0);
+                tabsRouter.setActiveIndex(0); // Quay về tab Home (index 0)
               },
+            ),
+          ),
+          Positioned(
+            top: 45,
+            left: 120,
+            child: Text(
+              "SCANNER",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 40,
+            right: 10,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.flash_on,
+                    color: isFlashOn
+                        ? Colors.white
+                        : const Color.fromARGB(255, 30, 144, 255),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isFlashOn = !isFlashOn;
+                    });
+                    cameraController.toggleTorch();
+                  },
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.flip_camera_android,
+                    color: isFrontCamera
+                        ? Colors.white
+                        : const Color.fromARGB(255, 30, 144, 255),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isFrontCamera = !isFrontCamera;
+                    });
+                    cameraController.switchCamera();
+                  },
+                ),
+              ],
             ),
           ),
         ],

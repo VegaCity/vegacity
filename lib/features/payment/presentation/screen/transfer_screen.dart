@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @RoutePage()
 class TransferScreen extends HookConsumerWidget {
@@ -45,15 +46,11 @@ class TransferScreen extends HookConsumerWidget {
     final formKey = useMemoized(GlobalKey<FormState>.new);
     final paymentType = useState<String>("");
 
-    // final useFetchResult = useFetchObject<WalletEntity>(
-    //   function: (context) =>
-    //       ref.read(walletControllerProvider.notifier).getWallet(context),
-    //   context: context,
-    // );
+    useEffect(() {
+      _loadSavedValues(cccdController, etagCodeController);
+      return null;
+    }, []);
 
-    // final wallet = useFetchResult.data?.balance;
-    // final wallet2 = useFetchResult.data?.crDate;
-    // print("Wallet: $wallet");
     return LoadingOverlay(
       isLoading: state.isLoading,
       child: Scaffold(
@@ -71,17 +68,13 @@ class TransferScreen extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              _buildSourceAccountSection(),
-              const SizedBox(height: 20),
               _buildDestinationSection(etagCodeController),
               const SizedBox(height: 20),
               _buildCccdSection(cccdController),
               const SizedBox(height: 20),
               _buildAmountInputSection(chargeAmountController),
               const SizedBox(height: 20),
-              _buildPaymentOptionButton(
-                  context, paymentType), // Nút mở bottom sheet
-
+              _buildPaymentOptionButton(context, paymentType),
               const SizedBox(height: 20),
               _buildActionButtons(context, ref, formKey, etagCodeController,
                   chargeAmountController, cccdController, paymentType),
@@ -92,32 +85,14 @@ class TransferScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _buildSourceAccountSection() {
-    return Center(
-      child: Container(
-        width: 350,
-        decoration: BoxDecoration(
-          color: const Color(0xFFF0F4FF),
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(color: const Color(0xFFE0E0E0)),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'TÀI KHOẢN THANH TOÁN - 1290197042292',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 5),
-            Text(
-              '20000 VND',
-              style: TextStyle(color: Color(0xFF007BFF)),
-            ),
-          ],
-        ),
-      ),
-    );
+  void _loadSavedValues(TextEditingController cccdController,
+      TextEditingController etagCodeController) async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedEtagCode = prefs.getString('etagCode') ?? '';
+    final savedCccd = prefs.getString('cccd') ?? '';
+
+    etagCodeController.text = savedEtagCode;
+    cccdController.text = savedCccd;
   }
 
   Widget _buildDestinationSection(TextEditingController etagCodeController) {
@@ -203,10 +178,8 @@ class TransferScreen extends HookConsumerWidget {
         width: 350,
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          border: Border.all(
-              color: Colors.grey.withOpacity(0.3)), // Sử dụng độ trong suốt
-          // Đường viền
-          borderRadius: BorderRadius.circular(8.0), // Bo tròn góc
+          border: Border.all(color: Colors.grey.withOpacity(0.3)),
+          borderRadius: BorderRadius.circular(8.0),
         ),
         child: GestureDetector(
           onTap: () => _showPaymentOptions(context, paymentType),
@@ -214,11 +187,10 @@ class TransferScreen extends HookConsumerWidget {
             valueListenable: paymentType,
             builder: (context, value, child) {
               return Text(
-                value.isEmpty
-                    ? 'Vui lòng chọn phương thức thanh toán'
-                    : value, // Hiện phương thức đã chọn hoặc thông báo
-                style: TextStyle(
-                  color: value.isEmpty ? Colors.grey : Colors.black,
+                value.isEmpty ? 'Vui lòng chọn phương thức thanh toán' : value,
+                style: const TextStyle(
+                  // color: value.isEmpty ? Colors.grey : Colors.black,
+                  color: Colors.black,
                   fontSize: 16,
                 ),
               );
@@ -233,9 +205,10 @@ class TransferScreen extends HookConsumerWidget {
       BuildContext context, ValueNotifier<String> paymentType) {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white,
       builder: (context) {
         return SizedBox(
-          height: 250,
+          height: 300,
           child: Column(
             children: [
               ListTile(
@@ -266,13 +239,13 @@ class TransferScreen extends HookConsumerWidget {
                   Navigator.pop(context);
                 },
               ),
-              ListTile(
-                title: const Text('Cash'),
-                onTap: () {
-                  paymentType.value = 'Cash';
-                  Navigator.pop(context);
-                },
-              ),
+              // ListTile(
+              //   title: const Text('Cash'),
+              //   onTap: () {
+              //     paymentType.value = 'Cash';
+              //     Navigator.pop(context);
+              //   },
+              // ),
             ],
           ),
         );
@@ -295,6 +268,15 @@ class TransferScreen extends HookConsumerWidget {
         ElevatedButton(
           onPressed: () => Navigator.pop(context),
           child: const Text('Quay lại'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white, // Màu nền nút "Quay lại"
+            foregroundColor: Colors.blue, // Màu chữ
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5), // Bo tròn
+            ),
+            padding: const EdgeInsets.symmetric(
+                horizontal: 20, vertical: 10), // Padding tùy chỉnh
+          ),
         ),
         const SizedBox(width: 10),
         ElevatedButton(
@@ -307,13 +289,21 @@ class TransferScreen extends HookConsumerWidget {
               formKey: formKey,
               ref: ref,
               etagCode: etagCodeController.text,
-              chargeAmount: chargeAmount ?? 0,
+              chargeAmount: chargeAmount,
               cccd: cccdController.text,
               paymentType: paymentType.value,
             );
-            // context.router.push(const TransferSuccessRoute());
           },
           child: const Text('Tiếp tục'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue, // Màu nền nút "Tiếp tục"
+            foregroundColor: Colors.white, // Màu chữ
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5), // Bo tròn
+            ),
+            padding: const EdgeInsets.symmetric(
+                horizontal: 20, vertical: 10), // Padding tùy chỉnh
+          ),
         ),
       ],
     );

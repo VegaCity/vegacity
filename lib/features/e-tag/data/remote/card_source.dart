@@ -1,6 +1,8 @@
 // rest API
 
 
+import 'package:base/features/e-tag/data/model/request/etag_request.dart';
+import 'package:base/features/e-tag/data/model/response/etag_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -27,6 +29,13 @@ abstract class CardSource {
     @Header(APIConstants.contentHeader) String contentType,
     @Header(APIConstants.authHeader) String accessToken,
     @Queries() CardRequest request,
+  );
+
+    @GET(APIConstants.etag)
+  Future<HttpResponse<EtagResponse>> getEtagCard(
+    @Header(APIConstants.contentHeader) String contentType,
+    @Header(APIConstants.authHeader) String accessToken,
+    @Queries() EtagRequest request,
   );
 }
 

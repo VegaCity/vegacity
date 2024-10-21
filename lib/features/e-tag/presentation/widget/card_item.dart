@@ -62,7 +62,15 @@ class CardItem extends HookConsumerWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 10),
-
+                  Text(
+                    card.etagCode,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                   // Package Description
                   Text(
                     card.cccd,

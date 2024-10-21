@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:base/configs/routes/guard/auth_guard.dart';
 import 'package:base/features/e-tag/presentation/screen/card_screen.dart';
+import 'package:base/features/map/map_screen.dart';
 import 'package:base/features/payment/presentation/screen/transfer_screen.dart';
 import 'package:base/features/payment/presentation/screen/transfer_success_screen.dart';
 import 'package:base/features/profile/presentation/screens/change_password/change_password_screen.dart';
@@ -53,7 +54,9 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
         // auth
-        AutoRoute(page: SignInScreenRoute.page),
+        AutoRoute(
+          page: SignInScreenRoute.page,
+        ),
         AutoRoute(page: SignUpScreenRoute.page),
         AutoRoute(page: OTPVerificationScreenRoute.page),
 
@@ -66,7 +69,7 @@ class AppRouter extends _$AppRouter {
           initial: true,
           guards: [
             // OnboardingGuard(ref: _ref),
-            AuthGuard(ref: _ref)
+            AuthGuard(ref: _ref),
           ],
           children: [
             AutoRoute(page: HomeScreenRoute.page),
@@ -93,6 +96,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: TransferSuccessRoute.page,
+          // initial: true,
+        ),
+        AutoRoute(
+          page: MapScreenRoute.page,
           // initial: true,
         ),
         AutoRoute(

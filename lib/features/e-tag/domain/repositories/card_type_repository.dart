@@ -1,4 +1,5 @@
 import 'package:base/features/e-tag/data/model/response/card_response.dart';
+import 'package:base/features/e-tag/data/model/response/etag_response.dart';
 import 'package:base/features/e-tag/data/remote/card_source.dart';
 import 'package:base/features/e-tag/data/repositories/card_type_repository_impl.dart';
 
@@ -14,6 +15,10 @@ abstract class CardTypeRepository {
   Future<CardResponse> getCard({
     required String accessToken,
     required PagingModel request,
+  });
+  Future<EtagResponse> getEtagCard({
+    required String accessToken,
+    required String etagCode,
   });
 }
 

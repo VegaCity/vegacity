@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'card_source.dart';
+part of 'wallet_card_source.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'card_source.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _CardSource implements CardSource {
-  _CardSource(
+class _WalletCardSource implements WalletCardSource {
+  _WalletCardSource(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
@@ -24,65 +24,24 @@ class _CardSource implements CardSource {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<CardResponse>> getCard(
+  Future<HttpResponse<WalletCardResponse>> getWalletEtag(
     String contentType,
     String accessToken,
-    CardRequest request,
+    String id,
+    String etagCode,
   ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.addAll(request.toMap());
+    final queryParameters = <String, dynamic>{
+      r'id': id,
+      r'etagCode': etagCode,
+    };
     final _headers = <String, dynamic>{
       r'Content-Type': contentType,
       r'Authorization': accessToken,
     };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<CardResponse>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-      contentType: contentType,
-    )
-        .compose(
-          _dio.options,
-          '/etags',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CardResponse _value;
-    try {
-      _value = CardResponse.fromMap(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    final httpResponse = HttpResponse(_value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<EtagResponse>> getEtagCard(
-    String contentType,
-    String accessToken,
-    EtagRequest request,
-  ) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.addAll(request.toMap());
-    final _headers = <String, dynamic>{
-      r'Content-Type': contentType,
-      r'Authorization': accessToken,
-    };
-    _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<EtagResponse>>(Options(
+    final _options = _setStreamType<HttpResponse<WalletCardResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -100,9 +59,9 @@ class _CardSource implements CardSource {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late EtagResponse _value;
+    late WalletCardResponse _value;
     try {
-      _value = EtagResponse.fromMap(_result.data!);
+      _value = WalletCardResponse.fromMap(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -146,19 +105,20 @@ class _CardSource implements CardSource {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$cardSourceHash() => r'76e0e681d14895163768e1ac7dafe5c9aa6d887a';
+String _$walletCardSourceHash() => r'712a14c96655e0047111581d26ea439c3dca6e5b';
 
-/// See also [cardSource].
-@ProviderFor(cardSource)
-final cardSourceProvider = AutoDisposeProvider<CardSource>.internal(
-  cardSource,
-  name: r'cardSourceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$cardSourceHash,
+/// See also [walletCardSource].
+@ProviderFor(walletCardSource)
+final walletCardSourceProvider = AutoDisposeProvider<WalletCardSource>.internal(
+  walletCardSource,
+  name: r'walletCardSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$walletCardSourceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef CardSourceRef = AutoDisposeProviderRef<CardSource>;
+typedef WalletCardSourceRef = AutoDisposeProviderRef<WalletCardSource>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

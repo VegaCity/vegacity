@@ -1,70 +1,205 @@
+import 'package:base/configs/routes/app_router.dart';
+import 'package:base/features/e-tag/domain/entities/etag_entity.dart';
+import 'package:base/features/scanner/controllers/etag_scanner_controller.dart';
+import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'scanner_screen.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:auto_route/auto_route.dart';
 
-class QRResult extends StatelessWidget {
-  final Map<String, dynamic> data;
+@RoutePage()
+class QRResult extends HookConsumerWidget {
+  final String code;
   final Function() closeScreen;
 
   const QRResult({
     super.key,
-    required this.data,
+    required this.code,
     required this.closeScreen,
   });
 
+  Future<void> _saveToSharedPreferences(String etagCode, String cccd) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('etagCode', etagCode);
+    await prefs.setString('cccd', cccd);
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.sizeOf(context);
+    final state = ref.watch(etagScannerControllerProvider);
+
+    final useFetchResult = useFetchObject<EtagEntity>(
+      function: (context) => ref
+          .read(etagScannerControllerProvider.notifier)
+          .getEtagCardData(context, code),
+      context: context,
+    );
+
+    if (useFetchResult.isFetchingData) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (useFetchResult.data == null) {
+      return const Center(child: Text('No data found'));
+    }
+
+    // example take information from etag entity
+    final name = useFetchResult.data!.fullName;
+    final etag = useFetchResult.data!.etagCode;
+    final dob = useFetchResult.data!.birthday;
+    final cccd = useFetchResult.data!.cccd;
+
+    // Save etagCode and cccd to SharedPreferences
+    _saveToSharedPreferences(etag, cccd!);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 30, 144, 255),
         title: const Text(
-          'Kết Quả Quét',
+          'Scanner Result',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 40,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.qr_code_scanner),
+          iconSize: 30,
+          color: const Color.fromARGB(255, 30, 144, 255),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const ScannerScreen();
+            }));
+          },
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 120),
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: data['imageUrl'] != null
-                    ? NetworkImage(data['imageUrl'])
-                    : null,
-                child: data['imageUrl'] == null
-                    ? const Icon(Icons.person, size: 50)
-                    : null,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 50, left: 5, right: 5, bottom: 5),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Card(
+              color: Colors.white,
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-              const SizedBox(height: 20),
-              Text(
-                data['fullName'] ?? 'N/A',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              child: Container(
+                width: 380,
+                height: 210,
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    QrImageView(
+                      data: code,
+                      size: 100,
+                      version: QrVersions.auto,
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          Text(
+                            etag,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            name,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            dob!,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            cccd,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                'Số điện thoại: ${data['phoneNumber'] ?? 'N/A'}',
-                style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 20),
+            // Replace the existing SizedBox code with the following
+            Padding(
+              padding: const EdgeInsets.only(left: 28.0),
+              child: Row(
+                children: [
+                  // SizedBox(
+                  //   width: MediaQuery.of(context).size.width - 220,
+                  //   height: 60,
+                  //   child: ElevatedButton(
+                  //     onPressed: () {
+                  //       // context.router.push(const TransferScreenRoute());
+                  //     },
+                  //     style: ElevatedButton.styleFrom(
+                  //       backgroundColor:
+                  //           Colors.green, // Set background color to blue
+                  //       foregroundColor:
+                  //           Colors.white, // Set text color to white
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(
+                  //             5), // Set border radius to 5
+                  //       ),
+                  //     ),
+                  //     child: const Text(
+                  //         "Chi tiết"), // Button text for "Transfer Money"
+                  //   ),
+                  // ),
+                  const SizedBox(width: 65), // Add space between buttons
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width - 200,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.router.push(const TransferScreenRoute());
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Colors.blue, // Set background color to blue
+                        foregroundColor:
+                            Colors.white, // Set text color to white
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              5), // Set border radius to 5
+                        ),
+                      ),
+                      child: const Text(
+                          "Nạp tiền"), // Button text for "Transfer Money"
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                'CCCD: ${data['cccd'] ?? 'N/A'}',
-                style: const TextStyle(fontSize: 18),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: data['qrCode']));
-                },
-                child: const Text('Sao chép mã QR'),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

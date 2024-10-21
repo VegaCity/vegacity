@@ -45,7 +45,9 @@ class ActionButtons extends StatelessWidget {
             IconButtonWithLabel(
               imagePath: 'assets/images/map.png',
               label: 'Map',
-              onPressed: () => _showUnderDevelopmentDialog(context),
+              onPressed: () {
+                context.router.push(const MapScreenRoute());
+              },
             ),
             IconButtonWithLabel(
               imagePath: 'assets/images/dashboard.png',
