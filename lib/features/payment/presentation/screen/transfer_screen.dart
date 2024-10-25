@@ -24,13 +24,13 @@ class TransferScreen extends HookConsumerWidget {
     required WidgetRef ref,
     required String etagCode,
     required int chargeAmount,
-    required String cccd,
+    required String cccdPassport,
     required String paymentType,
   }) async {
     await ref.read(orderControllerProvider.notifier).order(
           etagCode: etagCode,
           chargeAmount: chargeAmount,
-          cccd: cccd,
+          cccdPassport: cccdPassport,
           paymentType: paymentType,
           context: context,
         );
@@ -161,7 +161,7 @@ class TransferScreen extends HookConsumerWidget {
         child: TextField(
           controller: cccdController,
           decoration: const InputDecoration(
-            hintText: 'Nhập CCCD',
+            hintText: 'Nhập CCCD/Passporrt',
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(10),
             hintStyle: TextStyle(color: Colors.grey),
@@ -290,7 +290,7 @@ class TransferScreen extends HookConsumerWidget {
               ref: ref,
               etagCode: etagCodeController.text,
               chargeAmount: chargeAmount,
-              cccd: cccdController.text,
+              cccdPassport: cccdController.text,
               paymentType: paymentType.value,
             );
           },

@@ -39,7 +39,7 @@ class OrderController extends _$OrderController {
   Future<void> order({
     required String etagCode,
     required int chargeAmount,
-    required String cccd,
+    required String cccdPassport,
     required String paymentType,
     required BuildContext context,
   }) async {
@@ -55,7 +55,7 @@ class OrderController extends _$OrderController {
     final request = OrderRequest(
       etagCode: etagCode,
       chargeAmount: chargeAmount,
-      cccd: cccd,
+      cccdPassport: cccdPassport,
       paymentType: paymentType,
     );
 

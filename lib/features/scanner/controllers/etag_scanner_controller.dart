@@ -28,11 +28,11 @@ class EtagScannerController extends _$EtagScannerController {
   @override
   FutureOr<void> build() {}
 
-  Future<EtagEntity?> getEtagCardData(
+  Future<EtagParentEntity?> getEtagCardData(
     BuildContext context,
     String qrcode,
   ) async {
-    EtagEntity? etagCardData;
+    EtagParentEntity? etagCardData;
 
     state = const AsyncLoading();
     final cardRepository = ref.read(cardTypeRepositoryProvider);
@@ -48,11 +48,11 @@ class EtagScannerController extends _$EtagScannerController {
         //etagCode: checkEtagCode(qrcode),
         etagCode: "VGC2024101718260399",
       );
-      etagCardData = response.data.etag;
+      etagCardData = response.data;
 
       //checkdate
       final now = DateTime.now();
-      final isValid = now.isBefore(etagCardData?.endDate ?? DateTime.now());
+      final isValid = now.isBefore(etagCardData?.etag.endDate ?? DateTime.now());
 
       //final checkValidDate = deCodeQrCodeData(etagCardData?.qrcode ?? '');
 
@@ -76,7 +76,7 @@ class EtagScannerController extends _$EtagScannerController {
         );
       }
 
-      print("etagCardData: ${etagCardData?.etagCode}");
+      print("etagCardData: ${etagCardData?.etag.etagCode}");
     });
 
     if (state.hasError) {

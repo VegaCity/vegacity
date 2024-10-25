@@ -31,6 +31,8 @@ class APIConstants {
   static const trucks = '/packages';
   //PAYMENTS
   static const payment = '/payment';
+  //Transactions
+  static const transactions = '/transactions';
 
   // error
   static const Map<String, String> errorTrans = {

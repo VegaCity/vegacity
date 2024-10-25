@@ -3,14 +3,14 @@ import 'dart:convert';
 class OrderRequest {
   final String? etagCode;
   final int? chargeAmount; // Thay đổi từ double thành int
-  final String cccd;
+  final String cccdPassport;
   final String paymentType;
   // final String urlDirect;
 
   OrderRequest({
     required this.etagCode,
     required this.chargeAmount,
-    required this.cccd,
+    required this.cccdPassport,
     required this.paymentType,
     // this.urlDirect = "vega://payment-result",
   });
@@ -24,7 +24,7 @@ class OrderRequest {
     if (chargeAmount != null) {
       result.addAll({'chargeAmount': chargeAmount}); // Sử dụng chargeAmount là int
     }
-    result.addAll({'cccd': cccd});
+    result.addAll({'cccdPassport': cccdPassport});
     // result.addAll({'urlDirect': urlDirect});
     result.addAll({'paymentType': paymentType});
 
@@ -35,7 +35,7 @@ class OrderRequest {
     return OrderRequest(
       etagCode: map['etagCode'] ?? '',
       chargeAmount: map['chargeAmount']?.toInt(), // Chuyển đổi về int
-      cccd: map['cccd'] ?? '',
+      cccdPassport: map['cccdPassport'] ?? '',
       // urlDirect: map['urlDirect'] ?? '',
       paymentType: map['paymentType'] ?? '',
     );

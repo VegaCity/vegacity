@@ -21,10 +21,10 @@ class QRResult extends HookConsumerWidget {
     required this.closeScreen,
   });
 
-  Future<void> _saveToSharedPreferences(String etagCode, String cccd) async {
+  Future<void> _saveToSharedPreferences(String etagCode, String cccdPassport) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('etagCode', etagCode);
-    await prefs.setString('cccd', cccd);
+    await prefs.setString('cccdPassport', cccdPassport);
   }
 
   @override
@@ -32,12 +32,13 @@ class QRResult extends HookConsumerWidget {
     final size = MediaQuery.sizeOf(context);
     final state = ref.watch(etagScannerControllerProvider);
 
-    final useFetchResult = useFetchObject<EtagEntity>(
+    final useFetchResult = useFetchObject<EtagParentEntity>(
       function: (context) => ref
           .read(etagScannerControllerProvider.notifier)
           .getEtagCardData(context, code),
       context: context,
     );
+  
 
     if (useFetchResult.isFetchingData) {
       return const Center(child: CircularProgressIndicator());
@@ -47,13 +48,13 @@ class QRResult extends HookConsumerWidget {
     }
 
     // example take information from etag entity
-    final name = useFetchResult.data!.fullName;
-    final etag = useFetchResult.data!.etagCode;
-    final dob = useFetchResult.data!.birthday;
-    final cccd = useFetchResult.data!.cccd;
+    final name = useFetchResult.data!.etag.etagDetails.fullName;
+    final etag = useFetchResult.data!.etag.etagCode;
+    final dob = useFetchResult.data!.etag.etagDetails.birthday;
+    final cccdPassport = useFetchResult.data!.etag.etagDetails.cccdPassport;
 
     // Save etagCode and cccd to SharedPreferences
-    _saveToSharedPreferences(etag, cccd!);
+    _saveToSharedPreferences(etag, cccdPassport!);
 
     return Scaffold(
       appBar: AppBar(
@@ -134,7 +135,7 @@ class QRResult extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            cccd,
+                            cccdPassport,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 16,

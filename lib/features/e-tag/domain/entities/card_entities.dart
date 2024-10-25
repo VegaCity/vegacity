@@ -5,7 +5,7 @@ class CardEntities {
   final String etagCode;
   final String fullName;
   final String phoneNumber;
-  final String cccd;
+  final String cccdPassport;
   final String imageUrl;
   final int gender;
   final DateTime birthday;
@@ -20,7 +20,7 @@ class CardEntities {
     required this.etagCode,
     required this.fullName,
     required this.phoneNumber,
-    required this.cccd,
+    required this.cccdPassport,
     required this.imageUrl,
     required this.gender,
     required this.birthday,
@@ -38,7 +38,7 @@ class CardEntities {
     result.addAll({"etagCode": etagCode});
     result.addAll({"fullName": fullName});
     result.addAll({"phoneNumber": phoneNumber});
-    result.addAll({"cccd": cccd});
+    result.addAll({"cccdPassport": cccdPassport});
     result.addAll({"imageUrl": imageUrl});
     result.addAll({"gender": gender});
     result.addAll({"birthday": birthday.toIso8601String()});
@@ -57,7 +57,7 @@ class CardEntities {
       etagCode: map["etagCode"] ?? '',
       fullName: map["fullName"] ?? '',
       phoneNumber: map["phoneNumber"] ?? '',
-      cccd: map["cccd"] ?? '',
+      cccdPassport: map["cccdPassport"] ?? '',
       imageUrl: map["imageUrl"] ?? '',
       gender: map["gender"] ?? 0,
       birthday: DateTime.parse(map["birthday"] ?? '1970-01-01T00:00:00'),

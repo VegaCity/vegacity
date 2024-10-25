@@ -42,7 +42,7 @@ class CardScreen extends HookConsumerWidget {
       final birthdayStr =
           item.birthday.toString(); // Chuyển DateTime thành chuỗi
 
-      return (item.cccd?.toString() ==
+      return (item.cccdPassport?.toString() ==
               searchQuery) || // Kiểm tra nếu cccd bằng searchQuery
           (item.phoneNumber?.toString() == searchQuery) ||
           (item.etagCode?.toString() ==

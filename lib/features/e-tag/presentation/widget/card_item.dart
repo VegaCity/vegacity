@@ -73,7 +73,7 @@ class CardItem extends HookConsumerWidget {
                   ),
                   // Package Description
                   Text(
-                    card.cccd,
+                    card.cccdPassport,
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.black54,
