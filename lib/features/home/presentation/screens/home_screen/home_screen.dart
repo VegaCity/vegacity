@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:base/features/home/presentation/widget/action_button.dart';
 
 import 'dart:async';
@@ -128,28 +129,34 @@ class HomeScreen extends HookConsumerWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    const CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/Logo.png'),
-                      radius: 30,
+                    FadeInLeft(
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('${user.imageUrl}'),
+                        radius: 30,
+                      ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Welcome Back!",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          Text(
-                            '${user.fullName}'.split(' ').last,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                          FadeInUp(
+                            child: const Text(
+                              "Welcome Back!",
+                              style: TextStyle(color: Colors.black),
                             ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
+                          ),
+                          FadeInUp(
+                            child: Text(
+                              '${user.fullName}'.split(' ').last,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                           ),
                         ],
                       ),
@@ -165,28 +172,30 @@ class HomeScreen extends HookConsumerWidget {
               ),
 
               // PageView
-              SizedBox(
-                  height: 200,
-                  child: Swiper(
-                    layout: SwiperLayout.STACK,
-                    itemWidth: 320,
-                    itemHeight: 500,
-                    duration: 500,
-                    loop: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        width: 500,
-                        height: 500,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            image: DecorationImage(
-                                image: NetworkImage(imgList[index]),
-                                fit: BoxFit.cover)),
-                      );
-                    },
-                  )),
+              FadeInDown(
+                child: SizedBox(
+                    height: 200,
+                    child: Swiper(
+                      layout: SwiperLayout.STACK,
+                      itemWidth: 320,
+                      itemHeight: 500,
+                      duration: 500,
+                      loop: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 6,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          width: 500,
+                          height: 500,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              image: DecorationImage(
+                                  image: NetworkImage(imgList[index]),
+                                  fit: BoxFit.cover)),
+                        );
+                      },
+                    )),
+              ),
               // Center(
               //   child: buildPageIndicator(imgList.length, _currentPage.value),
               // ),
@@ -194,39 +203,45 @@ class HomeScreen extends HookConsumerWidget {
               // Action Buttons
               Stack(
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    child: const Column(
-                      children: [
-                        ActionButtons(),
-                        SizedBox(height: 30),
-                      ],
+                  FadeInUp(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: const Column(
+                        children: [
+                          ActionButtons(),
+                          SizedBox(height: 30),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
               // Packages Title
               Container(
-                margin: const EdgeInsets.only(left: 35, right: 35),
+                margin: const EdgeInsets.only(left: 25.5, right: 35),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Packages",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    FadeInLeft(
+                      child: const Text(
+                        "Packages",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 5),
                     FadeTransition(
                       opacity: _animation,
-                      child: const Text(
-                        "new",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red, // Thêm màu đỏ cho nổi bật
+                      child: FadeInLeft(
+                        child: Text(
+                          "new",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red, // Thêm màu đỏ cho nổi bật
+                          ),
                         ),
                       ),
                     ),
@@ -239,27 +254,29 @@ class HomeScreen extends HookConsumerWidget {
               Padding(
                   padding: const EdgeInsets.only(
                       top: 16.0, left: 12, right: 12, bottom: 10),
-                  child: GridView.builder(
-                    itemCount: fetchReslut.items.length, // Giữ lại dòng này
-                    // physics: const AlwaysScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    controller: scrollController,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AssetsConstants.defaultPadding - 5.0,
+                  child: FadeInUp(
+                    child: GridView.builder(
+                      itemCount: fetchReslut.items.length, // Giữ lại dòng này
+                      // physics: const AlwaysScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      controller: scrollController,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AssetsConstants.defaultPadding - 5.0,
+                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, // Số cột
+                        crossAxisSpacing: 8, // Khoảng cách giữa các cột
+                        mainAxisSpacing: 10, // Khoảng cách giữa các hàng
+                        childAspectRatio: 0.6, // Tỷ lệ khung hình
+                      ),
+                      itemBuilder: (context, index) {
+                        return HomeItem(
+                          package: fetchReslut.items[index],
+                          onCallback: fetchReslut.refresh,
+                        );
+                      },
                     ),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // Số cột
-                      crossAxisSpacing: 8, // Khoảng cách giữa các cột
-                      mainAxisSpacing: 10, // Khoảng cách giữa các hàng
-                      childAspectRatio: 0.65, // Tỷ lệ khung hình
-                    ),
-                    itemBuilder: (context, index) {
-                      return HomeItem(
-                        package: fetchReslut.items[index],
-                        onCallback: fetchReslut.refresh,
-                      );
-                    },
                   )),
             ],
           ),

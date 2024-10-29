@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:base/features/package/domain/entities/packages_entities.dart';
+import 'package:base/features/package/presentation/widgets/package_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -24,93 +25,11 @@ class PackageItem extends HookConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              backgroundColor: Colors.white,
-              contentPadding: const EdgeInsets.all(16.0),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Image for the package
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      package.imageUrl.isNotEmpty
-                          ? package.imageUrl
-                          : 'https://storage.googleapis.com/a1aa/image/jCeQ5BWBaYW2VqCp9dQ2q4YIfbPdqTZqCfHtEMnxxj2C6yKnA.jpg',
-                      height: 120,
-                      width: size.width * 0.8,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-
-                  // Package Name
-                  Text(
-                    package.name,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 10),
-
-                  // Package Description
-                  Text(
-                    package.description,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black54,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 10),
-
-                  // Package Price
-                  Text(
-                    '${package.price.toStringAsFixed(0)} VNĐ',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Close Button
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: const Text(
-                      'Đóng',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PackageDetails(package: package),
+          ),
         );
       },
       child: Container(

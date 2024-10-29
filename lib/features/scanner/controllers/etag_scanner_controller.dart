@@ -45,14 +45,16 @@ class EtagScannerController extends _$EtagScannerController {
     state = await AsyncValue.guard(() async {
       final response = await cardRepository.getEtagCard(
         accessToken: APIConstants.prefixToken + user!.tokens.accessToken,
-        //etagCode: checkEtagCode(qrcode),
-        etagCode: "VGC2024101718260399",
+        etagCode: checkEtagCode(qrcode),
+        // etagCode: "VGC2024101718260399",
       );
       etagCardData = response.data;
-
+      print("Datatest $etagCardData");
+      //print('EtagcodeLog: $etagCode');
       //checkdate
       final now = DateTime.now();
-      final isValid = now.isBefore(etagCardData?.etag.endDate ?? DateTime.now());
+      final isValid =
+          now.isBefore(etagCardData?.etag.endDate ?? DateTime.now());
 
       //final checkValidDate = deCodeQrCodeData(etagCardData?.qrcode ?? '');
 

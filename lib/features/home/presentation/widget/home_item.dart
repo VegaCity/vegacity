@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:base/features/home/presentation/widget/home_details.dart';
 import 'package:base/features/package/domain/entities/packages_entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -58,7 +59,7 @@ class HomeItem extends HookConsumerWidget {
                 child: Image.network(
                   package.imageUrl.isNotEmpty
                       ? package.imageUrl
-                      : 'https://storage.googleapis.com/a1aa/image/jCeQ5BWBaYW2VqCp9dQ2q4YIfbPdqTZqCfHtEMnxxj2C6yKnA.jpg', // Thay thế bằng URL của hình ảnh mặc định
+                      : 'https://storage.googleapis.com/a1aa/image/jCeQ5BWBaYW2VqCp9dQ2q4YIfbPdqTZqCfHtEMnxxj2C6yKnA.jpg', 
                   height: 150,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -79,6 +80,28 @@ class HomeItem extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 5),
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 14.0, left: 8.0, right: 8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeDetails(package: package),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "Xem thêm",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                      fontFamily: 'Inter',
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

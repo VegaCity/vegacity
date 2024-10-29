@@ -8,9 +8,11 @@ class ActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 24.0,
+      ),
       child: Container(
-        width: double.infinity,
+        width: 308,
         alignment: Alignment.center,
         height: 100,
         decoration: BoxDecoration(

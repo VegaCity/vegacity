@@ -7,7 +7,7 @@ part of 'etag_scanner_controller.dart';
 // **************************************************************************
 
 String _$etagScannerControllerHash() =>
-    r'394af75e4fe1805aebd0fa7e1427f7ef860a4728';
+    r'5926e5e7014e7d12ab8e4fb801fcccb9ec6eacf5';
 
 /// See also [EtagScannerController].
 @ProviderFor(EtagScannerController)

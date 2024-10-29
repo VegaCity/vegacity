@@ -89,7 +89,7 @@ class TransferScreen extends HookConsumerWidget {
       TextEditingController etagCodeController) async {
     final prefs = await SharedPreferences.getInstance();
     final savedEtagCode = prefs.getString('etagCode') ?? '';
-    final savedCccd = prefs.getString('cccd') ?? '';
+    final savedCccd = prefs.getString('cccdPassport') ?? '';
 
     etagCodeController.text = savedEtagCode;
     cccdController.text = savedCccd;

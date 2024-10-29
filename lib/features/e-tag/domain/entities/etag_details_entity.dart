@@ -7,10 +7,10 @@ class EtagDetails {
   final String phoneNumber;
   final String? cccdPassport;
   final int gender;
-  final String? birthday;
+  final DateTime? birthday;
   final bool isVerifyPhone;
-  final String crDate;
-  final String upsDate;
+  final DateTime? crDate;
+  final DateTime? upsDate;
 
   EtagDetails({
     required this.id,
@@ -21,8 +21,8 @@ class EtagDetails {
     required this.gender,
     this.birthday,
     required this.isVerifyPhone,
-    required this.crDate,
-    required this.upsDate,
+    this.crDate,
+    this.upsDate,
   });
 
   Map<String, dynamic> toMap() {
@@ -48,10 +48,15 @@ class EtagDetails {
       phoneNumber: map['phoneNumber'] ?? '',
       cccdPassport: map['cccdPassport'],
       gender: map['gender']?.toInt() ?? 0,
-      birthday: map['birthday'],
+      // birthday: map['birthday'],
+      birthday:
+          map['birthday'] != null ? DateTime.tryParse(map['birthday']) : null,
       isVerifyPhone: map['isVerifyPhone'] ?? false,
-      crDate: map['crDate'] ?? '',
-      upsDate: map['upsDate'] ?? '',
+      // crDate: map['crDate'] ?? '',
+      // upsDate: map['upsDate'] ?? '',
+      crDate: map['crDate'] != null ? DateTime.tryParse(map['crDate']) : null,
+      upsDate:
+          map['upsDate'] != null ? DateTime.tryParse(map['upsDate']) : null,
     );
   }
 

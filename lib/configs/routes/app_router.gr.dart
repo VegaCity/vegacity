@@ -88,17 +88,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ProfileScreen(),
       );
     },
-    // QRResultRoute.name: (routeData) {
-    //   final args = routeData.argsAs<QRResultRouteArgs>();
-    //   return AutoRoutePage<dynamic>(
-    //     routeData: routeData,
-    //     child: QRResult(
-    //       key: args.key,
-    //       code: args.code,
-    //       closeScreen: args.closeScreen,
-    //     ),
-    //   );
-    // },
+    QRResultRoute.name: (routeData) {
+      final args = routeData.argsAs<QRResultRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: QRResult(
+          key: args.key,
+          code: args.code,
+          closeScreen: args.closeScreen,
+        ),
+      );
+    },
     QrScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,

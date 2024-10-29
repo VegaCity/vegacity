@@ -9,6 +9,7 @@ import 'scanner_screen.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:intl/intl.dart';
 
 @RoutePage()
 class QRResult extends HookConsumerWidget {
@@ -21,7 +22,8 @@ class QRResult extends HookConsumerWidget {
     required this.closeScreen,
   });
 
-  Future<void> _saveToSharedPreferences(String etagCode, String cccdPassport) async {
+  Future<void> _saveToSharedPreferences(
+      String etagCode, String cccdPassport) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('etagCode', etagCode);
     await prefs.setString('cccdPassport', cccdPassport);
@@ -38,7 +40,6 @@ class QRResult extends HookConsumerWidget {
           .getEtagCardData(context, code),
       context: context,
     );
-  
 
     if (useFetchResult.isFetchingData) {
       return const Center(child: CircularProgressIndicator());
@@ -48,10 +49,13 @@ class QRResult extends HookConsumerWidget {
     }
 
     // example take information from etag entity
-    final name = useFetchResult.data!.etag.etagDetails.fullName;
-    final etag = useFetchResult.data!.etag.etagCode;
-    final dob = useFetchResult.data!.etag.etagDetails.birthday;
-    final cccdPassport = useFetchResult.data!.etag.etagDetails.cccdPassport;
+    // field nó sẽ case là rỗng hoặc null => check null trước khi lấy
+    final etagDetail = useFetchResult.data?.etag.etagDetail;
+
+    final name = etagDetail?.fullName;
+    final etag = useFetchResult.data?.etag?.etagCode ?? "No etag code";
+    final dob = etagDetail?.birthday;
+    final cccdPassport = etagDetail?.cccdPassport;
 
     // Save etagCode and cccd to SharedPreferences
     _saveToSharedPreferences(etag, cccdPassport!);
@@ -97,11 +101,11 @@ class QRResult extends HookConsumerWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    QrImageView(
-                      data: code,
-                      size: 100,
-                      version: QrVersions.auto,
-                    ),
+                    // QrImageView(
+                    //   data: code,
+                    //   size: 100,
+                    //   version: QrVersions.auto,
+                    // ),
                     const SizedBox(width: 20),
                     Expanded(
                       child: Column(
@@ -112,13 +116,13 @@ class QRResult extends HookConsumerWidget {
                             etag,
                             style: const TextStyle(
                               color: Colors.black,
-                              fontSize: 25,
+                              fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            name,
+                            name!,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -127,20 +131,21 @@ class QRResult extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            dob!,
+                            DateFormat('dd/MM/yyyy')
+                                .format(dob!), // Convert DateTime to String
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 16,
                             ),
                           ),
                           const SizedBox(height: 5),
-                          Text(
-                            cccdPassport,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
-                          ),
+                          // Text(
+                          //   cccdPassport,
+                          //   style: const TextStyle(
+                          //     color: Colors.black,
+                          //     fontSize: 16,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

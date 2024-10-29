@@ -39,6 +39,7 @@ class CardTypeRepositoryImpl extends RemoteBaseRepository
       ),
     );
   }
+
   @override
   Future<EtagResponse> getEtagCard({
     required String accessToken,
@@ -47,10 +48,9 @@ class CardTypeRepositoryImpl extends RemoteBaseRepository
     // mới
     final etagRequest = EtagRequest(
       etagCode: etagCode,
-
     );
 
-    print('vinglog: $etagCode'); 
+    print('EtagcodeLog: $etagCode');
 
     return getDataOf(
       request: () => _cardSource.getEtagCard(
