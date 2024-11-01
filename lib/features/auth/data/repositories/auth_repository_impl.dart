@@ -1,7 +1,6 @@
 // import local
 
 import 'package:base/features/auth/data/models/request/change_password_request.dart';
-import 'package:base/features/auth/data/models/request/order_request.dart';
 import 'package:base/features/auth/data/models/response/account_response.dart';
 import 'package:base/features/auth/data/models/request/sign_in_request.dart';
 import 'package:base/utils/commons/functions/functions_common_export.dart';

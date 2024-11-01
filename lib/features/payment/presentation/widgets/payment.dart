@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PaymentMethodBottomSheet extends StatefulWidget {
+  const PaymentMethodBottomSheet({super.key});
+
   @override
   _PaymentMethodBottomSheetState createState() =>
       _PaymentMethodBottomSheetState();

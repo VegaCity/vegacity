@@ -53,7 +53,7 @@ class QRResult extends HookConsumerWidget {
     final etagDetail = useFetchResult.data?.etag.etagDetail;
 
     final name = etagDetail?.fullName;
-    final etag = useFetchResult.data?.etag?.etagCode ?? "No etag code";
+    final etag = useFetchResult.data?.etag.etagCode ?? "No etag code";
     final dob = etagDetail?.birthday;
     final cccdPassport = etagDetail?.cccdPassport;
 

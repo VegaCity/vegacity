@@ -3,11 +3,9 @@ import 'package:base/features/e-tag/data/model/response/etag_response.dart';
 import 'package:base/features/e-tag/data/remote/card_source.dart';
 import 'package:base/features/e-tag/data/repositories/card_type_repository_impl.dart';
 
-import 'package:base/features/package/data/remote/package_source.dart';
 
 import 'package:base/models/request/paging_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:flutter/widgets.dart';
 
 part 'card_type_repository.g.dart';
 

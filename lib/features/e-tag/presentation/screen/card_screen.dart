@@ -42,10 +42,10 @@ class CardScreen extends HookConsumerWidget {
       final birthdayStr =
           item.birthday.toString(); // Chuyển DateTime thành chuỗi
 
-      return (item.cccdPassport?.toString() ==
+      return (item.cccdPassport.toString() ==
               searchQuery) || // Kiểm tra nếu cccd bằng searchQuery
-          (item.phoneNumber?.toString() == searchQuery) ||
-          (item.etagCode?.toString() ==
+          (item.phoneNumber.toString() == searchQuery) ||
+          (item.etagCode.toString() ==
               searchQuery); // Kiểm tra nếu etagCode bằng searchQuery
     }).toList();
 
@@ -54,7 +54,7 @@ class CardScreen extends HookConsumerWidget {
         preferredSize:
             const Size.fromHeight(200), // Chiều cao tùy chỉnh cho AppBar
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color(0xFF0052CC), // Blue

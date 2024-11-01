@@ -11,7 +11,6 @@ import 'package:base/models/request/paging_model.dart';
 // utils
 import 'package:base/utils/constants/api_constant.dart';
 import 'package:base/utils/resources/remote_base_repository.dart';
-import 'package:retrofit/dio.dart';
 
 class CardTypeRepositoryImpl extends RemoteBaseRepository
     implements CardTypeRepository {

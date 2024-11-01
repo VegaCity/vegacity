@@ -30,7 +30,7 @@ class HistoryRepositoryImpl extends RemoteBaseRepository
     );
 
     print('log filter ở đây ${historyRequest.toString()}');
-    print('log filter ở đây ${accessToken}');
+    print('log filter ở đây $accessToken');
     return getDataOf(
       request: () => _historySource.getHistory(
         APIConstants.contentType,

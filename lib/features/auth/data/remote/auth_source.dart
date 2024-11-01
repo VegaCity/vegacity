@@ -1,4 +1,3 @@
-import 'package:base/features/auth/data/models/request/order_request.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

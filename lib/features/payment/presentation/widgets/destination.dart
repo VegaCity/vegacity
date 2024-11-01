@@ -36,9 +36,9 @@ Widget buildDestinationSection() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Padding(
-        padding: const EdgeInsets.all(7.0),
-        child: const Text(
+      const Padding(
+        padding: EdgeInsets.all(7.0),
+        child: Text(
           'Chuyển đến',
           style: TextStyle(fontSize: 14, color: Color(0xFF333333)),
         ),
@@ -52,14 +52,14 @@ Widget buildDestinationSection() {
             borderRadius: BorderRadius.circular(5),
             border: Border.all(color: const Color(0xFFE0E0E0)),
           ),
-          child: TextField(
+          child: const TextField(
             decoration: InputDecoration(
               hintText: 'Số tài khoản',
               border: InputBorder.none,
               contentPadding:
-                  const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               suffixIcon:
-                  const Icon(FontAwesomeIcons.idCard, color: Color(0xFF007BFF)),
+                  Icon(FontAwesomeIcons.idCard, color: Color(0xFF007BFF)),
             ),
           ),
         ),
@@ -80,12 +80,12 @@ Widget buildDestinationSection() {
               FilteringTextInputFormatter.digitsOnly, // Chỉ cho phép nhập số
               NumberWithCurrencyFormatter(), // Định dạng số với VND
             ],
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: '0 VND',
               border: InputBorder.none,
               contentPadding:
-                  const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              hintStyle: const TextStyle(color: Color(0xFF007BFF)),
+                  EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              hintStyle: TextStyle(color: Color(0xFF007BFF)),
             ),
             style: const TextStyle(fontSize: 24, color: Color(0xFF007BFF)),
             textAlign: TextAlign.center,

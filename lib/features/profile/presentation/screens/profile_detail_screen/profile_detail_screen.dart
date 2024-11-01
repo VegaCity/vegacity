@@ -21,7 +21,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<FormState> _formKey =
+    final GlobalKey<FormState> formKey =
         GlobalKey<FormState>(); // Tạo key cho form
     final size = MediaQuery.sizeOf(context);
     final state = ref.watch(profileControllerProvider);
@@ -46,10 +46,10 @@ class ProfileDetailsScreen extends HookConsumerWidget {
 
     // Lấy thông tin từ dữ liệu trả về
     final user = useFetchResult.data!.user;
-    File? _image;
-    final Dio _dio = Dio();
+    File? image;
+    final Dio dio = Dio();
 
-    Future<void> _pickImage() async {
+    Future<void> pickImage() async {
       final ImagePicker picker = ImagePicker();
       final XFile? pickedFile = await picker.pickImage(
         source: ImageSource.gallery,
@@ -57,19 +57,19 @@ class ProfileDetailsScreen extends HookConsumerWidget {
 
       if (pickedFile != null) {
         // setState không dùng trong HookWidget, cần cách khác để cập nhật
-        _image = File(pickedFile.path);
+        image = File(pickedFile.path);
       }
     }
 
-    Future<void> _updateProfile() async {
-      if (!_formKey.currentState!.validate()) {
+    Future<void> updateProfile() async {
+      if (!formKey.currentState!.validate()) {
         return; // Dừng lại nếu form không hợp lệ
       }
       // Thực hiện cập nhật profile
     }
 
-    void _saveProfile() {
-      _updateProfile();
+    void saveProfile() {
+      updateProfile();
     }
 
     return Scaffold(
@@ -121,12 +121,12 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                     padding: const EdgeInsets.only(
                         left: 10.0, right: 10.0, top: 10.0),
                     child: Form(
-                      key: _formKey,
+                      key: formKey,
                       child: Column(
                         children: [
                           buildTextField(
                             'Họ và tên',
-                            '${user.fullName}',
+                            user.fullName,
                             Icons.person,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -194,7 +194,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                           const SizedBox(height: 10),
                           buildTextField(
                             'Email',
-                            '${user.email}',
+                            user.email,
                             Icons.email,
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
@@ -211,7 +211,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                           const SizedBox(height: 10),
                           buildTextField(
                             'Số điện thoại',
-                            '${user.phoneNumber}',
+                            user.phoneNumber,
                             Icons.phone,
                             keyboardType: TextInputType.phone,
                             validator: (value) {
@@ -260,10 +260,10 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                               ),
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: _saveProfile,
+                                  onPressed: saveProfile,
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor:
-                                        Color.fromARGB(255, 116, 240, 231),
+                                        const Color.fromARGB(255, 116, 240, 231),
                                     shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(3),
@@ -294,14 +294,14 @@ class ProfileDetailsScreen extends HookConsumerWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(75),
                 child: GestureDetector(
-                  onTap: _pickImage,
+                  onTap: pickImage,
                   child: Container(
                     color: Colors.grey[300],
                     width: 120,
                     height: 120,
-                    child: _image != null
+                    child: image != null
                         ? Image.file(
-                            _image!,
+                            image!,
                             fit: BoxFit.cover,
                           )
                         : const Icon(

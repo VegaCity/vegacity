@@ -6,9 +6,9 @@ Widget buildSourceSection() {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(7.0),
-          child: const Text(
+        const Padding(
+          padding: EdgeInsets.all(7.0),
+          child: Text(
             'Nguồn chuyển tiền',
             style: TextStyle(fontSize: 14, color: Color(0xFF333333)),
           ),

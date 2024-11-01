@@ -32,7 +32,7 @@ class PackageTypeRepositoryImpl extends RemoteBaseRepository
     );
 
     print('log filter ở đây ${packageRequest.toString()}');
-    print('log filter ở đây ${accessToken}');
+    print('log filter ở đây $accessToken');
     return getDataOf(
       request: () => _packageSource.getPackageType(
         APIConstants.contentType,

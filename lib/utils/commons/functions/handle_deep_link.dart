@@ -55,6 +55,6 @@ void handleDeepLink(String link, WidgetRef ref) {
     ref
         .read(appRouterProvider)
         // .push(PaymentResultScreenRoute(isSuccess: isSuccess));
-        .push(TabViewScreenRoute());
+        .push(const TabViewScreenRoute());
   }
 }

@@ -1,6 +1,5 @@
 // rest API
 import 'package:base/features/e-tag/data/model/response/wallet_card_response.dart';
-import 'package:base/features/profile/data/models/response/wallet_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

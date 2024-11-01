@@ -3,17 +3,17 @@ import 'package:base/features/history/domain/entities/history_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
+import 'package:animate_do/animate_do.dart';
 import '../../../../../configs/routes/app_router.dart';
 import '../../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../../utils/constants/asset_constant.dart';
 
 class OrderItem extends HookConsumerWidget {
   const OrderItem({
-    Key? key,
+    super.key,
     required this.history,
     required this.onCallback,
-  }) : super(key: key);
+  });
 
   final HistoryEntity history;
   final VoidCallback onCallback;
@@ -23,83 +23,70 @@ class OrderItem extends HookConsumerWidget {
     final size = MediaQuery.sizeOf(context);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      child: Container(
-        padding: const EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: AssetsConstants.subtitleColor),
-          borderRadius: BorderRadius.circular(10),
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Avatar
-            // CircleAvatar(
-            //   radius: 20,
-            //   backgroundImage: NetworkImage(history.imageUrl ?? ''),
-            // ),
-            const SizedBox(width: 10),
-            // Thông tin giao dịch
+            // Chi tiết giao dịch
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    history.type,
-                    style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    history.description,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
+                  FadeInLeft(
+                    child: Text(
+                      history.crDate.toString() ?? 'Thời gian không rõ',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFF888888),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    (history.crDate?.toString()) ?? 'Ngày không rõ',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
+                  const SizedBox(height: 4),
+                  FadeInLeft(
+                    child: Text(
+                      history.description,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF333333),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            // Chi tiết số tiền và trạng thái
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '${history.amount}VND',
-                  style: TextStyle(
-                    fontSize: 14,
-                    // color: history.isPositive ? Colors.green : Colors.red,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  FadeInDown(
+                    child: Icon(
+                      history.type == 'Income'
+                          ? Icons.arrow_upward
+                          : Icons.arrow_downward,
+                      color:
+                          history.type == 'Income' ? Colors.blue : Colors.red,
+                      size: 20,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  history.status ?? 'Chưa xác định',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.green,
+                  const SizedBox(height: 4),
+                  FadeInUp(
+                    child: Text(
+                      '${history.amount} VND',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color:
+                            history.type == 'Income' ? Colors.blue : Colors.red,
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                // Text(
-                //   history.method ?? 'Phương thức không rõ',
-                //   style: const TextStyle(
-                //     fontSize: 12,
-                //     color: Colors.grey,
-                //   ),
-                // ),
-              ],
+                ],
+              ),
             ),
+            // Số tiền giao dịch
           ],
         ),
       ),

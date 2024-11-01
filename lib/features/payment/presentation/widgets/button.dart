@@ -60,6 +60,8 @@ Widget buildButtons(BuildContext context) {
 }
 
 class PaymentMethodBottomSheet extends StatefulWidget {
+  const PaymentMethodBottomSheet({super.key});
+
   @override
   _PaymentMethodBottomSheetState createState() =>
       _PaymentMethodBottomSheetState();

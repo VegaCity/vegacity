@@ -6,22 +6,16 @@ import 'package:base/models/request/paging_model.dart';
 import 'package:base/utils/commons/functions/shared_preference_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dio/dio.dart';
-import 'package:auto_route/auto_route.dart';
 
 // config
-import 'package:base/configs/routes/app_router.dart';
 
 // domain - data
-import 'package:base/features/auth/data/models/request/sign_up_request.dart';
 import 'package:base/features/auth/domain/repositories/auth_repository.dart';
-import 'package:base/features/test/data/models/response/house_response.dart';
 import 'package:base/features/test/domain/entities/house_entities.dart';
 import 'package:base/features/test/domain/repositories/house_type_repository.dart';
 
 // utils
-import 'package:base/utils/constants/asset_constant.dart';
 import 'package:base/utils/commons/functions/api_utils.dart';
-import 'package:base/utils/commons/widgets/widgets_common_export.dart';
 import 'package:base/utils/extensions/extensions_export.dart';
 import 'package:base/utils/constants/api_constant.dart';
 

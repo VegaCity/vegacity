@@ -75,7 +75,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
               },
             ),
           ),
-          Positioned(
+          const Positioned(
             top: 45,
             left: 120,
             child: Text(

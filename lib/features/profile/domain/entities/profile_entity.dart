@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:base/features/profile/domain/entities/user_entity.dart';
-import 'package:base/features/profile/domain/entities/wallet_entity.dart';
 
 class ProfileEntity {
   final UserEntity user;

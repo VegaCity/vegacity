@@ -37,7 +37,7 @@ class _OrderSource implements OrderSource {
     };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(request?.toMap() ?? <String, dynamic>{});
+    _data.addAll(request.toMap() ?? <String, dynamic>{});
     final _options = _setStreamType<HttpResponse<OrderResponse>>(Options(
       method: 'POST',
       headers: _headers,
@@ -82,7 +82,7 @@ class _OrderSource implements OrderSource {
     };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(request?.toMap() ?? <String, dynamic>{});
+    _data.addAll(request.toMap() ?? <String, dynamic>{});
     final _options = _setStreamType<HttpResponse<PaymentResponse>>(Options(
       method: 'POST',
       headers: _headers,

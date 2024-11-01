@@ -72,11 +72,11 @@ class ChangePasswordScreen extends HookConsumerWidget {
                   end: Alignment.bottomRight,
                 ),
               ),
-              child: Column(
+              child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Center(
+                  Center(
                     child: Text(
                       'Đổi mật khẩu',
                       style: TextStyle(
@@ -86,7 +86,7 @@ class ChangePasswordScreen extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                 ],
               ),
             ),

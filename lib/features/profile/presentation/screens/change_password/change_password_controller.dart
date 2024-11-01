@@ -3,21 +3,13 @@ import 'package:base/utils/constants/asset_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dio/dio.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
 
-import 'package:base/configs/routes/app_router.dart';
-import 'package:base/models/user_model.dart';
 
 import 'package:base/features/auth/domain/repositories/auth_repository.dart';
-import 'package:base/features/auth/data/models/request/sign_in_request.dart';
 
-import 'package:base/utils/enums/enums_export.dart';
 import 'package:base/utils/commons/functions/api_utils.dart';
 import 'package:base/utils/commons/widgets/widgets_common_export.dart';
 import 'package:base/utils/extensions/extensions_export.dart';
-import 'package:base/utils/commons/functions/shared_preference_utils.dart';
-import 'package:base/utils/providers/common_provider.dart';
 
 part 'change_password_controller.g.dart';
 

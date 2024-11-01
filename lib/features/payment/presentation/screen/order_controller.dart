@@ -66,7 +66,7 @@ class OrderController extends _$OrderController {
         final orderResponse = await orderRepository.order(
             request: request,
             accessToken: APIConstants.prefixToken +
-                user!.tokens.accessToken); // Kiểm tra prefix
+                user.tokens.accessToken); // Kiểm tra prefix
 
         print("ORDER IN OK");
 
@@ -90,7 +90,7 @@ class OrderController extends _$OrderController {
         );
 
         final paymentResponse = await orderRepository.paymentMomo(
-          accessToken: APIConstants.prefixToken + user!.tokens.accessToken,
+          accessToken: APIConstants.prefixToken + user.tokens.accessToken,
           request: paymentRequest,
         );
         print("paymentResponse IN OK");

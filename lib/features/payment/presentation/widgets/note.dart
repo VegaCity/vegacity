@@ -7,9 +7,9 @@ Widget buildNoteSection() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Padding(
-        padding: const EdgeInsets.all(7.0),
-        child: const Text(
+      const Padding(
+        padding: EdgeInsets.all(7.0),
+        child: Text(
           'Nội dung chuyển tiền',
           style: TextStyle(fontSize: 14, color: Color(0xFF333333)),
         ),
@@ -28,11 +28,11 @@ Widget buildNoteSection() {
           padding: const EdgeInsets.all(10),
           child: TextField(
             controller: noteController, // Kết nối controller với TextField
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Nhập nội dung', // Thay đổi label thành nội dung nhập
               border: InputBorder.none, // Ẩn đường viền
               hintStyle:
-                  const TextStyle(color: Colors.grey), // Màu cho nội dung nhập
+                  TextStyle(color: Colors.grey), // Màu cho nội dung nhập
             ),
             style: const TextStyle(fontSize: 14, color: Color(0xFF333333)),
           ),

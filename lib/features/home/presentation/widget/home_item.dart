@@ -11,10 +11,10 @@ import 'dart:async';
 
 class HomeItem extends HookConsumerWidget {
   const HomeItem({
-    Key? key,
+    super.key,
     required this.package,
     required this.onCallback,
-  }) : super(key: key);
+  });
 
   final PackageEntities package;
   final VoidCallback onCallback;
@@ -39,7 +39,7 @@ class HomeItem extends HookConsumerWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
                 blurRadius: 8,

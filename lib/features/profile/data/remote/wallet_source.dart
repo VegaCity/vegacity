@@ -6,7 +6,6 @@ import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // data impl
-import 'package:base/features/profile/data/models/response/profile_response.dart';
 
 // utils
 import 'package:base/utils/constants/api_constant.dart';

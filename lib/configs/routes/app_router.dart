@@ -1,9 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:base/configs/routes/guard/auth_guard.dart';
 import 'package:base/features/e-tag/presentation/screen/card_screen.dart';
-import 'package:base/features/home/presentation/widget/home_details.dart';
 import 'package:base/features/map/map_screen.dart';
-import 'package:base/features/package/domain/entities/packages_entities.dart';
 import 'package:base/features/payment/presentation/screen/transfer_screen.dart';
 import 'package:base/features/payment/presentation/screen/transfer_success_screen.dart';
 import 'package:base/features/profile/presentation/screens/change_password/change_password_screen.dart';
@@ -15,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // guard
-import 'guard/onboarding_guard.dart';
 
 // screen-auth
 import 'package:base/features/auth/presentation/screens/sign_in/sign_in_screen.dart';
@@ -59,6 +56,7 @@ class AppRouter extends _$AppRouter {
         // auth
         AutoRoute(
           page: SignInScreenRoute.page,
+          initial: true,
         ),
         AutoRoute(page: SignUpScreenRoute.page),
         AutoRoute(page: OTPVerificationScreenRoute.page),
@@ -69,7 +67,6 @@ class AppRouter extends _$AppRouter {
         // Màn hình chính
         AutoRoute(
           page: TabViewScreenRoute.page,
-          initial: true,
           guards: [
             // OnboardingGuard(ref: _ref),
             AuthGuard(ref: _ref),

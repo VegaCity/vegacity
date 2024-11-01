@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class HomeDetails extends StatelessWidget {
   final PackageEntities package;
 
-  const HomeDetails({Key? key, required this.package}) : super(key: key);
+  const HomeDetails({super.key, required this.package});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +56,7 @@ class HomeDetails extends StatelessWidget {
           children: [
             _buildBanner(context),
             Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -135,7 +135,7 @@ class HomeDetails extends StatelessWidget {
 class ProgramRules extends StatelessWidget {
   final PackageEntities package;
 
-  const ProgramRules({Key? key, required this.package}) : super(key: key);
+  const ProgramRules({super.key, required this.package});
 
   @override
   Widget build(BuildContext context) {

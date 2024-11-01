@@ -1,15 +1,12 @@
-import 'package:base/utils/commons/functions/functions_common_export.dart';
 import 'package:base/utils/commons/functions/handle_deep_link.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:base/splash_screen.dart';
 import 'configs/routes/app_router.dart';
 import 'configs/theme/app_theme.dart';
 import 'utils/constants/asset_constant.dart';
 // import 'package:base/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -16,7 +16,7 @@ class ScannerResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 30, 144, 255),
+        backgroundColor: const Color.fromARGB(255, 30, 144, 255),
         title: const Text(
           'Scanner Result',
           style: TextStyle(
@@ -27,7 +27,7 @@ class ScannerResult extends StatelessWidget {
         ),
         centerTitle: true,
         leading: IconButton(
-          style: ButtonStyle(
+          style: const ButtonStyle(
             iconSize: WidgetStatePropertyAll(30),
             iconColor:
                 WidgetStatePropertyAll(Color.fromARGB(255, 30, 144, 255)),

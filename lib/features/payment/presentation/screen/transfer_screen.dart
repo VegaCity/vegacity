@@ -106,13 +106,13 @@ class TransferScreen extends HookConsumerWidget {
         ),
         child: TextField(
           controller: etagCodeController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'Mã eTag',
             border: InputBorder.none,
             contentPadding:
-                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             suffixIcon:
-                const Icon(FontAwesomeIcons.idCard, color: Color(0xFF007BFF)),
+                Icon(FontAwesomeIcons.idCard, color: Color(0xFF007BFF)),
           ),
         ),
       ),
@@ -267,7 +267,6 @@ class TransferScreen extends HookConsumerWidget {
       children: [
         ElevatedButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Quay lại'),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white, // Màu nền nút "Quay lại"
             foregroundColor: Colors.blue, // Màu chữ
@@ -277,6 +276,7 @@ class TransferScreen extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(
                 horizontal: 20, vertical: 10), // Padding tùy chỉnh
           ),
+          child: const Text('Quay lại'),
         ),
         const SizedBox(width: 10),
         ElevatedButton(
@@ -294,7 +294,6 @@ class TransferScreen extends HookConsumerWidget {
               paymentType: paymentType.value,
             );
           },
-          child: const Text('Tiếp tục'),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue, // Màu nền nút "Tiếp tục"
             foregroundColor: Colors.white, // Màu chữ
@@ -304,6 +303,7 @@ class TransferScreen extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(
                 horizontal: 20, vertical: 10), // Padding tùy chỉnh
           ),
+          child: const Text('Tiếp tục'),
         ),
       ],
     );

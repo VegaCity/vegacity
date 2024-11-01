@@ -8,7 +8,7 @@ Widget buildSection({required String title, required List<Widget> children}) {
       children: [
         if (title.isNotEmpty)
           Text(title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         ...children,
       ],
     ),

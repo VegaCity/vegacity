@@ -5,22 +5,17 @@ import 'package:base/features/e-tag/domain/repositories/card_type_repository.dar
 import 'package:base/utils/enums/enums_export.dart';
 import 'package:flutter/material.dart';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:base/models/request/paging_model.dart';
 import 'package:base/utils/commons/functions/shared_preference_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dio/dio.dart';
 
-import 'package:base/configs/routes/app_router.dart';
 
-import 'package:base/features/auth/data/models/request/sign_up_request.dart';
 import 'package:base/features/auth/domain/repositories/auth_repository.dart';
 
 
 
-import 'package:base/utils/constants/asset_constant.dart';
 import 'package:base/utils/commons/functions/api_utils.dart';
-import 'package:base/utils/commons/widgets/widgets_common_export.dart';
 import 'package:base/utils/extensions/extensions_export.dart';
 import 'package:base/utils/constants/api_constant.dart';
 

@@ -1,4 +1,6 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:base/configs/routes/app_router.dart';
+import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
 import 'package:base/features/profile/domain/entities/profile_entity.dart';
 import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
 import 'package:base/features/profile/presentation/widgets/item/listsection.dart';
@@ -66,23 +68,27 @@ class ProfileScreen extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Center(
-                  child: Text(
-                    'Tài khoản',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                Center(
+                  child: FadeInDown(
+                    child: const Text(
+                      'Tài khoản',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: const NetworkImage(
-                        'https://storage.googleapis.com/a1aa/image/ZlZz8xYKewVVZSKLqQmruw0BPEyzE4h4PjjXuHhRcotfekMnA.jpg',
+                    FadeInLeft(
+                      child: const CircleAvatar(
+                        radius: 40,
+                        backgroundImage: NetworkImage(
+                          'https://storage.googleapis.com/a1aa/image/ZlZz8xYKewVVZSKLqQmruw0BPEyzE4h4PjjXuHhRcotfekMnA.jpg',
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -92,35 +98,44 @@ class ProfileScreen extends HookConsumerWidget {
                         children: [
                           Row(
                             children: [
-                              Text(
-                                '${user.fullName}',
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                              FadeInUp(
+                                child: Text(
+                                  user.fullName,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 7),
-                              const Icon(
-                                Icons.check_circle,
-                                color: Colors.white,
-                                size: 16,
+                              FadeInUp(
+                                child: const Icon(
+                                  Icons.check_circle,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
                               ),
                             ],
                           ),
-                          Text(
-                            '${user.phoneNumber}',
-                            style: const TextStyle(color: Colors.white70),
+                          FadeInUp(
+                            child: Text(
+                              user.phoneNumber,
+                              style: const TextStyle(color: Colors.white70),
+                            ),
                           ),
                           const SizedBox(height: 8),
                         ],
                       ),
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.edit, color: Colors.white),
-                      onPressed: () {
-                        context.router.push(const ProfileDetailsScreenRoute());
-                      },
+                    FadeInRight(
+                      child: IconButton(
+                        icon: const Icon(Icons.edit, color: Colors.white),
+                        onPressed: () {
+                          context.router
+                              .push(const ProfileDetailsScreenRoute());
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -136,64 +151,189 @@ class ProfileScreen extends HookConsumerWidget {
             buildSection(
               title: '',
               children: [
-                buildListItem(
-                  context, // Thêm context để sử dụng Navigator
-                  icon: Icons.qr_code,
-                  title: 'Quản lý mã',
-                  subtitle: 'Quản lý các mã QR quan trọng của bạn',
-                  onTap: () {
-                    context.router.push(ScannerScreenRoute());
-                  },
-                ),
-                buildListItem(
-                  context,
-                  icon: Icons.lock_outline,
-                  title: 'Đổi Mật Khẩu',
-                  subtitle: 'thay đổi mật khẩu của bạn',
-                  onTap: () {
-                    context.router.push(const ChangePasswordScreenRoute());
-                  },
+                FadeInDown(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Màu nền của Container
+                      borderRadius: BorderRadius.circular(4), // Độ cong góc
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              Colors.black.withOpacity(0.1), // Màu của bóng mờ
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        buildListItem(
+                          context,
+                          icon: Icons.qr_code,
+                          title: 'Quản lý mã',
+                          subtitle: 'Quản lý các mã QR quan trọng của bạn',
+                          onTap: () {
+                            context.router.push(const ScannerScreenRoute());
+                          },
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: Divider(
+                            height: 1,
+                            color: Colors.grey[300],
+                          ),
+                        ),
+                        buildListItem(
+                          context,
+                          icon: Icons.lock_outline,
+                          title: 'Đổi Mật Khẩu',
+                          subtitle: 'Thay đổi mật khẩu của bạn',
+                          onTap: () {
+                            context.router
+                                .push(const ChangePasswordScreenRoute());
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
-            buildSection(
-              title: 'chính sách',
-              children: [
-                buildListItem(
-                  context,
-                  icon: Icons.security,
-                  title: 'chính sách và điều khoản',
-                  showArrow: true,
-                  onTap: () {
-                    // // Chuyển đến trang Zalopay Priority mới hoàn toàn
-                    context.router.push(const PolicyPrivacyScreenRoute());
-                  },
-                ),
-              ],
+            FadeInLeft(
+              child: buildSection(
+                title: 'chính sách',
+                children: [
+                  FadeInDown(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Màu nền của Container
+                        borderRadius: BorderRadius.circular(4), // Độ cong góc
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black
+                                .withOpacity(0.1), // Màu của bóng mờ
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          buildListItem(
+                            context,
+                            icon: Icons.security,
+                            title: 'chính sách và điều khoản',
+                            showArrow: true,
+                            onTap: () {
+                              // // Chuyển đến trang Zalopay Priority mới hoàn toàn
+                              context.router
+                                  .push(const PolicyPrivacyScreenRoute());
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
+            FadeInLeft(
+              child: buildSection(
+                title: 'Quản lý tài chính',
+                children: [
+                  FadeInDown(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Màu nền của Container
+                        borderRadius: BorderRadius.circular(4), // Độ cong góc
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black
+                                .withOpacity(0.1), // Màu của bóng mờ
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          buildListItem(
+                            context,
+                            icon: Icons.account_balance_wallet,
+                            title: 'Nguồn tiền',
+                            showArrow: true,
+                            onTap: () {
+                              // context.router.push(const ZalopayPriorityScreenRoute());
+                            },
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 16.0, right: 16.0),
+                            child: Divider(
+                              height: 1,
+                              color: Colors.grey[300],
+                            ),
+                          ),
+                          buildListItem(
+                            context,
+                            icon: Icons.wallet_giftcard,
+                            title: 'Ví của tôi',
+                            subtitle: '********',
+                            showArrow: true,
+                            onTap: () {
+                              // context.router.push(const ZalopayPriorityScreenRoute());
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
             buildSection(
-              title: 'Quản lý tài chính',
+              title: '',
               children: [
-                buildListItem(
-                  context,
-                  icon: Icons.account_balance_wallet,
-                  title: 'Nguồn tiền',
-                  showArrow: true,
-                  onTap: () {
-                    // // Chuyển đến trang Zalopay Priority mới hoàn toàn
-                    // context.router.push(const ZalopayPriorityScreenRoute());
-                  },
-                ),
-                buildListItem(
-                  context,
-                  icon: Icons.wallet_giftcard,
-                  title: 'Ví của tôi',
-                  subtitle: '********',
-                  showArrow: true,
-                  onTap: () {
-                    // // Chuyển đến trang Zalopay Priority mới hoàn toàn
-                    // context.router.push(const ZalopayPriorityScreenRoute());
-                  },
+                FadeInDown(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Màu nền của Container
+                      borderRadius: BorderRadius.circular(4), // Độ cong góc
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              Colors.black.withOpacity(0.1), // Màu của bóng mờ
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Center(
+                      child: GestureDetector(
+                        //  final controller =
+                        //       ref.read(signInControllerProvider.notifier);
+                        //   await controller.signOut(context);
+                        onTap: () {
+                          context.router.push(SignInScreenRoute());
+                        },
+                        child: const Text(
+                          'Đăng Xuất',
+                          style: TextStyle(
+                            color: Colors.red, // Màu chữ đỏ
+                            fontWeight: FontWeight.bold, // Độ dày chữ
+                            fontSize: 16, // Kích thước chữ
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

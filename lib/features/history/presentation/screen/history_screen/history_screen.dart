@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:base/features/history/domain/entities/history_entity.dart';
 import 'package:base/features/history/presentation/screen/history_screen/history_controller.dart';
 import 'package:base/features/history/presentation/widgets/order_item.dart';
@@ -59,7 +60,7 @@ class HistoryScreen extends HookConsumerWidget {
         preferredSize:
             const Size.fromHeight(200), // Chiều cao tùy chỉnh cho AppBar
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color(0xFF0052CC), // Blue
@@ -77,12 +78,14 @@ class HistoryScreen extends HookConsumerWidget {
                 backgroundColor: Colors.transparent, // AppBar trong suốt
                 elevation: 0,
                 centerTitle: true,
-                title: const Text(
-                  'History',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                title: FadeInDown(
+                  child: const Text(
+                    'History',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -94,31 +97,35 @@ class HistoryScreen extends HookConsumerWidget {
                 child: Column(
                   children: [
                     // Thanh tìm kiếm
-                    TextField(
-                      onChanged: (value) {
-                        ref.read(searchQueryProvider.notifier).state =
-                            value; // Cập nhật từ khóa tìm kiếm
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Tìm kiếm gói dịch vụ...',
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+                    FadeInLeft(
+                      child: TextField(
+                        onChanged: (value) {
+                          ref.read(searchQueryProvider.notifier).state =
+                              value; // Cập nhật từ khóa tìm kiếm
+                        },
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Tìm kiếm gói dịch vụ...',
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: const EdgeInsets.all(10),
                         ),
-                        contentPadding: const EdgeInsets.all(10),
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Tổng hợp các gói dịch vụ trong Vegacity',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
+                    FadeInUp(
+                      child: const Text(
+                        'Tổng hợp các gói dịch vụ trong Vegacity',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
@@ -128,7 +135,7 @@ class HistoryScreen extends HookConsumerWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+        padding: const EdgeInsets.only(top: 30.0, bottom: 8.0),
         child: Column(
           children: [
             // SizedBox(height: size.height * 0.02),
@@ -154,7 +161,7 @@ class HistoryScreen extends HookConsumerWidget {
                             crossAxisCount: 1,
                             crossAxisSpacing: 10.0,
                             mainAxisSpacing: 10.0,
-                            childAspectRatio: 2.5,
+                            childAspectRatio: 5,
                           ),
                           itemBuilder: (_, index) {
                             return OrderItem(

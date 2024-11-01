@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:base/features/package/domain/entities/packages_entities.dart';
 import 'package:base/features/package/presentation/screens/package_screen/package_controller.dart';
 import 'package:base/features/package/presentation/widgets/package_item.dart';
@@ -55,7 +56,7 @@ class PackageScreen extends HookConsumerWidget {
         preferredSize:
             const Size.fromHeight(200), // Chiều cao tùy chỉnh cho AppBar
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color(0xFF0052CC), // Blue
@@ -73,12 +74,14 @@ class PackageScreen extends HookConsumerWidget {
                 backgroundColor: Colors.transparent, // AppBar trong suốt
                 elevation: 0,
                 centerTitle: true,
-                title: const Text(
-                  'Package',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                title: FadeInDown(
+                  child: const Text(
+                    'Package',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -90,31 +93,35 @@ class PackageScreen extends HookConsumerWidget {
                 child: Column(
                   children: [
                     // Thanh tìm kiếm
-                    TextField(
-                      onChanged: (value) {
-                        ref.read(searchQueryProvider.notifier).state =
-                            value; // Cập nhật từ khóa tìm kiếm
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Tìm kiếm gói dịch vụ...',
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+                    FadeInLeft(
+                      child: TextField(
+                        onChanged: (value) {
+                          ref.read(searchQueryProvider.notifier).state =
+                              value; // Cập nhật từ khóa tìm kiếm
+                        },
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Tìm kiếm gói dịch vụ...',
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: const EdgeInsets.all(10),
                         ),
-                        contentPadding: const EdgeInsets.all(10),
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Tổng hợp các gói dịch vụ trong Vegacity',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
+                    FadeInUp(
+                      child: const Text(
+                        'Tổng hợp các gói dịch vụ trong Vegacity',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

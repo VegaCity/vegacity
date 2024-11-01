@@ -7,17 +7,8 @@ import 'package:base/features/payment/data/repositories/order_repositories_impl.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // data impl
-import 'package:base/features/auth/data/remote/auth_source.dart';
-import 'package:base/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:base/features/auth/data/models/response/account_response.dart';
-import 'package:base/features/auth/data/models/request/sign_in_request.dart';
-import 'package:base/features/auth/data/models/request/sign_up_request.dart';
-import 'package:base/features/auth/data/models/request/otp_verify_request.dart';
-import 'package:base/features/auth/data/models/request/change_password_request.dart';
 
 // model system
-import 'package:base/models/response/success_model.dart';
-import 'package:base/models/token_model.dart';
 
 part 'order_repository.g.dart';
 

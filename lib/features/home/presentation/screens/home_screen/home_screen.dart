@@ -74,12 +74,12 @@ class HomeScreen extends HookConsumerWidget {
     }
     final user = useFetchResult.data!.user;
 
-    final _animationController = useAnimationController(
+    final animationController = useAnimationController(
       duration: const Duration(milliseconds: 500),
     )..repeat(reverse: true); // Lặp lại hiệu ứng nhấp nháy
 
-    final _animation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+    final animation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(animationController);
 
     final List<String> imgList = [
       'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/LandZone.png?alt=media&token=3af3be23-314f-4b67-8c62-625b223b66b9',
@@ -95,18 +95,18 @@ class HomeScreen extends HookConsumerWidget {
       // 'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/landPackage.jpeg?alt=media&token=5419b0d2-1fbc-4903-b2cc-967b7dc35acf'
     ];
 
-    final _currentPage = useState(0);
-    final _pageController = usePageController();
+    final currentPage = useState(0);
+    final pageController = usePageController();
 
     useEffect(() {
       final timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-        if (_currentPage.value < imgList.length - 1) {
-          _pageController.nextPage(
+        if (currentPage.value < imgList.length - 1) {
+          pageController.nextPage(
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeIn,
           );
         } else {
-          _pageController.animateToPage(
+          pageController.animateToPage(
             0,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeIn,
@@ -148,7 +148,7 @@ class HomeScreen extends HookConsumerWidget {
                           ),
                           FadeInUp(
                             child: Text(
-                              '${user.fullName}'.split(' ').last,
+                              user.fullName.split(' ').last,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -233,9 +233,9 @@ class HomeScreen extends HookConsumerWidget {
                     ),
                     const SizedBox(width: 5),
                     FadeTransition(
-                      opacity: _animation,
+                      opacity: animation,
                       child: FadeInLeft(
-                        child: Text(
+                        child: const Text(
                           "new",
                           style: TextStyle(
                             fontSize: 16,

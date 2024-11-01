@@ -11,10 +11,10 @@ import '../../../../../utils/constants/asset_constant.dart';
 
 class CardItem extends HookConsumerWidget {
   const CardItem({
-    Key? key,
+    super.key,
     required this.card,
     required this.onCallback,
-  }) : super(key: key);
+  });
 
   final CardEntities card;
   final VoidCallback onCallback;
@@ -99,7 +99,7 @@ class CardItem extends HookConsumerWidget {
                   // Close Button
                   ElevatedButton(
                     onPressed: () {
-                      context.router.push(TransferScreenRoute());
+                      context.router.push(const TransferScreenRoute());
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueAccent,

@@ -1,27 +1,20 @@
 import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
 import 'package:base/features/history/domain/entities/history_entity.dart';
 import 'package:base/features/history/domain/repositories/history_repository.dart';
-import 'package:base/features/package/domain/entities/packages_entities.dart';
-import 'package:base/features/package/domain/repositories/package_type_reponsitory.dart';
 import 'package:base/utils/enums/enums_export.dart';
 import 'package:flutter/material.dart';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:base/models/request/paging_model.dart';
 import 'package:base/utils/commons/functions/shared_preference_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dio/dio.dart';
 
-import 'package:base/configs/routes/app_router.dart';
 
-import 'package:base/features/auth/data/models/request/sign_up_request.dart';
 import 'package:base/features/auth/domain/repositories/auth_repository.dart';
 
 
 
-import 'package:base/utils/constants/asset_constant.dart';
 import 'package:base/utils/commons/functions/api_utils.dart';
-import 'package:base/utils/commons/widgets/widgets_common_export.dart';
 import 'package:base/utils/extensions/extensions_export.dart';
 import 'package:base/utils/constants/api_constant.dart';
 
