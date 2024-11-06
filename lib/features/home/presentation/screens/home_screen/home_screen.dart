@@ -1,4 +1,4 @@
-
+import 'package:animate_do/animate_do.dart';
 import 'package:base/features/home/presentation/widget/action_button.dart';
 
 import 'dart:async';
@@ -14,22 +14,20 @@ import 'package:base/models/request/paging_model.dart';
 import 'package:base/utils/commons/widgets/custom_circular.dart';
 import 'package:base/utils/commons/widgets/no_more_content.dart';
 
-
 import 'dart:async';
-
 
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:base/features/home/presentation/widget/action_button.dart';
 import 'package:base/utils/constants/asset_constant.dart';
 
 import 'package:base/features/home/presentation/widget/action_button.dart';
-
+import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 
 @RoutePage()
 class HomeScreen extends HookConsumerWidget {
@@ -76,27 +74,39 @@ class HomeScreen extends HookConsumerWidget {
     }
     final user = useFetchResult.data!.user;
 
+    final animationController = useAnimationController(
+      duration: const Duration(milliseconds: 500),
+    )..repeat(reverse: true); // Lặp lại hiệu ứng nhấp nháy
+
+    final animation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(animationController);
+
     final List<String> imgList = [
-      'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-      'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-      'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-      'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-      'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-      'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
+      'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/LandZone.png?alt=media&token=3af3be23-314f-4b67-8c62-625b223b66b9',
+      'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/SeaSidePackage.jpeg?alt=media&token=e867cade-ebb1-4a2f-b1f6-05fa2994ce02',
+      'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/adventurePackage.jpeg?alt=media&token=f9612f33-cf76-4ac2-bdb9-459d9e87061e',
+      'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/seaShorePackage.jpeg?alt=media&token=cd560f6e-1cf4-4107-86e0-562b43e5d624',
+      'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/landPackage.jpeg?alt=media&token=5419b0d2-1fbc-4903-b2cc-967b7dc35acf',
+      'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
+      // 'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/LandZone.png?alt=media&token=3af3be23-314f-4b67-8c62-625b223b66b9',
+      // 'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/SeaSidePackage.jpeg?alt=media&token=e867cade-ebb1-4a2f-b1f6-05fa2994ce02',
+      // 'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/adventurePackage.jpeg?alt=media&token=f9612f33-cf76-4ac2-bdb9-459d9e87061e',
+      // 'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/seaShorePackage.jpeg?alt=media&token=cd560f6e-1cf4-4107-86e0-562b43e5d624',
+      // 'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/landPackage.jpeg?alt=media&token=5419b0d2-1fbc-4903-b2cc-967b7dc35acf'
     ];
 
-    final _currentPage = useState(0);
-    final _pageController = usePageController();
+    final currentPage = useState(0);
+    final pageController = usePageController();
 
     useEffect(() {
       final timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-        if (_currentPage.value < imgList.length - 1) {
-          _pageController.nextPage(
+        if (currentPage.value < imgList.length - 1) {
+          pageController.nextPage(
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeIn,
           );
         } else {
-          _pageController.animateToPage(
+          pageController.animateToPage(
             0,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeIn,
@@ -119,30 +129,34 @@ class HomeScreen extends HookConsumerWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    const CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/Logo.png'),
-                      radius: 30,
+                    FadeInLeft(
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('${user.imageUrl}'),
+                        radius: 30,
+                      ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Welcome Back!",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          Text(
-
-                            '${user.fullName}'.split(' ').last,
-
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                          FadeInUp(
+                            child: const Text(
+                              "Welcome Back!",
+                              style: TextStyle(color: Colors.black),
                             ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
+                          ),
+                          FadeInUp(
+                            child: Text(
+                              user.fullName.split(' ').last,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                           ),
                         ],
                       ),
@@ -158,71 +172,76 @@ class HomeScreen extends HookConsumerWidget {
               ),
 
               // PageView
-              SizedBox(
-                height: 200,
-                child: PageView.builder(
-                  controller: _pageController,
-                  itemCount: imgList.length,
-                  onPageChanged: (index) {
-                    _currentPage.value = index;
-                  },
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          imgList[index],
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    );
-                  },
-                ),
+              FadeInDown(
+                child: SizedBox(
+                    height: 200,
+                    child: Swiper(
+                      layout: SwiperLayout.STACK,
+                      itemWidth: 320,
+                      itemHeight: 500,
+                      duration: 500,
+                      loop: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 6,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          width: 500,
+                          height: 500,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              image: DecorationImage(
+                                  image: NetworkImage(imgList[index]),
+                                  fit: BoxFit.cover)),
+                        );
+                      },
+                    )),
               ),
-
-              const SizedBox(height: 20),
-              Center(
-                child: buildPageIndicator(imgList.length, _currentPage.value),
-              ),
+              // Center(
+              //   child: buildPageIndicator(imgList.length, _currentPage.value),
+              // ),
               const SizedBox(height: 20),
               // Action Buttons
               Stack(
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    child: const Column(
-                      children: [
-                        ActionButtons(),
-                        SizedBox(height: 30),
-                      ],
+                  FadeInUp(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: const Column(
+                        children: [
+                          ActionButtons(),
+                          SizedBox(height: 30),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
               // Packages Title
               Container(
-                margin: const EdgeInsets.only(left: 35, right: 35),
+                margin: const EdgeInsets.only(left: 25.5, right: 35),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Packages new",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigate to packages page
-                      },
+                    FadeInLeft(
                       child: const Text(
-                        "See All",
+                        "Packages",
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.normal,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    FadeTransition(
+                      opacity: animation,
+                      child: FadeInLeft(
+                        child: const Text(
+                          "new",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red, // Thêm màu đỏ cho nổi bật
+                          ),
                         ),
                       ),
                     ),
@@ -235,27 +254,29 @@ class HomeScreen extends HookConsumerWidget {
               Padding(
                   padding: const EdgeInsets.only(
                       top: 16.0, left: 12, right: 12, bottom: 10),
-                  child: GridView.builder(
-                    itemCount: fetchReslut.items.length, // Giữ lại dòng này
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    controller: scrollController,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AssetsConstants.defaultPadding - 5.0,
+                  child: FadeInUp(
+                    child: GridView.builder(
+                      itemCount: fetchReslut.items.length, // Giữ lại dòng này
+                      // physics: const AlwaysScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      controller: scrollController,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AssetsConstants.defaultPadding - 5.0,
+                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, // Số cột
+                        crossAxisSpacing: 8, // Khoảng cách giữa các cột
+                        mainAxisSpacing: 10, // Khoảng cách giữa các hàng
+                        childAspectRatio: 0.6, // Tỷ lệ khung hình
+                      ),
+                      itemBuilder: (context, index) {
+                        return HomeItem(
+                          package: fetchReslut.items[index],
+                          onCallback: fetchReslut.refresh,
+                        );
+                      },
                     ),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // Số cột
-                      crossAxisSpacing: 8, // Khoảng cách giữa các cột
-                      mainAxisSpacing: 10, // Khoảng cách giữa các hàng
-                      childAspectRatio: 1, // Tỷ lệ khung hình
-                    ),
-                    itemBuilder: (context, index) {
-                      return HomeItem(
-                        package: fetchReslut.items[index],
-                        onCallback: fetchReslut.refresh,
-                      );
-                    },
                   )),
             ],
           ),
@@ -330,4 +351,3 @@ Widget buildCard(String title, String imageUrl) {
     ),
   );
 }
-

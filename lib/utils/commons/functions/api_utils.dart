@@ -35,7 +35,8 @@ Future<void> handleAPIError({
           context: context,
           title: 'Thông báo',
           exception:
-              APIConstants.errorTrans[errorModel.messageResponse] ?? 'Có lỗi rồi.',
+              // APIConstants.errorTrans[errorModel.messageResponse] ?? 'Có lỗi rồi.',
+              errorModel.messageResponse ?? 'Có lỗi rồi.',
         );
         break;
 

@@ -14,7 +14,7 @@ class _AuthSource implements AuthSource {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://14.225.204.144:8000/api/v1';
+    baseUrl ??= 'https://api.vegacity.id.vn/api/v1';
   }
 
   final Dio _dio;
@@ -83,6 +83,46 @@ class _AuthSource implements AuthSource {
         .compose(
           _dio.options,
           '/auth/register',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late SuccessModel _value;
+    try {
+      _value = SuccessModel.fromMap(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<SuccessModel>> changePassword(
+    ChangePasswordRequest request,
+    String contentType,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Content-Type': contentType};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(request?.toMap() ?? <String, dynamic>{});
+    final _options = _setStreamType<HttpResponse<SuccessModel>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+        .compose(
+          _dio.options,
+          '/auth/change-password',
           queryParameters: queryParameters,
           data: _data,
         )

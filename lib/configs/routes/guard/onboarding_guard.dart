@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../utils/commons/functions/shared_preference_utils.dart';
-import '../app_router.dart';
 
 // Onboarding Guard
 class OnboardingGuard extends AutoRouteGuard {

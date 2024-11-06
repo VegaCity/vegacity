@@ -7,6 +7,7 @@ import 'package:base/features/auth/data/models/response/account_response.dart';
 import 'package:base/features/auth/data/models/request/sign_in_request.dart';
 import 'package:base/features/auth/data/models/request/sign_up_request.dart';
 import 'package:base/features/auth/data/models/request/otp_verify_request.dart';
+import 'package:base/features/auth/data/models/request/change_password_request.dart';
 
 // model system
 import 'package:base/models/response/success_model.dart';
@@ -26,6 +27,9 @@ abstract class AuthRepository {
   Future<SuccessModel> verifyToken({required OTPVerifyRequest request});
 
   Future<AccountReponse> signUpAndRes({required SignUpRequest request});
+
+  Future<SuccessModel> changePassword({required ChangePasswordRequest request});
+
 
   Future<void> signOut();
 }

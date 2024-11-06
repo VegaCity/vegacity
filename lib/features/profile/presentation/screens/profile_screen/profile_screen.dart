@@ -1,15 +1,21 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:base/configs/routes/app_router.dart';
+import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
 import 'package:base/features/profile/domain/entities/profile_entity.dart';
 import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
+import 'package:base/features/profile/presentation/widgets/item/listsection.dart';
+import 'package:base/features/profile/presentation/widgets/item/section.dart';
 import 'package:base/features/profile/presentation/widgets/menu_item.dart';
+import 'package:base/features/scanner/scanner_screen.dart';
+import 'package:base/features/scanner1/manage_scanner_screen.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:base/utils/commons/widgets/widgets_common_export.dart';
 import 'package:base/utils/constants/asset_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-//
 
 @RoutePage()
 class ProfileScreen extends HookConsumerWidget {
@@ -26,193 +32,310 @@ class ProfileScreen extends HookConsumerWidget {
       context: context,
     );
 
-    // Kiểm tra xem dữ liệu đã được lấy về hay chưa
     if (useFetchResult.isFetchingData) {
-      return const Center(
-          child: CircularProgressIndicator()); // Hiển thị vòng tròn loading
+      return const Center(child: CircularProgressIndicator());
     }
 
-    // Kiểm tra xem dữ liệu có tồn tại hay không
     if (useFetchResult.data == null) {
-      return const Center(
-          child: Text('No data found')); // Thông báo không có dữ liệu
+      return const Center(child: Text('No data found'));
     }
 
-    // Lấy thông tin từ dữ liệu trả về
     final user = useFetchResult.data!.user;
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start, // Căn nội dung lên trên
-          children: [
-            // Header
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                children: [
-                  FaIcon(
-                    FontAwesomeIcons.arrowLeft,
-                    color: Color(0xFF00aaff),
-                    size: 24,
-                  ),
-                  Spacer(),
-                  Text(
-                    'Profile',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Spacer(),
+      backgroundColor: const Color(0xFFF0F4F8),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(160.0),
+        child: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF0052CC),
+                  Color(0xFF00AAFF),
+                  Color.fromARGB(255, 111, 194, 208),
+                  Color.fromARGB(255, 116, 240, 231),
                 ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
             ),
-            // Profile Section
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Column(
-                children: [
-                  // Profile Picture
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Center(
+                  child: FadeInDown(
+                    child: const Text(
+                      'Tài khoản',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        width: 3,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xFF00aaff),
-                          spreadRadius: 3,
-                        ),
-                      ],
                     ),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        'https://storage.googleapis.com/a1aa/image/cAfqWbLEB03HAC0iASxIRqzRRR5NCbjqFcZzuqyBAmDaxYyJA.jpg',
-                      ),
-                      radius: 40,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  // Full Name
-                  Text(
-                    '${user.fullName}',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  // Role
-                  Text(
-                    '${user.email}',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  // Edit Profile Button
-                  OutlinedButton(
-                    onPressed: () {
-                      context.router.push(ProfileDetailsScreenRoute());
-                    },
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: Color(0xFFFFCC00), // Màu nền
-                      side: BorderSide(
-                        color: Colors.black, // Màu viền
-                        width: 2, // Độ dày của viền
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    ),
-                    child: Text(
-                      'Edit Profile',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Menu Section
-            Expanded(
-              // Dùng Expanded để ngăn khoảng trống ở phía dưới
-              child: Container(
-                padding: const EdgeInsets.only(
-                    top: 40, right: 30, left: 30, bottom: 20),
-                decoration: BoxDecoration(
-                  color: Color(0xFF00aaff),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                  ),
-                  border: Border.all(
-                    // Thêm border ở đây
-                    color: Colors.black, // Màu viền
-                    width: 2, // Độ dày của viền
                   ),
                 ),
-                child: Column(
+                const SizedBox(height: 20),
+                Row(
                   children: [
-                    // Privacy Menu Item
-                    MenuItem(
-                      icon: FontAwesomeIcons.lock,
-                      title: 'Privacy',
-                      titleStyle: TextStyle(
-                        fontWeight: FontWeight.bold, // Đặt chữ in đậm
-                        fontSize: 16,
+                    FadeInLeft(
+                      child: const CircleAvatar(
+                        radius: 40,
+                        backgroundImage: NetworkImage(
+                          'https://storage.googleapis.com/a1aa/image/ZlZz8xYKewVVZSKLqQmruw0BPEyzE4h4PjjXuHhRcotfekMnA.jpg',
+                        ),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    // Information App Menu Item
-                    MenuItem(
-                      icon: FontAwesomeIcons.infoCircle,
-                      title: 'Information App',
-                      titleStyle: TextStyle(
-                        fontWeight: FontWeight.bold, // Đặt chữ in đậm
-                        fontSize: 16,
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              FadeInUp(
+                                child: Text(
+                                  user.fullName,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 7),
+                              FadeInUp(
+                                child: const Icon(
+                                  Icons.check_circle,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                          FadeInUp(
+                            child: Text(
+                              user.phoneNumber,
+                              style: const TextStyle(color: Colors.white70),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 10),
-                    // Change Password Menu Item
-                    MenuItem(
-                      icon: FontAwesomeIcons.key,
-                      title: 'Change Password',
-                      titleStyle: TextStyle(
-                        fontWeight: FontWeight.bold, // Đặt chữ in đậm
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    // Address Menu Item
-                    MenuItem(
-                      icon: FontAwesomeIcons.mapMarkerAlt,
-                      title: ' Address',
-                      titleStyle: TextStyle(
-                        fontWeight: FontWeight.bold, // Đặt chữ in đậm
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    // Logout Menu Item
-                    InkWell(
-                      onTap: () {
-                        context.router.push(SignInScreenRoute());
-                      },
-                      child: MenuItem(
-                        icon: FontAwesomeIcons.signOutAlt,
-                        title: 'Logout',
+                    FadeInRight(
+                      child: IconButton(
+                        icon: const Icon(Icons.edit, color: Colors.white),
+                        onPressed: () {
+                          context.router
+                              .push(const ProfileDetailsScreenRoute());
+                        },
                       ),
                     ),
                   ],
                 ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildSection(
+              title: '',
+              children: [
+                FadeInDown(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Màu nền của Container
+                      borderRadius: BorderRadius.circular(4), // Độ cong góc
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              Colors.black.withOpacity(0.1), // Màu của bóng mờ
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        buildListItem(
+                          context,
+                          icon: Icons.qr_code,
+                          title: 'Quản lý mã',
+                          subtitle: 'Quản lý các mã QR quan trọng của bạn',
+                          onTap: () {
+                            context.router.push(const ScannerScreenRoute());
+                          },
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: Divider(
+                            height: 1,
+                            color: Colors.grey[300],
+                          ),
+                        ),
+                        buildListItem(
+                          context,
+                          icon: Icons.lock_outline,
+                          title: 'Đổi Mật Khẩu',
+                          subtitle: 'Thay đổi mật khẩu của bạn',
+                          onTap: () {
+                            context.router
+                                .push(const ChangePasswordScreenRoute());
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            FadeInLeft(
+              child: buildSection(
+                title: 'chính sách',
+                children: [
+                  FadeInDown(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Màu nền của Container
+                        borderRadius: BorderRadius.circular(4), // Độ cong góc
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black
+                                .withOpacity(0.1), // Màu của bóng mờ
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          buildListItem(
+                            context,
+                            icon: Icons.security,
+                            title: 'chính sách và điều khoản',
+                            showArrow: true,
+                            onTap: () {
+                              // // Chuyển đến trang Zalopay Priority mới hoàn toàn
+                              context.router
+                                  .push(const PolicyPrivacyScreenRoute());
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
+            ),
+            FadeInLeft(
+              child: buildSection(
+                title: 'Quản lý tài chính',
+                children: [
+                  FadeInDown(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Màu nền của Container
+                        borderRadius: BorderRadius.circular(4), // Độ cong góc
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black
+                                .withOpacity(0.1), // Màu của bóng mờ
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          buildListItem(
+                            context,
+                            icon: Icons.account_balance_wallet,
+                            title: 'Nguồn tiền',
+                            showArrow: true,
+                            onTap: () {
+                              // context.router.push(const ZalopayPriorityScreenRoute());
+                            },
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 16.0, right: 16.0),
+                            child: Divider(
+                              height: 1,
+                              color: Colors.grey[300],
+                            ),
+                          ),
+                          buildListItem(
+                            context,
+                            icon: Icons.wallet_giftcard,
+                            title: 'Ví của tôi',
+                            subtitle: '********',
+                            showArrow: true,
+                            onTap: () {
+                              // context.router.push(const ZalopayPriorityScreenRoute());
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            buildSection(
+              title: '',
+              children: [
+                FadeInDown(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Màu nền của Container
+                      borderRadius: BorderRadius.circular(4), // Độ cong góc
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              Colors.black.withOpacity(0.1), // Màu của bóng mờ
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Center(
+                      child: GestureDetector(
+                        //  final controller =
+                        //       ref.read(signInControllerProvider.notifier);
+                        //   await controller.signOut(context);
+                        onTap: () {
+                          context.router.push(SignInScreenRoute());
+                        },
+                        child: const Text(
+                          'Đăng Xuất',
+                          style: TextStyle(
+                            color: Colors.red, // Màu chữ đỏ
+                            fontWeight: FontWeight.bold, // Độ dày chữ
+                            fontSize: 16, // Kích thước chữ
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

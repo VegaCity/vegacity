@@ -7,11 +7,11 @@ class MenuItem extends StatelessWidget {
   final TextStyle? titleStyle;
 
   const MenuItem({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     this.titleStyle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +30,16 @@ class MenuItem extends StatelessWidget {
         children: [
           FaIcon(
             icon,
-            color: Color(0xFFFF6B6B),
+            color: const Color(0xFFFF6B6B),
             size: 24,
           ),
-          SizedBox(width: 15),
+          const SizedBox(width: 15),
           Text(
             title,
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
-          Spacer(),
-          FaIcon(
+          const Spacer(),
+          const FaIcon(
             FontAwesomeIcons.chevronRight,
             color: Colors.black,
             size: 12,

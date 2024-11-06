@@ -11,7 +11,7 @@ class UserEntity {
   final String crDate;
   final String upsDate;
   final int gender;
-  final String cccd;
+  final String cccdPassport;
   final String? imageUrl;
   final String marketZoneId;
   final String email;
@@ -32,7 +32,7 @@ class UserEntity {
     required this.crDate,
     required this.upsDate,
     required this.gender,
-    required this.cccd,
+    required this.cccdPassport,
     this.imageUrl,
     required this.marketZoneId,
     required this.email,
@@ -55,7 +55,7 @@ class UserEntity {
       "crDate": crDate,
       "upsDate": upsDate,
       "gender": gender,
-      "cccd": cccd,
+      "cccdPassport": cccdPassport,
       "imageUrl": imageUrl,
       "marketZoneId": marketZoneId,
       "email": email,
@@ -79,7 +79,7 @@ class UserEntity {
       crDate: map["crDate"] ?? '',
       upsDate: map["upsDate"] ?? '',
       gender: map["gender"]?.toInt() ?? 0,
-      cccd: map["cccd"] ?? '',
+      cccdPassport: map["cccdPassport"] ?? '',
       imageUrl: map["imageUrl"],
       marketZoneId: map["marketZoneId"] ?? '',
       email: map["email"] ?? '',

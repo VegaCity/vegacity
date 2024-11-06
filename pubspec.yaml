@@ -24,6 +24,7 @@ dependencies:
   json_annotation: ^4.9.0
   get: ^4.3.8 
   curved_navigation_bar: ^1.0.6
+  flutter_swiper_view: ^1.1.8
   # Router
   auto_route: ^7.8.4
 
@@ -40,9 +41,19 @@ dependencies:
   firebase_messaging: ^14.7.6
   firebase_auth: ^4.0.0
 
+  #payment-link
+  url_launcher: ^6.1.10
+  uni_links: ^0.5.1
+  
   #Icon
   icons_plus:
     ^4.0.0
+
+  # Map
+  vietmap_flutter_gl: ^3.0.0
+  vietmap_flutter_navigation: ^3.1.1
+  vietmap_flutter_plugin: ^0.3.0
+  vietmap_gl_platform_interface: ^0.2.0
 
   # Animation
   lottie: ^2.7.0
@@ -87,6 +98,9 @@ dev_dependencies:
   plugin_platform_interface: ^2.1.7
   freezed: ^2.5.7
   json_serializable: ^6.8.0
+  # Payment-link
+  # url_launcher: ^6.1.10
+  # uni_links: ^0.5.1
 
 flutter:
   uses-material-design: true

@@ -1,98 +1,85 @@
+import 'dart:ffi';
 import 'package:base/configs/routes/app_router.dart';
+import 'package:base/features/payment/presentation/screen/order_controller.dart';
+import 'package:base/features/payment/presentation/screen/wallet_controller.dart';
+import 'package:base/features/profile/domain/entities/wallet_entity.dart';
+import 'package:base/hooks/use_fetch_obj.dart';
+import 'package:base/utils/commons/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/services.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @RoutePage()
-class ContactScreen extends HookConsumerWidget {
-  const ContactScreen({super.key});
+class TransferScreen extends HookConsumerWidget {
+  const TransferScreen({super.key});
+
+  void submit({
+    required GlobalKey<FormState> formKey,
+    required BuildContext context,
+    required WidgetRef ref,
+    required String packageItemId,
+    required int chargeAmount,
+    required String cccdPassport,
+    required String paymentType,
+    // required String promoCode,
+  }) async {
+    await ref.read(orderControllerProvider.notifier).order(
+          packageItemId: packageItemId,
+          chargeAmount: chargeAmount,
+          cccdPassport: cccdPassport,
+          paymentType: paymentType,
+          //  promoCode: promoCode,
+          context: context,
+        );
+    print("Submit thành công");
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.home),
-            onPressed: () {
-              AutoRouter.of(context).navigate(HomeScreenRoute());
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.white, Colors.blue.shade50],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-          padding: EdgeInsets.all(16),
+    final state = ref.watch(orderControllerProvider);
+    final cccdController = useTextEditingController();
+    final etagCodeController = useTextEditingController();
+    final chargeAmountController = useTextEditingController();
+    final formKey = useMemoized(GlobalKey<FormState>.new);
+    final paymentType = useState<String>("");
+
+    useEffect(() {
+      _loadSavedValues(cccdController, etagCodeController);
+      return null;
+    }, []);
+
+    return LoadingOverlay(
+      isLoading: state.isLoading,
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF0F4FF),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.only(top: 48.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Chuyển tiền',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.qr_code_scanner),
-                      onPressed: () {
-                        AutoRouter.of(context).navigate(ScannerScreenRoute());
-                      },
-                    ),
-                  ],
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Chuyển tiền tới số tài khoản',
+                  style: TextStyle(fontSize: 18, color: Color(0xFF007BFF)),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: _buildGrid(),
-              ),
-              
-            Container(
-  padding: const EdgeInsets.all(16), 
-  decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(16), 
-    boxShadow: [ 
-      BoxShadow(
-        color: Colors.grey.withOpacity(0.2),
-        blurRadius: 4,
-        spreadRadius: 2,
-      ),
-    ],
-  ),
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      _buildSavedAndTemplateButtons(),
-      SizedBox(height: 16),
-      _buildSearchField(),
-      SizedBox(height: 16),
-      _buildUserCard('NGUYEN HOANG KHANG', '1290197042292', 'Ngân hàng TMCP Quân đội'),
-      _buildUserCard('NGUYEN HOANG KHANG', '1290197042292', 'Ngân hàng TMCP Quân đội'),
-    ],
-  ),
-)
-
-,
-
+              const SizedBox(height: 20),
+              _buildDestinationSection(etagCodeController),
+              const SizedBox(height: 20),
+              _buildCccdSection(cccdController),
+              const SizedBox(height: 20),
+              _buildAmountInputSection(chargeAmountController),
+              const SizedBox(height: 20),
+              _buildPaymentOptionButton(context, paymentType),
+              const SizedBox(height: 20),
+              _buildActionButtons(context, ref, formKey, etagCodeController,
+                  chargeAmountController, cccdController, paymentType),
             ],
           ),
         ),
@@ -100,172 +87,246 @@ class ContactScreen extends HookConsumerWidget {
     );
   }
 
-  
-  Widget _buildSavedAndTemplateButtons() {
-    return Container(
-      height: 40,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.blue, width: 2),
-      ),
-      child: Row(
-        children: [
-    
-          Expanded(
-            child: InkWell(
-              onTap: () {
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.blue, // Blue background for the selected tab
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(6),
-                    bottomLeft: Radius.circular(6),
-                  ),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  'Đã lưu',
-                  style: TextStyle(
-                    color: Colors.white, // White text for the selected tab
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+  void _loadSavedValues(TextEditingController cccdController,
+      TextEditingController etagCodeController) async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedEtagCode = prefs.getString('id') ?? '';
+    final savedCccd = prefs.getString('cccdPassport') ?? '';
+
+    etagCodeController.text = savedEtagCode;
+    cccdController.text = savedCccd;
+  }
+
+  Widget _buildDestinationSection(TextEditingController etagCodeController) {
+    return Center(
+      child: Container(
+        width: 350,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF0F4FF),
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: const Color(0xFFE0E0E0)),
+        ),
+        child: TextField(
+          controller: etagCodeController,
+          decoration: const InputDecoration(
+            hintText: 'Mã eTag',
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            suffixIcon: Icon(FontAwesomeIcons.idCard, color: Color(0xFF007BFF)),
           ),
-          
-          // 'Mẫu chuyển tiền' tab
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                // Handle 'Mẫu chuyển tiền' action
-              },
-              child: Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white, // White background for the unselected tab
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(6),
-                    bottomRight: Radius.circular(6),
-                  ),
-                ),
-                child: Text(
-                  'Mẫu chuyển tiền',
-                  style: TextStyle(
-                    color: Colors.blue, // Blue text for the unselected tab
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _buildSearchField() {
-    return Stack(
-      children: [
-        TextField(
-          decoration: InputDecoration(
-            hintText: 'Tìm theo tên, số tài khoản',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
+  Widget _buildAmountInputSection(
+      TextEditingController chargeAmountController) {
+    return Center(
+      child: Container(
+        width: 350,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF0F4FF),
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: const Color(0xFFE0E0E0)),
+        ),
+        child: TextField(
+          controller: chargeAmountController,
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            NumberWithCurrencyFormatter(),
+          ],
+          decoration: const InputDecoration(
+            hintText: '0 VND',
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintStyle: TextStyle(color: Color(0xFF007BFF)),
           ),
+          style: const TextStyle(fontSize: 24, color: Color(0xFF007BFF)),
+          textAlign: TextAlign.center,
         ),
-        Positioned(
-          right: 16,
-          top: 12,
-          child: Icon(Icons.search, color: Colors.grey),
-        ),
-      ],
+      ),
     );
   }
 
-  Widget _buildUserCard(String name, String account, String bank) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 4,
-            spreadRadius: 2,
+  Widget _buildCccdSection(TextEditingController cccdController) {
+    return Center(
+      child: Container(
+        width: 350,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF0F4FF),
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: const Color(0xFFE0E0E0)),
+        ),
+        child: TextField(
+          controller: cccdController,
+          decoration: const InputDecoration(
+            hintText: 'Nhập CCCD/Passporrt',
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.all(10),
+            hintStyle: TextStyle(color: Colors.grey),
           ),
-        ],
+        ),
       ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage('https://placehold.co/30x30'),
+    );
+  }
+
+  Widget _buildPaymentOptionButton(
+      BuildContext context, ValueNotifier<String> paymentType) {
+    return Center(
+      child: Container(
+        width: 350,
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.withOpacity(0.3)),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: GestureDetector(
+          onTap: () => _showPaymentOptions(context, paymentType),
+          child: ValueListenableBuilder<String>(
+            valueListenable: paymentType,
+            builder: (context, value, child) {
+              return Text(
+                value.isEmpty ? 'Vui lòng chọn phương thức thanh toán' : value,
+                style: const TextStyle(
+                  // color: value.isEmpty ? Colors.grey : Colors.black,
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              );
+            },
           ),
-          SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+      ),
+    );
+  }
+
+  void _showPaymentOptions(
+      BuildContext context, ValueNotifier<String> paymentType) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (context) {
+        return SizedBox(
+          height: 300,
+          child: Column(
             children: [
-              Text(
-                name,
-                style: TextStyle(fontWeight: FontWeight.bold),
+              ListTile(
+                title: const Text('Momo'),
+                onTap: () {
+                  paymentType.value = 'Momo';
+                  Navigator.pop(context);
+                },
               ),
-              Text(account, style: TextStyle(color: Colors.grey)),
-              Text(bank, style: TextStyle(color: Colors.grey)),
+              ListTile(
+                title: const Text('VnPay'),
+                onTap: () {
+                  paymentType.value = 'VnPay';
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text('PayOS'),
+                onTap: () {
+                  paymentType.value = 'PayOS';
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text('ZaloPay'),
+                onTap: () {
+                  paymentType.value = 'ZaloPay';
+                  Navigator.pop(context);
+                },
+              ),
+              // ListTile(
+              //   title: const Text('Cash'),
+              //   onTap: () {
+              //     paymentType.value = 'Cash';
+              //     Navigator.pop(context);
+              //   },
+              // ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildGrid() {
-    return GridView.count(
-      crossAxisCount: 2,
-      childAspectRatio: 2,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+  Widget _buildActionButtons(
+    BuildContext context,
+    WidgetRef ref,
+    GlobalKey<FormState> formKey,
+    TextEditingController packageItemController,
+    TextEditingController chargeAmountController,
+    TextEditingController cccdController,
+    ValueNotifier<String> paymentType,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildGridItem(Icons.account_balance, 'Số tài khoản'),
-        _buildGridItem(Icons.phone, 'Số điện thoại'),
-        _buildGridItem(Icons.credit_card, 'Số thẻ'),
-        _buildGridItem(Icons.search, 'Truy vấn giao dịch'),
+        ElevatedButton(
+          onPressed: () => Navigator.pop(context),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white, // Màu nền nút "Quay lại"
+            foregroundColor: Colors.blue, // Màu chữ
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5), // Bo tròn
+            ),
+            padding: const EdgeInsets.symmetric(
+                horizontal: 20, vertical: 10), // Padding tùy chỉnh
+          ),
+          child: const Text('Quay lại'),
+        ),
+        const SizedBox(width: 10),
+        ElevatedButton(
+          onPressed: () {
+            final rawAmount =
+                chargeAmountController.text.replaceAll(RegExp(r'\D'), '');
+            final chargeAmount = int.tryParse(rawAmount) ?? 0;
+            submit(
+              context: context,
+              formKey: formKey,
+              ref: ref,
+              packageItemId: packageItemController.text,
+              chargeAmount: chargeAmount,
+              cccdPassport: cccdController.text,
+              paymentType: paymentType.value,
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue, // Màu nền nút "Tiếp tục"
+            foregroundColor: Colors.white, // Màu chữ
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5), // Bo tròn
+            ),
+            padding: const EdgeInsets.symmetric(
+                horizontal: 20, vertical: 10), // Padding tùy chỉnh
+          ),
+          child: const Text('Tiếp tục'),
+        ),
       ],
     );
   }
+}
 
-  Widget _buildGridItem(IconData icon, String label, {int colSpan = 1}) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 4,
-            spreadRadius: 2,
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.blue),
-          SizedBox(width: 8),
-          Flexible(
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
+class NumberWithCurrencyFormatter extends TextInputFormatter {
+  final NumberFormat _formatter = NumberFormat('#,###');
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final cleanedText = newValue.text.replaceAll(RegExp(r'\D'), '');
+
+    if (cleanedText.isEmpty) return newValue.copyWith(text: '');
+
+    final int? value = int.tryParse(cleanedText);
+    if (value == null) return oldValue;
+
+    final newText = _formatter.format(value);
+    return newValue.copyWith(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
     );
   }
 }

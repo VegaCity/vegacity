@@ -14,7 +14,7 @@ class _PackageSource implements PackageSource {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://14.225.204.144:8000/api/v1';
+    baseUrl ??= 'https://api.vegacity.id.vn/api/v1';
   }
 
   final Dio _dio;

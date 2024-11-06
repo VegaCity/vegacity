@@ -21,7 +21,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<FormState> _formKey =
+    final GlobalKey<FormState> formKey =
         GlobalKey<FormState>(); // Tạo key cho form
     final size = MediaQuery.sizeOf(context);
     final state = ref.watch(profileControllerProvider);
@@ -46,10 +46,10 @@ class ProfileDetailsScreen extends HookConsumerWidget {
 
     // Lấy thông tin từ dữ liệu trả về
     final user = useFetchResult.data!.user;
-    File? _image;
-    final Dio _dio = Dio();
+    File? image;
+    final Dio dio = Dio();
 
-    Future<void> _pickImage() async {
+    Future<void> pickImage() async {
       final ImagePicker picker = ImagePicker();
       final XFile? pickedFile = await picker.pickImage(
         source: ImageSource.gallery,
@@ -57,19 +57,19 @@ class ProfileDetailsScreen extends HookConsumerWidget {
 
       if (pickedFile != null) {
         // setState không dùng trong HookWidget, cần cách khác để cập nhật
-        _image = File(pickedFile.path);
+        image = File(pickedFile.path);
       }
     }
 
-    Future<void> _updateProfile() async {
-      if (!_formKey.currentState!.validate()) {
+    Future<void> updateProfile() async {
+      if (!formKey.currentState!.validate()) {
         return; // Dừng lại nếu form không hợp lệ
       }
       // Thực hiện cập nhật profile
     }
 
-    void _saveProfile() {
-      _updateProfile();
+    void saveProfile() {
+      updateProfile();
     }
 
     return Scaffold(
@@ -86,8 +86,10 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Color.fromARGB(255, 30, 144, 255),
-                      Color.fromARGB(255, 16, 78, 139)
+                      Color(0xFF0052CC), // Blue
+                      Color(0xFF00AAFF), // Light Blue
+                      Color.fromARGB(255, 111, 194, 208),
+                      Color.fromARGB(255, 116, 240, 231), // Pastel Light Purple
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -96,30 +98,35 @@ class ProfileDetailsScreen extends HookConsumerWidget {
               ),
             ),
             Positioned(
-              top: 100,
+              top: 160,
               bottom: 100,
               right: 30,
               left: 30,
               child: Card(
                 elevation: 8,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(
+                      10), // Set to 10 for rounded corners
                 ),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(
+                        10), // Set to 10 for rounded corners
+                  ),
                   height: MediaQuery.of(context).size.height * .9,
                   width: double.maxFinite,
-                  padding: const EdgeInsets.only(top: 50),
+                  padding: const EdgeInsets.only(top: 20),
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 10.0, right: 10.0, top: 50.0),
+                        left: 10.0, right: 10.0, top: 10.0),
                     child: Form(
-                      key: _formKey,
+                      key: formKey,
                       child: Column(
                         children: [
                           buildTextField(
-                            'Tên',
-                            '${user.fullName}',
+                            'Họ và tên',
+                            user.fullName,
                             Icons.person,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -138,24 +145,24 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                               if (value == null || value.isEmpty) {
                                 return 'Ngày sinh không được để trống';
                               }
-                              // Kiểm tra định dạng ngày (dd/mm/yyyy)
+                              // Check date format (dd/mm/yyyy)
                               RegExp regex = RegExp(r'^\d{2}/\d{2}/\d{4}$');
                               if (!regex.hasMatch(value)) {
                                 return 'Ngày sinh phải theo định dạng dd/mm/yyyy';
                               }
 
-                              // Phân tách ngày, tháng, năm
+                              // Parse day, month, year
                               List<String> parts = value.split('/');
                               int day = int.parse(parts[0]);
                               int month = int.parse(parts[1]);
                               int year = int.parse(parts[2]);
 
-                              // Kiểm tra giá trị tháng hợp lệ (1-12)
+                              // Check month validity (1-12)
                               if (month < 1 || month > 12) {
                                 return 'Tháng không hợp lệ';
                               }
 
-                              // Kiểm tra ngày hợp lệ trong mỗi tháng
+                              // Days in each month
                               List<int> daysInMonth = [
                                 31,
                                 28,
@@ -171,7 +178,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                                 31
                               ];
 
-                              // Nếu là năm nhuận và tháng 2 thì có 29 ngày
+                              // Leap year check for February
                               if ((year % 4 == 0 && year % 100 != 0) ||
                                   (year % 400 == 0)) {
                                 daysInMonth[1] = 29;
@@ -181,20 +188,20 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                                 return 'Ngày không hợp lệ trong tháng $month';
                               }
 
-                              return null; // Nếu tất cả đều hợp lệ
+                              return null; // Valid
                             },
                           ),
                           const SizedBox(height: 10),
                           buildTextField(
                             'Email',
-                            '${user.email}',
+                            user.email,
                             Icons.email,
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Email không được để trống';
                               }
-                              // Kiểm tra email có chứa @gmail.com
+                              // Check email contains @gmail.com
                               if (!value.contains('@gmail.com')) {
                                 return 'Email phải có dạng @gmail.com';
                               }
@@ -204,7 +211,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                           const SizedBox(height: 10),
                           buildTextField(
                             'Số điện thoại',
-                            '${user.phoneNumber}',
+                            user.phoneNumber,
                             Icons.phone,
                             keyboardType: TextInputType.phone,
                             validator: (value) {
@@ -212,17 +219,17 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                                 return 'Số điện thoại không được để trống';
                               }
 
-                              // Kiểm tra chỉ chứa số
+                              // Check only numbers
                               if (!RegExp(r'^\d+$').hasMatch(value)) {
                                 return 'Số điện thoại chỉ được nhập số';
                               }
 
-                              // Kiểm tra số lượng chữ số (ví dụ: 10 số)
+                              // Check digit count (e.g., 10 digits)
                               if (value.length != 10) {
                                 return 'Số điện thoại phải có đúng 10 chữ số';
                               }
 
-                              return null; // Hợp lệ nếu tất cả các điều kiện đều đúng
+                              return null; // Valid
                             },
                           ),
                           const SizedBox(height: 10),
@@ -235,7 +242,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                                     Navigator.pop(context);
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.red,
+                                    backgroundColor: Colors.grey,
                                     shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(3),
@@ -253,10 +260,10 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                               ),
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: _saveProfile,
+                                  onPressed: saveProfile,
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor:
-                                        const Color.fromARGB(255, 30, 144, 255),
+                                        const Color.fromARGB(255, 116, 240, 231),
                                     shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(3),
@@ -267,7 +274,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                                         const TextStyle(color: Colors.white),
                                   ),
                                   child: const Text(
-                                    'Save',
+                                    'Edit',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ),
@@ -282,19 +289,19 @@ class ProfileDetailsScreen extends HookConsumerWidget {
               ),
             ),
             Positioned(
-              top: 30,
+              top: 70,
               left: MediaQuery.of(context).size.width / 2 - 65,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(75),
                 child: GestureDetector(
-                  onTap: _pickImage,
+                  onTap: pickImage,
                   child: Container(
                     color: Colors.grey[300],
-                    width: 130,
-                    height: 130,
-                    child: _image != null
+                    width: 120,
+                    height: 120,
+                    child: image != null
                         ? Image.file(
-                            _image!,
+                            image!,
                             fit: BoxFit.cover,
                           )
                         : const Icon(

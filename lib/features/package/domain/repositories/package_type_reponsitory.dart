@@ -4,7 +4,6 @@ import 'package:base/features/package/data/repositories/package_type_repository_
 
 import 'package:base/models/request/paging_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:flutter/widgets.dart';
 
 part 'package_type_reponsitory.g.dart';
 

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:base/features/package/domain/entities/packages_entities.dart';
 import 'package:base/features/profile/domain/entities/profile_entity.dart';
 
 class ProfileResponse {

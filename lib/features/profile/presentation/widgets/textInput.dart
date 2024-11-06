@@ -20,11 +20,15 @@ Widget buildTextField(String labelText, String placeholder, IconData iconData,
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
-        labelText,
-        style: const TextStyle(
-          fontSize: 14,
-          color: Colors.black,
+      Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: Text(
+          labelText,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       const SizedBox(height: 8),

@@ -1,5 +1,6 @@
 class APIConstants {
-  static const baseUrl = "http://14.225.204.144:8000/api/v1";
+  static const baseUrl = "https://api.vegacity.id.vn/api/v1";
+  // static const baseUrl = "https://localhost:7127/api/v1";
   static const contentType = 'application/json';
   static const contentHeader = 'Content-Type';
   static const authHeader = 'Authorization';
@@ -13,17 +14,26 @@ class APIConstants {
   static const checkExists = '/auth/check-exists';
   static const verifyToken = '/auth/verify-token';
   static const reGenerateToken = '/auth/refresh-token';
+  static const changePassword = '/auth/change-password';
 
   // user
-  static const user = '/user';  
-
+  static const user = '/user';
+  // order
+  static const order = '/package-item/charge-money';
+  // wallet
+  static const wallet = '/wallet';
+  // wallet etag
+  static const card = '/etag';
   // package
   static const packages = '/packages';
-
-
+  // etags
+  static const packageitem = '/package-items';
+  // test
   static const trucks = '/packages';
-
-
+  //PAYMENTS
+  static const payment = '/payment';
+  //Transactions
+  static const transactions = '/transactions';
 
   // error
   static const Map<String, String> errorTrans = {
@@ -32,6 +42,7 @@ class APIConstants {
     'Email already exists.': 'Email này đã được đăng kí',
     'Phone already exists.': 'Số điện thoại này đã được đăng kí',
     'Wrong Password !!': "Sai password rồi",
+    'Password is not changed!': "Hãy nhập mật khẩu hợp lệ",
     'Invalid Email !!': "Email không hợp lệ",
     'User Not Found !!': "Không tìm thấy người dùng",
     'Email does not exist in the system.':

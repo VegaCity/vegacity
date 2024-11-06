@@ -22,6 +22,7 @@ abstract class ProfileSource {
     @Header(APIConstants.authHeader) String accessToken,
     @Path('id') String id,
   );
+
 }
 
 @riverpod

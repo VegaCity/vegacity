@@ -1,8 +1,8 @@
+import 'package:base/utils/constants/asset_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dio/dio.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
 
 import 'package:base/configs/routes/app_router.dart';
 import 'package:base/models/user_model.dart';
@@ -39,11 +39,23 @@ class SignInController extends _$SignInController {
     );
 
     print("go here ${request.toString()}");
+    print("1");
     state = await AsyncValue.guard(
       () async {
+        
         final user = await authRepository.signIn(request: request);
+        print("user ${user}");
+        final isNotPermission =
+            user.data.roleName == 'Admin' || user.data.roleName == 'CashierWeb';
+        print("2");
+        if (isNotPermission) {
+          print("SIGN IN FAIL ");
+          throw Exception('ko có quyền truy cập');
+        }
 
         print("SIGN IN OKE ");
+
+        print("3");
 
         final userModel = UserModel(
           id: user.data.userId,
@@ -63,15 +75,24 @@ class SignInController extends _$SignInController {
     );
 
     if (state.hasError) {
-      if (kDebugMode) {
-        print(state.error);
+      final error = state.error!;
+      if (error is DioException) {
+        final statusCode = error.response?.statusCode ?? error.onStatusDio();
+
+        handleAPIError(
+          statusCode: statusCode,
+          stateError: state.error!,
+          context: context,
+        );
+      } else {
+        showSnackBar(
+          context: context,
+          content: error.toString(),
+          icon: AssetsConstants.iconError,
+          backgroundColor: Colors.red,
+          textColor: AssetsConstants.whiteColor,
+        );
       }
-      final statusCode = (state.error as DioException).onStatusDio();
-      handleAPIError(
-        statusCode: statusCode,
-        stateError: state.error!,
-        context: context,
-      );
     }
   }
 

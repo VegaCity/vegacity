@@ -1,5 +1,6 @@
 // import local
 
+import 'package:base/features/auth/data/models/request/change_password_request.dart';
 import 'package:base/features/auth/data/models/response/account_response.dart';
 import 'package:base/features/auth/data/models/request/sign_in_request.dart';
 import 'package:base/utils/commons/functions/functions_common_export.dart';
@@ -25,10 +26,18 @@ class AuthRepositoryImpl extends RemoteBaseRepository
 
   @override
   Future<SuccessModel> signUp({required SignUpRequest request}) {
-    print("SignUpRequest as Map: ${request.toJson()}");
-
     return getDataOf(
       request: () => _authSource.signUp(request, APIConstants.contentType),
+    );
+  }
+
+  @override
+  Future<SuccessModel> changePassword(
+      {required ChangePasswordRequest request}) {
+    print("ChangePassword as Map: ${request.toJson()}");
+    return getDataOf(
+      request: () =>
+          _authSource.changePassword(request, APIConstants.contentType),
     );
   }
 
@@ -55,7 +64,6 @@ class AuthRepositoryImpl extends RemoteBaseRepository
     );
   }
 
-  @override
   Future<AccountReponse> signIn({required SignInRequest request}) {
     print("SignINRequest as Map: ${request.toJson()}");
     return getDataOf(
@@ -65,6 +73,7 @@ class AuthRepositoryImpl extends RemoteBaseRepository
 
   @override
   Future<TokenModel> generateToken({required TokenModel request}) {
+    print("Token as Map: ${request.toJson()}");
     return getDataOf(
       request: () =>
           _authSource.generateToken(request, APIConstants.contentType),
