@@ -54,7 +54,7 @@ class SignInScreen extends HookConsumerWidget with Validations {
     final isEmailSelected = useState(true);
 
     final state = ref.watch(signInControllerProvider);
-
+    print("state: ${state.isLoading}");
     return LoadingOverlay(
       isLoading: state.isLoading,
       child: CustomScaffold(

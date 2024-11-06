@@ -64,7 +64,6 @@ class AuthRepositoryImpl extends RemoteBaseRepository
     );
   }
 
-  @override
   Future<AccountReponse> signIn({required SignInRequest request}) {
     print("SignINRequest as Map: ${request.toJson()}");
     return getDataOf(

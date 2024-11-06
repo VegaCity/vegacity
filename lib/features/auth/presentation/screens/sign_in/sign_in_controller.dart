@@ -42,6 +42,7 @@ class SignInController extends _$SignInController {
     print("1");
     state = await AsyncValue.guard(
       () async {
+        
         final user = await authRepository.signIn(request: request);
         print("user ${user}");
         final isNotPermission =

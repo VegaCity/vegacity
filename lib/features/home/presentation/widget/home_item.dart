@@ -22,9 +22,9 @@ class HomeItem extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
-    final opacity = useState(1.0); // Trạng thái cho hiệu ứng nhấp nháy
+    final opacity = useState(1.0); 
 
-    // Sử dụng hiệu ứng nhấp nháy
+  
     useEffect(() {
       final timer = Timer.periodic(const Duration(seconds: 1), (_) {
         opacity.value = opacity.value == 1.0 ? 0.0 : 1.0;

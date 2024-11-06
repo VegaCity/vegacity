@@ -1,7 +1,6 @@
 class APIConstants {
-  // static const baseUrl = "https://api.vegacity.id.vn/api/v1";
+  static const baseUrl = "https://api.vegacity.id.vn/api/v1";
   // static const baseUrl = "https://localhost:7127/api/v1";
-  static const baseUrl = "https://localhost:7127/api/v1";
   static const contentType = 'application/json';
   static const contentHeader = 'Content-Type';
   static const authHeader = 'Authorization';

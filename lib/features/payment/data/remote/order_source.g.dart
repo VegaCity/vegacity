@@ -14,7 +14,7 @@ class _OrderSource implements OrderSource {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://localhost:7127/api/v1';
+    baseUrl ??= 'https://api.vegacity.id.vn/api/v1';
   }
 
   final Dio _dio;
