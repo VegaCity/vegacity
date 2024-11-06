@@ -37,10 +37,11 @@ class OrderController extends _$OrderController {
   FutureOr<void> build() {}
 
   Future<void> order({
-    required String etagCode,
+    required String packageItemId,
     required int chargeAmount,
     required String cccdPassport,
     required String paymentType,
+    // required String promoCode,
     required BuildContext context,
   }) async {
     state = const AsyncLoading();
@@ -53,10 +54,11 @@ class OrderController extends _$OrderController {
     // print("User token: ${user?.tokens.accessToken}");
 
     final request = OrderRequest(
-      etagCode: etagCode,
+      packageItemId: packageItemId,
       chargeAmount: chargeAmount,
       cccdPassport: cccdPassport,
       paymentType: paymentType,
+      // promoCode: promoCode,
     );
 
     print("Request: ${request.toJson()}"); // Debugging

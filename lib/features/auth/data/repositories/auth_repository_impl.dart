@@ -41,8 +41,6 @@ class AuthRepositoryImpl extends RemoteBaseRepository
     );
   }
 
-  
-
   @override
   Future<SuccessModel> checkValidUser({required SignUpRequest request}) {
     return getDataOf(
@@ -76,6 +74,7 @@ class AuthRepositoryImpl extends RemoteBaseRepository
 
   @override
   Future<TokenModel> generateToken({required TokenModel request}) {
+    print("Token as Map: ${request.toJson()}");
     return getDataOf(
       request: () =>
           _authSource.generateToken(request, APIConstants.contentType),

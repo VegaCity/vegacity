@@ -1,8 +1,8 @@
 // data - domain impl
 import 'package:base/features/auth/domain/repositories/auth_repository.dart';
 import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
-import 'package:base/features/e-tag/domain/entities/etag_entity.dart';
-import 'package:base/features/e-tag/domain/repositories/card_type_repository.dart';
+import 'package:base/features/vcard/domain/entities/etag_entity.dart';
+import 'package:base/features/vcard/domain/repositories/package_item_type_repository.dart';
 
 // system
 import 'package:flutter/material.dart';
@@ -30,12 +30,13 @@ class EtagScannerController extends _$EtagScannerController {
 
   Future<EtagParentEntity?> getEtagCardData(
     BuildContext context,
-    String qrcode,
+    String id,
   ) async {
     EtagParentEntity? etagCardData;
 
     state = const AsyncLoading();
-    final cardRepository = ref.read(cardTypeRepositoryProvider);
+    final PackageItemTypeRepository =
+        ref.read(packageItemTypeRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
 
@@ -43,9 +44,9 @@ class EtagScannerController extends _$EtagScannerController {
     // example unvalid etag code to check date VGC2024101900470937
 
     state = await AsyncValue.guard(() async {
-      final response = await cardRepository.getEtagCard(
+      final response = await PackageItemTypeRepository.getEtagCard(
         accessToken: APIConstants.prefixToken + user!.tokens.accessToken,
-        etagCode: checkEtagCode(qrcode),
+        etagCode: checkEtagCode(id),
         // etagCode: "VGC2024101718260399",
       );
       etagCardData = response.data;
@@ -105,7 +106,7 @@ class EtagScannerController extends _$EtagScannerController {
             return;
           }
 
-          await getEtagCardData(context, checkEtagCode(qrcode));
+          await getEtagCardData(context, checkEtagCode(id));
         },
       );
     }
@@ -114,23 +115,23 @@ class EtagScannerController extends _$EtagScannerController {
   }
 
   // check valid date of qr code
-  bool deCodeQrCodeData(String qrcode) {
-    List<int> bytes = base64Decode(qrcode);
+  // bool deCodeQrCodeData(String qrcode) {
+  //   List<int> bytes = base64Decode(qrcode);
 
-    String decodedString = utf8.decode(bytes);
+  //   String decodedString = utf8.decode(bytes);
 
-    decodedString = decodedString.split('_')[1];
-    DateTime now = DateTime.now();
-    DateTime decoddeDateTime =
-        DateFormat('MM/dd/yyyy HH:mm:ss').parse(decodedString);
+  //   decodedString = decodedString.split('_')[1];
+  //   DateTime now = DateTime.now();
+  //   DateTime decoddeDateTime =
+  //       DateFormat('MM/dd/yyyy HH:mm:ss').parse(decodedString);
 
-    final checkValidDate = now.isBefore(decoddeDateTime) ? true : false;
+  //   final checkValidDate = now.isBefore(decoddeDateTime) ? true : false;
 
-    return checkValidDate;
-  }
+  //   return checkValidDate;
+  // }
 
-  String checkEtagCode(String qrcode) {
-    List<int> bytes = base64Decode(qrcode);
+  String checkEtagCode(String id) {
+    List<int> bytes = base64Decode(id);
     String decodedString = utf8.decode(bytes);
     String etagCode =
         decodedString.split('_')[0]; // Extract etagCode before "_"

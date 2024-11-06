@@ -65,7 +65,7 @@ abstract class _$AppRouter extends RootStackRouter {
     PolicyPrivacyScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: PolicyPrivacyScreen(),
+        child: const PolicyPrivacyScreen(),
       );
     },
     PrivacyPolicyScreenRoute.name: (routeData) {

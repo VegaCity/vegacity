@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:base/features/e-tag/domain/entities/etag_entity.dart';
+import 'package:base/features/vcard/domain/entities/etag_entity.dart';
 
 class EtagResponse {
   final EtagParentEntity data;

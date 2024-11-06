@@ -1,6 +1,6 @@
 import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
-import 'package:base/features/e-tag/domain/entities/card_entities.dart';
-import 'package:base/features/e-tag/domain/repositories/card_type_repository.dart';
+import 'package:base/features/vcard/domain/entities/packageItem_entity.dart';
+import 'package:base/features/vcard/domain/repositories/package_item_type_repository.dart';
 
 import 'package:base/utils/enums/enums_export.dart';
 import 'package:flutter/material.dart';
@@ -19,26 +19,26 @@ import 'package:base/utils/commons/functions/api_utils.dart';
 import 'package:base/utils/extensions/extensions_export.dart';
 import 'package:base/utils/constants/api_constant.dart';
 
-part 'card_controller.g.dart';
+part 'package_item_controller.g.dart';
 
 @riverpod
-class CardController extends _$CardController {
+class PackageItemController extends _$PackageItemController {
   @override
   FutureOr<void> build() {}
 
-  Future<List<CardEntities>> getCard(
+  Future<List<PackageItemEntities>> getCard(
     PagingModel request,
     BuildContext context,
   ) async {
-    List<CardEntities> cards = [];
+    List<PackageItemEntities> cards = [];
 
     state = const AsyncLoading();
-    final cardTypeReponsitory = ref.read(cardTypeRepositoryProvider);
+    final packageItemTypeReponsitory = ref.read(packageItemTypeRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(() async {
-      final response = await cardTypeReponsitory.getCard(
+      final response = await packageItemTypeReponsitory.getCard(
         accessToken: APIConstants.prefixToken + user!.tokens.accessToken,
         request: request,
       );

@@ -39,19 +39,22 @@ class SignInController extends _$SignInController {
     );
 
     print("go here ${request.toString()}");
+    print("1");
     state = await AsyncValue.guard(
       () async {
         final user = await authRepository.signIn(request: request);
-
+        print("user ${user}");
         final isNotPermission =
             user.data.roleName == 'Admin' || user.data.roleName == 'CashierWeb';
-
+        print("2");
         if (isNotPermission) {
           print("SIGN IN FAIL ");
           throw Exception('ko có quyền truy cập');
         }
 
         print("SIGN IN OKE ");
+
+        print("3");
 
         final userModel = UserModel(
           id: user.data.userId,

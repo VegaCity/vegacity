@@ -14,7 +14,7 @@ class _AuthSource implements AuthSource {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://api.vegacity.id.vn/api/v1';
+    baseUrl ??= 'https://localhost:7127/api/v1';
   }
 
   final Dio _dio;
@@ -33,7 +33,7 @@ class _AuthSource implements AuthSource {
     final _headers = <String, dynamic>{r'Content-Type': contentType};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(request.toMap() ?? <String, dynamic>{});
+    _data.addAll(request?.toMap() ?? <String, dynamic>{});
     final _options = _setStreamType<HttpResponse<AccountReponse>>(Options(
       method: 'POST',
       headers: _headers,
@@ -73,7 +73,7 @@ class _AuthSource implements AuthSource {
     final _headers = <String, dynamic>{r'Content-Type': contentType};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(request.toMap() ?? <String, dynamic>{});
+    _data.addAll(request?.toMap() ?? <String, dynamic>{});
     final _options = _setStreamType<HttpResponse<SuccessModel>>(Options(
       method: 'POST',
       headers: _headers,
@@ -113,7 +113,7 @@ class _AuthSource implements AuthSource {
     final _headers = <String, dynamic>{r'Content-Type': contentType};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(request.toMap() ?? <String, dynamic>{});
+    _data.addAll(request?.toMap() ?? <String, dynamic>{});
     final _options = _setStreamType<HttpResponse<SuccessModel>>(Options(
       method: 'POST',
       headers: _headers,
@@ -153,7 +153,7 @@ class _AuthSource implements AuthSource {
     final _headers = <String, dynamic>{r'Content-Type': contentType};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(request.toMap() ?? <String, dynamic>{});
+    _data.addAll(request?.toMap() ?? <String, dynamic>{});
     final _options = _setStreamType<HttpResponse<SuccessModel>>(Options(
       method: 'POST',
       headers: _headers,
@@ -193,7 +193,7 @@ class _AuthSource implements AuthSource {
     final _headers = <String, dynamic>{r'Content-Type': contentType};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(request.toMap() ?? <String, dynamic>{});
+    _data.addAll(request?.toMap() ?? <String, dynamic>{});
     final _options = _setStreamType<HttpResponse<SuccessModel>>(Options(
       method: 'POST',
       headers: _headers,
@@ -233,7 +233,7 @@ class _AuthSource implements AuthSource {
     final _headers = <String, dynamic>{r'Content-Type': contentType};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(request.toMap() ?? <String, dynamic>{});
+    _data.addAll(request?.toMap() ?? <String, dynamic>{});
     final _options = _setStreamType<HttpResponse<AccountReponse>>(Options(
       method: 'POST',
       headers: _headers,
@@ -273,7 +273,7 @@ class _AuthSource implements AuthSource {
     final _headers = <String, dynamic>{r'Content-Type': contentType};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(request.toMap() ?? <String, dynamic>{});
+    _data.addAll(request?.toMap() ?? <String, dynamic>{});
     final _options = _setStreamType<HttpResponse<TokenModel>>(Options(
       method: 'POST',
       headers: _headers,

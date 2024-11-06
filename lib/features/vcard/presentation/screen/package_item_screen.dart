@@ -1,22 +1,18 @@
-import 'package:base/features/e-tag/domain/entities/card_entities.dart';
-import 'package:base/features/e-tag/presentation/screen/card_controller.dart';
-import 'package:base/features/e-tag/presentation/widget/card_item.dart';
+import 'package:base/features/vcard/domain/entities/packageItem_entity.dart';
+import 'package:base/features/vcard/presentation/screen/package_item_controller.dart';
+import 'package:base/features/vcard/presentation/widget/package_item.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
 
 import 'package:auto_route/auto_route.dart';
 
 import 'package:base/hooks/use_fetch.dart';
 import 'package:base/models/request/paging_model.dart';
-import 'package:base/utils/commons/functions/datetime_utils.dart';
-import 'package:base/utils/commons/widgets/app_bar.dart';
+
 import 'package:base/utils/commons/widgets/widgets_common_export.dart';
 import 'package:base/utils/constants/asset_constant.dart';
-import 'package:base/utils/enums/enums_export.dart';
-import 'package:base/utils/extensions/scroll_controller.dart';
 
 final searchQueryProvider = StateProvider.autoDispose<String>((ref) => '');
 
@@ -27,25 +23,26 @@ class CardScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scrollController = useScrollController();
-    final state = ref.watch(cardControllerProvider);
+    final state = ref.watch(packageItemControllerProvider);
     final searchQuery = ref.watch(searchQueryProvider);
 
-    final fetchResult = useFetch<CardEntities>(
-      function: (model, context) =>
-          ref.read(cardControllerProvider.notifier).getCard(model, context),
+    final fetchResult = useFetch<PackageItemEntities>(
+      function: (model, context) => ref
+          .read(packageItemControllerProvider.notifier)
+          .getCard(model, context),
       initialPagingModel: PagingModel(),
       context: context,
     );
 
     // Lọc danh sách gói dịch vụ dựa trên từ khóa tìm kiếm
     final filteredItems = fetchResult.items.where((item) {
-      final birthdayStr =
-          item.birthday.toString(); // Chuyển DateTime thành chuỗi
+      // final birthdayStr =
+      //     item.birthday.toString();
 
       return (item.cccdPassport.toString() ==
               searchQuery) || // Kiểm tra nếu cccd bằng searchQuery
           (item.phoneNumber.toString() == searchQuery) ||
-          (item.etagCode.toString() ==
+          (item.packageId.toString() ==
               searchQuery); // Kiểm tra nếu etagCode bằng searchQuery
     }).toList();
 
@@ -73,7 +70,7 @@ class CardScreen extends HookConsumerWidget {
                 elevation: 0,
                 centerTitle: true,
                 title: const Text(
-                  'E-tag',
+                  'VCARD',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -151,7 +148,7 @@ class CardScreen extends HookConsumerWidget {
                               childAspectRatio: 3,
                             ),
                             itemBuilder: (_, index) {
-                              return CardItem(
+                              return PackageItem(
                                 card: filteredItems[index], // Gói đã lọc
                                 onCallback: fetchResult.refresh,
                               );

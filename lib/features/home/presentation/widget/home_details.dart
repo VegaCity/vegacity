@@ -74,7 +74,7 @@ class HomeDetails extends StatelessWidget {
                       const FaIcon(FontAwesomeIcons.calendarAlt, size: 18),
                       const SizedBox(width: 8),
                       Text(
-                        'Thời gian: ${package.startDate?.toLocal().toString().split(' ')[0]} - ${package.endDate?.toLocal().toString().split(' ')[0]}',
+                        'Thời gian: ${package.crDate?.toLocal().toString().split(' ')[0]} - ${package.upsDate?.toLocal().toString().split(' ')[0]}',
                         style: const TextStyle(fontSize: 16),
                       ),
                     ],

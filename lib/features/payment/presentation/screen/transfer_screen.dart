@@ -22,16 +22,18 @@ class TransferScreen extends HookConsumerWidget {
     required GlobalKey<FormState> formKey,
     required BuildContext context,
     required WidgetRef ref,
-    required String etagCode,
+    required String packageItemId,
     required int chargeAmount,
     required String cccdPassport,
     required String paymentType,
+    // required String promoCode,
   }) async {
     await ref.read(orderControllerProvider.notifier).order(
-          etagCode: etagCode,
+          packageItemId: packageItemId,
           chargeAmount: chargeAmount,
           cccdPassport: cccdPassport,
           paymentType: paymentType,
+          //  promoCode: promoCode,
           context: context,
         );
     print("Submit thành công");
@@ -88,7 +90,7 @@ class TransferScreen extends HookConsumerWidget {
   void _loadSavedValues(TextEditingController cccdController,
       TextEditingController etagCodeController) async {
     final prefs = await SharedPreferences.getInstance();
-    final savedEtagCode = prefs.getString('etagCode') ?? '';
+    final savedEtagCode = prefs.getString('id') ?? '';
     final savedCccd = prefs.getString('cccdPassport') ?? '';
 
     etagCodeController.text = savedEtagCode;
@@ -109,10 +111,8 @@ class TransferScreen extends HookConsumerWidget {
           decoration: const InputDecoration(
             hintText: 'Mã eTag',
             border: InputBorder.none,
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            suffixIcon:
-                Icon(FontAwesomeIcons.idCard, color: Color(0xFF007BFF)),
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            suffixIcon: Icon(FontAwesomeIcons.idCard, color: Color(0xFF007BFF)),
           ),
         ),
       ),
@@ -257,7 +257,7 @@ class TransferScreen extends HookConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     GlobalKey<FormState> formKey,
-    TextEditingController etagCodeController,
+    TextEditingController packageItemController,
     TextEditingController chargeAmountController,
     TextEditingController cccdController,
     ValueNotifier<String> paymentType,
@@ -288,7 +288,7 @@ class TransferScreen extends HookConsumerWidget {
               context: context,
               formKey: formKey,
               ref: ref,
-              etagCode: etagCodeController.text,
+              packageItemId: packageItemController.text,
               chargeAmount: chargeAmount,
               cccdPassport: cccdController.text,
               paymentType: paymentType.value,

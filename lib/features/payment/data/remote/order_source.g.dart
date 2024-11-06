@@ -14,7 +14,7 @@ class _OrderSource implements OrderSource {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://api.vegacity.id.vn/api/v1';
+    baseUrl ??= 'https://localhost:7127/api/v1';
   }
 
   final Dio _dio;
@@ -37,7 +37,7 @@ class _OrderSource implements OrderSource {
     };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(request.toMap() ?? <String, dynamic>{});
+    _data.addAll(request?.toMap() ?? <String, dynamic>{});
     final _options = _setStreamType<HttpResponse<OrderResponse>>(Options(
       method: 'POST',
       headers: _headers,
@@ -46,7 +46,7 @@ class _OrderSource implements OrderSource {
     )
         .compose(
           _dio.options,
-          '/etag/charge-money',
+          '/package-item/charge-money',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -82,7 +82,7 @@ class _OrderSource implements OrderSource {
     };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(request.toMap() ?? <String, dynamic>{});
+    _data.addAll(request?.toMap() ?? <String, dynamic>{});
     final _options = _setStreamType<HttpResponse<PaymentResponse>>(Options(
       method: 'POST',
       headers: _headers,

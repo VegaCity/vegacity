@@ -1,5 +1,7 @@
 class APIConstants {
-  static const baseUrl = "https://api.vegacity.id.vn/api/v1";
+  // static const baseUrl = "https://api.vegacity.id.vn/api/v1";
+  // static const baseUrl = "https://localhost:7127/api/v1";
+  static const baseUrl = "https://localhost:7127/api/v1";
   static const contentType = 'application/json';
   static const contentHeader = 'Content-Type';
   static const authHeader = 'Authorization';
@@ -18,15 +20,15 @@ class APIConstants {
   // user
   static const user = '/user';
   // order
-  static const order = '/etag/charge-money';
+  static const order = '/package-item/charge-money';
   // wallet
   static const wallet = '/wallet';
   // wallet etag
-    static const etag = '/etag';
+  static const card = '/etag';
   // package
   static const packages = '/packages';
   // etags
-  static const cards = '/etags';
+  static const packageitem = '/package-items';
   // test
   static const trucks = '/packages';
   //PAYMENTS

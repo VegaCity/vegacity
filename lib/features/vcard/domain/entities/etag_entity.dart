@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:base/features/e-tag/domain/entities/etag_details_entity.dart';
-import 'package:base/features/e-tag/domain/entities/etag_type_entity.dart';
+import 'package:base/features/vcard/domain/entities/etag_details_entity.dart';
+import 'package:base/features/vcard/domain/entities/etag_type_entity.dart';
 
 class EtagParentEntity {
   final EtagEntity etag;

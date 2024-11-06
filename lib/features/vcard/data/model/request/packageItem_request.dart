@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class CardRequest {
+class PackageitemRequest {
   // final String? systemStatus;
   // final String? partnerOrderStatus;
   // final String? searchDateFrom;
@@ -11,7 +11,7 @@ class CardRequest {
   
   
 
-  CardRequest({
+  PackageitemRequest({
     // this.systemStatus,
     // this.partnerOrderStatus,
     // this.searchDateFrom,
@@ -33,8 +33,8 @@ class CardRequest {
     return result;
   }
 
-  factory CardRequest.fromMap(Map<String, dynamic> map) {
-    return CardRequest(
+  factory PackageitemRequest.fromMap(Map<String, dynamic> map) {
+    return PackageitemRequest(
       // systemStatus: map['systemStatus'],
       // partnerOrderStatus: map['partnerOrderStatus'],
       // searchDateFrom: map['searchDateFrom'],
@@ -52,6 +52,6 @@ class CardRequest {
     return 'SignUpRequest( page: $page, size: $size)';
   }
 
-  factory CardRequest.fromJson(String source) =>
-      CardRequest.fromMap(json.decode(source));
+  factory PackageitemRequest.fromJson(String source) =>
+      PackageitemRequest.fromMap(json.decode(source));
 }

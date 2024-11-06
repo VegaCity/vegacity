@@ -1,43 +1,50 @@
 import 'dart:convert';
 
 class OrderRequest {
-  final String? etagCode;
+  final String? packageItemId;
   final int? chargeAmount; // Thay đổi từ double thành int
   final String cccdPassport;
   final String paymentType;
+  // final String? promoCode;
   // final String urlDirect;
 
   OrderRequest({
-    required this.etagCode,
+    required this.packageItemId,
     required this.chargeAmount,
     required this.cccdPassport,
     required this.paymentType,
+    // required this.promoCode,
     // this.urlDirect = "vega://payment-result",
   });
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (etagCode != null) {
-      result.addAll({'etagCode': etagCode});
+    if (packageItemId != null) {
+      result.addAll({'packageItemId': packageItemId});
     }
     if (chargeAmount != null) {
-      result.addAll({'chargeAmount': chargeAmount}); // Sử dụng chargeAmount là int
+      result.addAll(
+          {'chargeAmount': chargeAmount}); // Sử dụng chargeAmount là int
     }
     result.addAll({'cccdPassport': cccdPassport});
     // result.addAll({'urlDirect': urlDirect});
     result.addAll({'paymentType': paymentType});
-
+    //  if (packageItemId != null) {
+    //      result.addAll({'promoCode': promoCode});
+    // }
+ 
     return result;
   }
 
   factory OrderRequest.fromMap(Map<String, dynamic> map) {
     return OrderRequest(
-      etagCode: map['etagCode'] ?? '',
+      packageItemId: map['packageItemId'] ?? '',
       chargeAmount: map['chargeAmount']?.toInt(), // Chuyển đổi về int
       cccdPassport: map['cccdPassport'] ?? '',
       // urlDirect: map['urlDirect'] ?? '',
       paymentType: map['paymentType'] ?? '',
+      // promoCode: map['promoCode'] ?? '',
     );
   }
 
@@ -48,6 +55,6 @@ class OrderRequest {
 
   // @override
   // String toString() {
-  //   return 'OrderRequest( etagCode: $etagCode, chargeAmount: $chargeAmount, cccd: $cccd, paymentType: $paymentType)'; 
+  //   return 'OrderRequest( etagCode: $etagCode, chargeAmount: $chargeAmount, cccd: $cccd, paymentType: $paymentType)';
   // }
 }

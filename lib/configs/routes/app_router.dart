@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:base/configs/routes/guard/auth_guard.dart';
-import 'package:base/features/e-tag/presentation/screen/card_screen.dart';
+import 'package:base/features/vcard/presentation/screen/package_item_screen.dart';
 import 'package:base/features/map/map_screen.dart';
 import 'package:base/features/payment/presentation/screen/transfer_screen.dart';
 import 'package:base/features/payment/presentation/screen/transfer_success_screen.dart';

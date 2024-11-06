@@ -5,20 +5,22 @@ class PackageEntities {
   final String name;
   final String description;
   final String imageUrl;
+  final int duration;
   final int price;
-  final DateTime? startDate;
-  final DateTime? endDate;
-  // final String? bookingId; // Giá trị tùy chọn (nullable)
+  final DateTime? crDate;
+  final DateTime? upsDate;
+  final String? marketZone; // Giá trị tùy chọn (nullable)
 
   PackageEntities({
     required this.id,
     required this.name,
     required this.description,
     required this.imageUrl,
+    required this.duration,
     required this.price,
-    this.startDate,
-    this.endDate,
-    // this.bookingId,
+    this.crDate,
+    this.upsDate,
+    this.marketZone,
   });
 
   // Chuyển đối tượng sang Map
@@ -29,9 +31,9 @@ class PackageEntities {
       'description': description,
       'imageUrl': imageUrl,
       'price': price,
-      'startDate': startDate?.toIso8601String(), // Chuyển đổi nếu có
-      'endDate': endDate?.toIso8601String(), // Chuyển đổi nếu có
-      // 'bookingId': bookingId,
+      'crDate': crDate?.toIso8601String(),
+      'upsDate': upsDate?.toIso8601String(),
+      'marketZone': marketZone, // Thêm marketZone vào Map
     };
   }
 
@@ -43,11 +45,10 @@ class PackageEntities {
       description: map['description'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
       price: map['price']?.toInt() ?? 0,
-      startDate:
-          map['startDate'] != null ? DateTime.parse(map['startDate']) : null,
-      endDate: map['endDate'] != null ? DateTime.parse(map['endDate']) : null,
-
-      // bookingId: map['bookingId'],
+      duration: map['duration']?.toInt() ?? 0,
+      crDate: map['crDate'] != null ? DateTime.parse(map['crDate']) : null,
+      upsDate: map['upsDate'] != null ? DateTime.parse(map['upsDate']) : null,
+      marketZone: map['marketZone'], // Thêm marketZone từ Map
     );
   }
 
@@ -60,6 +61,6 @@ class PackageEntities {
 
   @override
   String toString() {
-    return 'PackageEntities{id: $id, name: $name, description: $description, price: $price, imageUrl: $imageUrl, startDate: $startDate, endDate: $endDate}';
+    return 'PackageEntities{id: $id, name: $name, description: $description, price: $price, imageUrl: $imageUrl, crDate: $crDate, upsDate: $upsDate,Duration: $duration, marketZone: $marketZone}';
   }
 }

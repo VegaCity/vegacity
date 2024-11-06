@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'card_type_repository.dart';
+part of 'package_item_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$cardTypeRepositoryHash() =>
-    r'93fd4afbb43013d271017b1bc77259c6f38d53fa';
+String _$packageItemControllerHash() =>
+    r'346a534c13272fd68808eb33b459c3144e3d382a';
 
-/// See also [cardTypeRepository].
-@ProviderFor(cardTypeRepository)
-final cardTypeRepositoryProvider = Provider<CardTypeRepository>.internal(
-  cardTypeRepository,
-  name: r'cardTypeRepositoryProvider',
+/// See also [PackageItemController].
+@ProviderFor(PackageItemController)
+final packageItemControllerProvider =
+    AutoDisposeAsyncNotifierProvider<PackageItemController, void>.internal(
+  PackageItemController.new,
+  name: r'packageItemControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$cardTypeRepositoryHash,
+      : _$packageItemControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef CardTypeRepositoryRef = ProviderRef<CardTypeRepository>;
+typedef _$PackageItemController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
