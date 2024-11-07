@@ -186,7 +186,12 @@ class QRResult extends HookConsumerWidget {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        context.router.push(const TransferScreenRoute());
+                        //  Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => TransferScreen(card: card),
+                        //   ),
+                        // );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:

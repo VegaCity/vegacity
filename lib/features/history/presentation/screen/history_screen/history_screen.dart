@@ -161,7 +161,7 @@ class HistoryScreen extends HookConsumerWidget {
                             crossAxisCount: 1,
                             crossAxisSpacing: 10.0,
                             mainAxisSpacing: 10.0,
-                            childAspectRatio: 5,
+                            childAspectRatio: 4,
                           ),
                           itemBuilder: (_, index) {
                             return OrderItem(

@@ -41,7 +41,8 @@ class ActionButtons extends StatelessWidget {
               imagePath: 'assets/images/cash-back.png',
               label: 'Transfer',
               onPressed: () {
-                context.router.push(const TransferScreenRoute());
+                showAboutDialog(context: context);
+                // context.router.push( TransferScreenRoute());
               },
             ),
             IconButtonWithLabel(

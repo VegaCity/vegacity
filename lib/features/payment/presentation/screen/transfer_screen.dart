@@ -3,6 +3,7 @@ import 'package:base/configs/routes/app_router.dart';
 import 'package:base/features/payment/presentation/screen/order_controller.dart';
 import 'package:base/features/payment/presentation/screen/wallet_controller.dart';
 import 'package:base/features/profile/domain/entities/wallet_entity.dart';
+import 'package:base/features/vcard/domain/entities/packageItem_entity.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:base/utils/commons/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @RoutePage()
 class TransferScreen extends HookConsumerWidget {
-  const TransferScreen({super.key});
+  final PackageItemEntities card;
+  const TransferScreen({super.key, required this.card});
 
   void submit({
     required GlobalKey<FormState> formKey,
@@ -42,16 +44,16 @@ class TransferScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(orderControllerProvider);
-    final cccdController = useTextEditingController();
-    final etagCodeController = useTextEditingController();
+    final cccdController = useTextEditingController(text: card.cccdpassport);
+    final etagCodeController = useTextEditingController(text: card.id);
     final chargeAmountController = useTextEditingController();
     final formKey = useMemoized(GlobalKey<FormState>.new);
     final paymentType = useState<String>("");
 
-    useEffect(() {
-      _loadSavedValues(cccdController, etagCodeController);
-      return null;
-    }, []);
+    // useEffect(() {
+    //   _loadSavedValues(cccdController, etagCodeController);
+    //   return null;
+    // }, []);
 
     return LoadingOverlay(
       isLoading: state.isLoading,
@@ -87,15 +89,15 @@ class TransferScreen extends HookConsumerWidget {
     );
   }
 
-  void _loadSavedValues(TextEditingController cccdController,
-      TextEditingController etagCodeController) async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedEtagCode = prefs.getString('id') ?? '';
-    final savedCccd = prefs.getString('cccdPassport') ?? '';
+  // void _loadSavedValues(TextEditingController cccdController,
+  //     TextEditingController etagCodeController) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final savedEtagCode = prefs.getString('id') ?? '';
+  //   final savedCccd = prefs.getString('cccdPassport') ?? '';
 
-    etagCodeController.text = savedEtagCode;
-    cccdController.text = savedCccd;
-  }
+  //   etagCodeController.text = savedEtagCode;
+  //   cccdController.text = savedCccd;
+  // }
 
   Widget _buildDestinationSection(TextEditingController etagCodeController) {
     return Center(
@@ -109,10 +111,32 @@ class TransferScreen extends HookConsumerWidget {
         child: TextField(
           controller: etagCodeController,
           decoration: const InputDecoration(
-            hintText: 'Mã eTag',
+            hintText: 'Mã Vcard',
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             suffixIcon: Icon(FontAwesomeIcons.idCard, color: Color(0xFF007BFF)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCccdSection(TextEditingController cccdController) {
+    return Center(
+      child: Container(
+        width: 350,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF0F4FF),
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: const Color(0xFFE0E0E0)),
+        ),
+        child: TextField(
+          controller: cccdController,
+          decoration: const InputDecoration(
+            hintText: 'Nhập CCCD/Passporrt',
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.all(10),
+            hintStyle: TextStyle(color: Colors.grey),
           ),
         ),
       ),
@@ -144,28 +168,6 @@ class TransferScreen extends HookConsumerWidget {
           ),
           style: const TextStyle(fontSize: 24, color: Color(0xFF007BFF)),
           textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCccdSection(TextEditingController cccdController) {
-    return Center(
-      child: Container(
-        width: 350,
-        decoration: BoxDecoration(
-          color: const Color(0xFFF0F4FF),
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(color: const Color(0xFFE0E0E0)),
-        ),
-        child: TextField(
-          controller: cccdController,
-          decoration: const InputDecoration(
-            hintText: 'Nhập CCCD/Passporrt',
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.all(10),
-            hintStyle: TextStyle(color: Colors.grey),
-          ),
         ),
       ),
     );

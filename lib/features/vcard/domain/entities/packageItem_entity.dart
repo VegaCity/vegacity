@@ -5,7 +5,7 @@ class PackageItemEntities {
   final String packageId;
   final String name;
   final String phoneNumber;
-  final String cccdPassport;
+  final String? cccdpassport;
   // final String imageUrl;
   final String gender;
   // final DateTime birthday;
@@ -20,7 +20,7 @@ class PackageItemEntities {
     required this.packageId,
     required this.name,
     required this.phoneNumber,
-    required this.cccdPassport,
+    this.cccdpassport,
     // required this.imageUrl,
     required this.gender,
     // required this.birthday,
@@ -38,7 +38,7 @@ class PackageItemEntities {
     result.addAll({"packageId": packageId});
     result.addAll({"name": name});
     result.addAll({"phoneNumber": phoneNumber});
-    result.addAll({"cccdPassport": cccdPassport});
+    result.addAll({"cccdpassport": cccdpassport});
     // result.addAll({"imageUrl": imageUrl});
     result.addAll({"gender": gender});
     // result.addAll({"birthday": birthday.toIso8601String()});
@@ -57,7 +57,7 @@ class PackageItemEntities {
       packageId: map["packageId"] ?? '',
       name: map["name"] ?? '',
       phoneNumber: map["phoneNumber"] ?? '',
-      cccdPassport: map["cccdPassport"] ?? '',
+      cccdpassport: map["cccdpassport"],
       // imageUrl: map["imageUrl"] ?? '',
       gender: map["gender"] ?? '',
       // birthday: DateTime.parse(map["birthday"] ?? '1970-01-01T00:00:00'),

@@ -154,9 +154,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     TransferScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<TransferScreenRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const TransferScreen(),
+        child: TransferScreen(
+          key: args.key,
+          card: args.card,
+        ),
       );
     },
     TransferSuccessRoute.name: (routeData) {
@@ -570,16 +574,40 @@ class TestScreenRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [TransferScreen]
-class TransferScreenRoute extends PageRouteInfo<void> {
-  const TransferScreenRoute({List<PageRouteInfo>? children})
-      : super(
+class TransferScreenRoute extends PageRouteInfo<TransferScreenRouteArgs> {
+  TransferScreenRoute({
+    Key? key,
+    required PackageItemEntities card,
+    List<PageRouteInfo>? children,
+  }) : super(
           TransferScreenRoute.name,
+          args: TransferScreenRouteArgs(
+            key: key,
+            card: card,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'TransferScreenRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<TransferScreenRouteArgs> page =
+      PageInfo<TransferScreenRouteArgs>(name);
+}
+
+class TransferScreenRouteArgs {
+  const TransferScreenRouteArgs({
+    this.key,
+    required this.card,
+  });
+
+  final Key? key;
+
+  final PackageItemEntities card;
+
+  @override
+  String toString() {
+    return 'TransferScreenRouteArgs{key: $key, card: $card}';
+  }
 }
 
 /// generated route for

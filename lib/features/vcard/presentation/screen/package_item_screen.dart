@@ -39,7 +39,7 @@ class CardScreen extends HookConsumerWidget {
       // final birthdayStr =
       //     item.birthday.toString();
 
-      return (item.cccdPassport.toString() ==
+      return (item.cccdpassport.toString() ==
               searchQuery) || // Kiểm tra nếu cccd bằng searchQuery
           (item.phoneNumber.toString() == searchQuery) ||
           (item.packageId.toString() ==

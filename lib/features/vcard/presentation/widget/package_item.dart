@@ -1,10 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:base/configs/routes/app_router.dart';
+import 'package:base/features/payment/presentation/screen/transfer_screen.dart';
 import 'package:base/features/vcard/domain/entities/packageItem_entity.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../../configs/routes/app_router.dart';
-
 
 class PackageItem extends HookConsumerWidget {
   const PackageItem({
@@ -27,95 +26,109 @@ class PackageItem extends HookConsumerWidget {
           builder: (BuildContext context) {
             return AlertDialog(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
+                borderRadius: BorderRadius.circular(20),
               ),
               backgroundColor: Colors.white,
-              contentPadding: const EdgeInsets.all(16.0),
+              contentPadding: const EdgeInsets.all(20.0),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Image for the package
-                  // ClipRRect(
-                  //   borderRadius: BorderRadius.circular(10),
-                  //   child: Image.network(
-                  //     card.imageUrl.isNotEmpty
-                  //         ? card.imageUrl
-                  //         : 'https://storage.googleapis.com/a1aa/image/jCeQ5BWBaYW2VqCp9dQ2q4YIfbPdqTZqCfHtEMnxxj2C6yKnA.jpg',
-                  //     height: 120,
-                  //     width: size.width * 0.8,
-                  //     fit: BoxFit.cover,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.network(
+                      'https://storage.googleapis.com/a1aa/image/jCeQ5BWBaYW2VqCp9dQ2q4YIfbPdqTZqCfHtEMnxxj2C6yKnA.jpg',
+                      height: 150,
+                      width: size.width * 0.9,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: Text(
+                      card.name,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  // Center(
+                  //   child: Text(
+                  //     card.packageId,
+                  //     style: const TextStyle(
+                  //       fontSize: 16,
+                  //       color: Colors.grey,
+                  //     ),
                   //   ),
                   // ),
-                  const SizedBox(height: 15),
-
-                  // Package Name
-                  Text(
-                    card.name,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                  const SizedBox(height: 5),
+                  Center(
+                    child: Text(
+                      card.cccdpassport ?? '',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    card.packageId,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  // Package Description
-                  Text(
-                    card.cccdPassport,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black54,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 10),
-
-                  // Package Price
-                  Text(
-                    card.crDate
-                        .toIso8601String()
-                        .substring(0, 10), 
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
+                  Center(
+                    child: Text(
+                      card.crDate.toIso8601String().substring(0, 10),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
-                  // Close Button
-                  ElevatedButton(
-                    onPressed: () {
-                      context.router.push(const TransferScreenRoute());
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
+                  Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF0052CC),
+                          Color(0xFF00AAFF),
+                          Color.fromARGB(255, 111, 194, 208),
+                          Color.fromARGB(255, 116, 240, 231),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 25,
+                          vertical: 14,
+                        ),
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TransferScreen(card: card),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Nạp tiền',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                    child: const Text(
-                      'Nạp tiền',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                  )
                 ],
               ),
             );
@@ -124,77 +137,74 @@ class PackageItem extends HookConsumerWidget {
       },
       child: Center(
         child: Container(
-          width: 350, // Same width as HTML card
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          width: 360,
+          height: 100,
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
           decoration: BoxDecoration(
-            color: Colors.white, // Card background color
-            borderRadius: BorderRadius.circular(20),
+            gradient: const LinearGradient(
+              colors: [
+                Color(0xFF0052CC),
+                Color(0xFF00AAFF),
+                Color.fromARGB(255, 111, 194, 208),
+                Color.fromARGB(255, 116, 240, 231),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
+                color: Colors.grey.withOpacity(0.15),
+                blurRadius: 10,
+                offset: const Offset(0, 6),
               ),
             ],
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Icon Section
-              // Center(
-              //   child: Image.network(
-              //     card.imageUrl.isNotEmpty
-              //         ? card.imageUrl
-              //         : 'https://storage.googleapis.com/a1aa/image/jCeQ5BWBaYW2VqCp9dQ2q4YIfbPdqTZqCfHtEMnxxj2C6yKnA.jpg',
-              //     width: 50,
-              //     height: 50,
-              //     fit: BoxFit.cover,
-              //   ),
-              // ),
-              const SizedBox(width: 10), // Space between icon and details
-
-              // Details Section
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  'https://storage.googleapis.com/a1aa/image/jCeQ5BWBaYW2VqCp9dQ2q4YIfbPdqTZqCfHtEMnxxj2C6yKnA.jpg',
+                  width: 70,
+                  height: 70,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(width: 15),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
-                      child: Text(
-                        card.name,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                        // textAlign: TextAlign.center,
+                    Text(
+                      card.name,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      card.crDate.toIso8601String().substring(0, 10),
+                      card.phoneNumber,
                       style: const TextStyle(
-                        color: Color(0xFFB0B0B0),
+                        fontSize: 14,
+                        color: Colors.white70,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      'crDate: ${card.crDate.toIso8601String().substring(0, 10)}',
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),
                     ),
                   ],
-                ),
-              ),
-
-              // Price Section
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF5A5A5A), // Price background color
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: const Text(
-                  'Detail',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
                 ),
               ),
             ],
