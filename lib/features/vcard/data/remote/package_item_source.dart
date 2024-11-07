@@ -27,7 +27,7 @@ abstract class PackageItemSource {
     @Queries() PackageitemRequest request,
   );
 
-  @GET('${APIConstants.packageitem}/{id}')
+  @GET('${APIConstants.card}/{id}')
   Future<HttpResponse<EtagResponse>> getEtagCard(
     @Header(APIConstants.contentHeader) String contentType,
     @Header(APIConstants.authHeader) String accessToken,

@@ -2,6 +2,7 @@
 import 'package:base/features/auth/domain/repositories/auth_repository.dart';
 import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
 import 'package:base/features/profile/domain/entities/profile_entity.dart';
+import 'package:base/features/profile/domain/entities/user_entity.dart';
 import 'package:base/features/profile/domain/repositories/profile_repository.dart';
 import 'package:base/utils/enums/enums_export.dart';
 
@@ -23,11 +24,11 @@ class ProfileController extends _$ProfileController {
   @override
   FutureOr<void> build() {}
 
-  Future<ProfileEntity?> getUser(
+  Future<UserEntity?> getUser(
     BuildContext context,
  
   ) async {
-    ProfileEntity? profile ;
+    UserEntity? profile ;
 
     state = const AsyncLoading();
     final profileRepository = ref.read(profileRepositoryProvider);

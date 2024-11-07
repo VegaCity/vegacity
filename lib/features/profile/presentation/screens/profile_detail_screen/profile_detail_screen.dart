@@ -1,5 +1,6 @@
 import 'package:base/configs/routes/app_router.dart';
 import 'package:base/features/profile/domain/entities/profile_entity.dart';
+import 'package:base/features/profile/domain/entities/user_entity.dart';
 import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
 import 'package:base/features/profile/presentation/widgets/menu_item.dart';
 import 'package:base/features/profile/presentation/widgets/textInput.dart';
@@ -26,7 +27,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
     final size = MediaQuery.sizeOf(context);
     final state = ref.watch(profileControllerProvider);
 
-    final useFetchResult = useFetchObject<ProfileEntity>(
+    final useFetchResult = useFetchObject<UserEntity>(
       function: (context) =>
           ref.read(profileControllerProvider.notifier).getUser(context),
       context: context,
@@ -45,7 +46,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
     }
 
     // Lấy thông tin từ dữ liệu trả về
-    final user = useFetchResult.data!.user;
+    final user = useFetchResult.data;
     File? image;
     final Dio dio = Dio();
 
@@ -126,7 +127,7 @@ class ProfileDetailsScreen extends HookConsumerWidget {
                         children: [
                           buildTextField(
                             'Họ và tên',
-                            user.fullName,
+                            user!.fullName,
                             Icons.person,
                             validator: (value) {
                               if (value == null || value.isEmpty) {

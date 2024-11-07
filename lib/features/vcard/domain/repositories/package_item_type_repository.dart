@@ -22,6 +22,6 @@ abstract class PackageItemTypeRepository {
 
 @Riverpod(keepAlive: true)
 PackageItemTypeRepository packageItemTypeRepository(PackageItemTypeRepositoryRef ref) {
-  final PackageItemSource = ref.read(packageItemSourceProvider);
-  return PackageItemTypeRepositoryImpl(PackageItemSource);
+  final packageItemSource = ref.read(packageItemSourceProvider);
+  return PackageItemTypeRepositoryImpl(packageItemSource);
 }

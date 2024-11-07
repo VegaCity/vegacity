@@ -90,7 +90,7 @@ class _PackageItemSource implements PackageItemSource {
     )
         .compose(
           _dio.options,
-          '/package-items/{id}',
+          '/etag/{id}',
           queryParameters: queryParameters,
           data: _data,
         )

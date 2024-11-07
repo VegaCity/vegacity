@@ -7,6 +7,7 @@ import 'package:base/features/package/domain/entities/packages_entities.dart';
 import 'package:base/features/package/presentation/screens/package_screen/package_controller.dart';
 import 'package:base/features/home/presentation/widget/home_item.dart';
 import 'package:base/features/profile/domain/entities/profile_entity.dart';
+import 'package:base/features/profile/domain/entities/user_entity.dart';
 import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
 import 'package:base/hooks/use_fetch.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
@@ -57,7 +58,7 @@ class HomeScreen extends HookConsumerWidget {
       context: context,
     );
     //get user id
-    final useFetchResult = useFetchObject<ProfileEntity>(
+    final useFetchResult = useFetchObject<UserEntity>(
       function: (context) =>
           ref.read(profileControllerProvider.notifier).getUser(context),
       context: context,
@@ -72,7 +73,7 @@ class HomeScreen extends HookConsumerWidget {
       return const Center(
           child: Text('No data found')); // Thông báo không có dữ liệu
     }
-    final user = useFetchResult.data!.user;
+    final user = useFetchResult.data;
 
     final animationController = useAnimationController(
       duration: const Duration(milliseconds: 500),
@@ -131,7 +132,7 @@ class HomeScreen extends HookConsumerWidget {
                   children: [
                     FadeInLeft(
                       child: CircleAvatar(
-                        backgroundImage: AssetImage('${user.imageUrl}'),
+                        backgroundImage: AssetImage('${user!.imageUrl}'),
                         radius: 30,
                       ),
                     ),
@@ -148,7 +149,7 @@ class HomeScreen extends HookConsumerWidget {
                           ),
                           FadeInUp(
                             child: Text(
-                              user.fullName.split(' ').last,
+                              user!.fullName.split(' ').last,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,

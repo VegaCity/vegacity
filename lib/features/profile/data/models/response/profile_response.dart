@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:base/features/profile/domain/entities/profile_entity.dart';
+import 'package:base/features/profile/domain/entities/user_entity.dart';
 
 class ProfileResponse {
-  final ProfileEntity data;
+  final UserEntity data;
 
   ProfileResponse({
     required this.data,
@@ -19,7 +20,7 @@ class ProfileResponse {
 
   factory ProfileResponse.fromMap(Map<String, dynamic> map) {
     return ProfileResponse(
-      data: ProfileEntity.fromMap(map['data']),
+      data: UserEntity.fromMap(map['data']),
     );
   }
 

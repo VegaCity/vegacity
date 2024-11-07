@@ -1,16 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:base/configs/routes/app_router.dart';
-import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
+
 import 'package:base/features/profile/domain/entities/profile_entity.dart';
+import 'package:base/features/profile/domain/entities/user_entity.dart';
 import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
 import 'package:base/features/profile/presentation/widgets/item/listsection.dart';
 import 'package:base/features/profile/presentation/widgets/item/section.dart';
-import 'package:base/features/profile/presentation/widgets/menu_item.dart';
-import 'package:base/features/scanner/scanner_screen.dart';
-import 'package:base/features/scanner1/manage_scanner_screen.dart';
+
 import 'package:base/hooks/use_fetch_obj.dart';
-import 'package:base/utils/commons/widgets/widgets_common_export.dart';
-import 'package:base/utils/constants/asset_constant.dart';
+
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:get/get.dart';
@@ -26,7 +24,7 @@ class ProfileScreen extends HookConsumerWidget {
     final size = MediaQuery.sizeOf(context);
     final state = ref.watch(profileControllerProvider);
 
-    final useFetchResult = useFetchObject<ProfileEntity>(
+    final useFetchResult = useFetchObject<UserEntity>(
       function: (context) =>
           ref.read(profileControllerProvider.notifier).getUser(context),
       context: context,
@@ -40,7 +38,8 @@ class ProfileScreen extends HookConsumerWidget {
       return const Center(child: Text('No data found'));
     }
 
-    final user = useFetchResult.data!.user;
+    final user = useFetchResult.data;
+    print('1a: $user');
 
     return Scaffold(
       backgroundColor: const Color(0xFFF0F4F8),
@@ -100,7 +99,7 @@ class ProfileScreen extends HookConsumerWidget {
                             children: [
                               FadeInUp(
                                 child: Text(
-                                  user.fullName,
+                                  user!.fullName,
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
