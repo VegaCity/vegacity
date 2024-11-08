@@ -121,7 +121,7 @@ class PackageItem extends HookConsumerWidget {
                         );
                       },
                       child: const Text(
-                        'Nạp tiền',
+                        'Deposit money',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,

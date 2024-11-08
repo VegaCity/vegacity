@@ -111,7 +111,7 @@ class TransferScreen extends HookConsumerWidget {
         child: TextField(
           controller: etagCodeController,
           decoration: const InputDecoration(
-            hintText: 'Mã Vcard',
+            hintText: 'Code Vcard',
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             suffixIcon: Icon(FontAwesomeIcons.idCard, color: Color(0xFF007BFF)),
@@ -133,7 +133,7 @@ class TransferScreen extends HookConsumerWidget {
         child: TextField(
           controller: cccdController,
           decoration: const InputDecoration(
-            hintText: 'Nhập CCCD/Passporrt',
+            hintText: 'Input CCCD/Passporrt',
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(10),
             hintStyle: TextStyle(color: Colors.grey),
@@ -189,7 +189,7 @@ class TransferScreen extends HookConsumerWidget {
             valueListenable: paymentType,
             builder: (context, value, child) {
               return Text(
-                value.isEmpty ? 'Vui lòng chọn phương thức thanh toán' : value,
+                value.isEmpty ? 'Please select payment method' : value,
                 style: const TextStyle(
                   // color: value.isEmpty ? Colors.grey : Colors.black,
                   color: Colors.black,
@@ -214,28 +214,32 @@ class TransferScreen extends HookConsumerWidget {
           child: Column(
             children: [
               ListTile(
-                title: const Text('Momo'),
+                title:
+                    const Text('Momo', style: TextStyle(color: Colors.black)),
                 onTap: () {
                   paymentType.value = 'Momo';
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                title: const Text('VnPay'),
+                title:
+                    const Text('VnPay', style: TextStyle(color: Colors.black)),
                 onTap: () {
                   paymentType.value = 'VnPay';
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                title: const Text('PayOS'),
+                title:
+                    const Text('PayOS', style: TextStyle(color: Colors.black)),
                 onTap: () {
                   paymentType.value = 'PayOS';
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                title: const Text('ZaloPay'),
+                title: const Text('ZaloPay',
+                    style: TextStyle(color: Colors.black)),
                 onTap: () {
                   paymentType.value = 'ZaloPay';
                   Navigator.pop(context);
@@ -278,7 +282,7 @@ class TransferScreen extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(
                 horizontal: 20, vertical: 10), // Padding tùy chỉnh
           ),
-          child: const Text('Quay lại'),
+          child: const Text('Cancel'),
         ),
         const SizedBox(width: 10),
         ElevatedButton(
@@ -305,7 +309,7 @@ class TransferScreen extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(
                 horizontal: 20, vertical: 10), // Padding tùy chỉnh
           ),
-          child: const Text('Tiếp tục'),
+          child: const Text('continue'),
         ),
       ],
     );
