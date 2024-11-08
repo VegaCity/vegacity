@@ -68,10 +68,10 @@ class _PackageItemSource implements PackageItemSource {
   }
 
   @override
-  Future<HttpResponse<EtagResponse>> getEtagCard(
+  Future<HttpResponse<VcardResponse>> getEtagCard(
     String contentType,
     String accessToken,
-    EtagRequest request,
+    VcardRequest request,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -82,7 +82,7 @@ class _PackageItemSource implements PackageItemSource {
     };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<EtagResponse>>(Options(
+    final _options = _setStreamType<HttpResponse<VcardResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -90,7 +90,7 @@ class _PackageItemSource implements PackageItemSource {
     )
         .compose(
           _dio.options,
-          '/etag/{id}',
+          '/package-item/{id}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -100,9 +100,9 @@ class _PackageItemSource implements PackageItemSource {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late EtagResponse _value;
+    late VcardResponse _value;
     try {
-      _value = EtagResponse.fromMap(_result.data!);
+      _value = VcardResponse.fromMap(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

@@ -1,5 +1,5 @@
 import 'package:base/features/vcard/data/model/response/packageItem_response.dart';
-import 'package:base/features/vcard/data/model/response/etag_response.dart';
+import 'package:base/features/vcard/data/model/response/vcard_response.dart';
 import 'package:base/features/vcard/data/remote/package_item_source.dart';
 import 'package:base/features/vcard/data/repositories/package_item_type_repository_impl.dart';
 
@@ -14,9 +14,9 @@ abstract class PackageItemTypeRepository {
     required String accessToken,
     required PagingModel request,
   });
-  Future<EtagResponse> getEtagCard({
+  Future<VcardResponse> getEtagCard({
     required String accessToken,
-    required String etagCode,
+    required String id,
   });
 }
 

@@ -70,7 +70,7 @@ class ProfileScreen extends HookConsumerWidget {
                 Center(
                   child: FadeInDown(
                     child: const Text(
-                      'Tài khoản',
+                      'Account',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -170,8 +170,8 @@ class ProfileScreen extends HookConsumerWidget {
                         buildListItem(
                           context,
                           icon: Icons.qr_code,
-                          title: 'Quản lý mã',
-                          subtitle: 'Quản lý các mã QR quan trọng của bạn',
+                          title: 'Code management',
+                          subtitle: 'Manage your important QR codes',
                           onTap: () {
                             context.router.push(const ScannerScreenRoute());
                           },
@@ -187,8 +187,8 @@ class ProfileScreen extends HookConsumerWidget {
                         buildListItem(
                           context,
                           icon: Icons.lock_outline,
-                          title: 'Đổi Mật Khẩu',
-                          subtitle: 'Thay đổi mật khẩu của bạn',
+                          title: 'Change Password',
+                          subtitle: 'Change your password',
                           onTap: () {
                             context.router
                                 .push(const ChangePasswordScreenRoute());
@@ -202,7 +202,7 @@ class ProfileScreen extends HookConsumerWidget {
             ),
             FadeInLeft(
               child: buildSection(
-                title: 'chính sách',
+                title: 'policy',
                 children: [
                   FadeInDown(
                     child: Container(
@@ -224,7 +224,7 @@ class ProfileScreen extends HookConsumerWidget {
                           buildListItem(
                             context,
                             icon: Icons.security,
-                            title: 'chính sách và điều khoản',
+                            title: 'policies and terms',
                             showArrow: true,
                             onTap: () {
                               // // Chuyển đến trang Zalopay Priority mới hoàn toàn
@@ -241,7 +241,7 @@ class ProfileScreen extends HookConsumerWidget {
             ),
             FadeInLeft(
               child: buildSection(
-                title: 'Quản lý tài chính',
+                title: 'Financial management',
                 children: [
                   FadeInDown(
                     child: Container(
@@ -263,7 +263,7 @@ class ProfileScreen extends HookConsumerWidget {
                           buildListItem(
                             context,
                             icon: Icons.account_balance_wallet,
-                            title: 'Nguồn tiền',
+                            title: 'Source of money',
                             showArrow: true,
                             onTap: () {
                               // context.router.push(const ZalopayPriorityScreenRoute());
@@ -277,16 +277,16 @@ class ProfileScreen extends HookConsumerWidget {
                               color: Colors.grey[300],
                             ),
                           ),
-                          buildListItem(
-                            context,
-                            icon: Icons.wallet_giftcard,
-                            title: 'Ví của tôi',
-                            subtitle: '********',
-                            showArrow: true,
-                            onTap: () {
-                              // context.router.push(const ZalopayPriorityScreenRoute());
-                            },
-                          ),
+                          // buildListItem(
+                          //   context,
+                          //   icon: Icons.wallet_giftcard,
+                          //   title: 'My wallet',
+                          //   subtitle: '********',
+                          //   showArrow: true,
+                          //   onTap: () {
+                          //     // context.router.push(const ZalopayPriorityScreenRoute());
+                          //   },
+                          // ),
                         ],
                       ),
                     ),
@@ -323,7 +323,7 @@ class ProfileScreen extends HookConsumerWidget {
                           context.router.push(SignInScreenRoute());
                         },
                         child: const Text(
-                          'Đăng Xuất',
+                          'Log out',
                           style: TextStyle(
                             color: Colors.red, // Màu chữ đỏ
                             fontWeight: FontWeight.bold, // Độ dày chữ

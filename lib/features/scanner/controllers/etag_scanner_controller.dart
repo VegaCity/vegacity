@@ -1,7 +1,7 @@
 // data - domain impl
 import 'package:base/features/auth/domain/repositories/auth_repository.dart';
 import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
-import 'package:base/features/vcard/domain/entities/etag_entity.dart';
+import 'package:base/features/vcard/domain/entities/vcard_entity.dart';
 import 'package:base/features/vcard/domain/repositories/package_item_type_repository.dart';
 
 // system
@@ -28,11 +28,11 @@ class EtagScannerController extends _$EtagScannerController {
   @override
   FutureOr<void> build() {}
 
-  Future<EtagParentEntity?> getEtagCardData(
+  Future<VcardEntities?> getEtagCardData(
     BuildContext context,
     String id,
   ) async {
-    EtagParentEntity? etagCardData;
+    VcardEntities? vcardCardData;
 
     state = const AsyncLoading();
     final PackageItemTypeRepository =
@@ -46,16 +46,17 @@ class EtagScannerController extends _$EtagScannerController {
     state = await AsyncValue.guard(() async {
       final response = await PackageItemTypeRepository.getEtagCard(
         accessToken: APIConstants.prefixToken + user!.tokens.accessToken,
-        etagCode: checkEtagCode(id),
+        id: checkEtagCode(id),
         // etagCode: "VGC2024101718260399",
       );
-      etagCardData = response.data;
-      print("Datatest $etagCardData");
+      vcardCardData = response.data;
+      print("Datatest $vcardCardData");
       //print('EtagcodeLog: $etagCode');
       //checkdate
       final now = DateTime.now();
-      final isValid =
-          now.isBefore(etagCardData?.etag.endDate ?? DateTime.now());
+      final expirationDate =
+          (vcardCardData?.crDate ?? DateTime.now()).add(Duration(days: 20));
+      final isValid = now.isBefore(expirationDate);
 
       //final checkValidDate = deCodeQrCodeData(etagCardData?.qrcode ?? '');
 
@@ -79,7 +80,7 @@ class EtagScannerController extends _$EtagScannerController {
         );
       }
 
-      print("etagCardData: ${etagCardData?.etag.etagCode}");
+      print("VCardData: ${vcardCardData?.id}");
     });
 
     if (state.hasError) {
@@ -111,7 +112,7 @@ class EtagScannerController extends _$EtagScannerController {
       );
     }
 
-    return etagCardData;
+    return vcardCardData;
   }
 
   // check valid date of qr code
@@ -133,11 +134,11 @@ class EtagScannerController extends _$EtagScannerController {
   String checkEtagCode(String id) {
     List<int> bytes = base64Decode(id);
     String decodedString = utf8.decode(bytes);
-    String etagCode =
+    String vcardCode =
         decodedString.split('_')[0]; // Extract etagCode before "_"
 
     // You can modify this to return a Boolean based on your requirements
     // If you just want to return the etagCode, do so here
-    return etagCode; // Change this return value as needed
+    return vcardCode; // Change this return value as needed
   }
 }

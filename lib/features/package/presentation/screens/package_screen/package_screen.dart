@@ -53,8 +53,7 @@ class PackageScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize:
-            const Size.fromHeight(200), // Chiều cao tùy chỉnh cho AppBar
+        preferredSize: const Size.fromHeight(200),
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -102,7 +101,7 @@ class PackageScreen extends HookConsumerWidget {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: 'Tìm kiếm gói dịch vụ...',
+                          hintText: 'Search for service packages...',
                           prefixIcon: const Icon(Icons.search),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -115,7 +114,7 @@ class PackageScreen extends HookConsumerWidget {
                     const SizedBox(height: 8),
                     FadeInUp(
                       child: const Text(
-                        'Tổng hợp các gói dịch vụ trong Vegacity',
+                        'Summary of service packages in Vegacity',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.white,

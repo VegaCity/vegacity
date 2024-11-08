@@ -22,9 +22,8 @@ class HomeItem extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
-    final opacity = useState(1.0); 
+    final opacity = useState(1.0);
 
-  
     useEffect(() {
       final timer = Timer.periodic(const Duration(seconds: 1), (_) {
         opacity.value = opacity.value == 1.0 ? 0.0 : 1.0;
@@ -59,7 +58,7 @@ class HomeItem extends HookConsumerWidget {
                 child: Image.network(
                   package.imageUrl.isNotEmpty
                       ? package.imageUrl
-                      : 'https://storage.googleapis.com/a1aa/image/jCeQ5BWBaYW2VqCp9dQ2q4YIfbPdqTZqCfHtEMnxxj2C6yKnA.jpg', 
+                      : 'https://storage.googleapis.com/a1aa/image/jCeQ5BWBaYW2VqCp9dQ2q4YIfbPdqTZqCfHtEMnxxj2C6yKnA.jpg',
                   height: 150,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -93,9 +92,9 @@ class HomeItem extends HookConsumerWidget {
                     );
                   },
                   child: const Text(
-                    "Xem thêm",
+                    "more",
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14, 
                       color: Colors.grey,
                       fontFamily: 'Inter',
                     ),

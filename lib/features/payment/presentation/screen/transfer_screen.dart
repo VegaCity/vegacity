@@ -3,7 +3,7 @@ import 'package:base/configs/routes/app_router.dart';
 import 'package:base/features/payment/presentation/screen/order_controller.dart';
 import 'package:base/features/payment/presentation/screen/wallet_controller.dart';
 import 'package:base/features/profile/domain/entities/wallet_entity.dart';
-import 'package:base/features/vcard/domain/entities/packageItem_entity.dart';
+import 'package:base/features/vcard/domain/entities/packageItems_entity.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:base/utils/commons/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +67,7 @@ class TransferScreen extends HookConsumerWidget {
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  'Chuyển tiền tới số tài khoản',
+                  'Transfer money to account number',
                   style: TextStyle(fontSize: 18, color: Color(0xFF007BFF)),
                 ),
               ),

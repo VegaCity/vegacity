@@ -1,29 +1,29 @@
 import 'dart:convert';
 
-class EtagRequest {
-  final String? etagCode;
+class VcardRequest {
+  final String? id;
 
-  EtagRequest({this.etagCode});
+  VcardRequest({this.id});
 
   Map<String, dynamic> toMap() {
     return {
-      if (etagCode != null) 'etagCode': etagCode,
+      if (id != null) 'id': id,
     };
   }
 
-  factory EtagRequest.fromMap(Map<String, dynamic> map) {
-    return EtagRequest(
-      etagCode: map['etagCode'],
+  factory VcardRequest.fromMap(Map<String, dynamic> map) {
+    return VcardRequest(
+      id: map['id'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory EtagRequest.fromJson(String source) =>
-      EtagRequest.fromMap(json.decode(source));
+  factory VcardRequest.fromJson(String source) =>
+      VcardRequest.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'EtagRequest(etagCode: $etagCode)';
+    return 'VcardRequest(id: $id)';
   }
 }

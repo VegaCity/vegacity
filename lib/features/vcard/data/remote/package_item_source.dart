@@ -1,7 +1,7 @@
 // rest API
 
 import 'package:base/features/vcard/data/model/request/etag_request.dart';
-import 'package:base/features/vcard/data/model/response/etag_response.dart';
+import 'package:base/features/vcard/data/model/response/vcard_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -28,10 +28,10 @@ abstract class PackageItemSource {
   );
 
   @GET('${APIConstants.card}/{id}')
-  Future<HttpResponse<EtagResponse>> getEtagCard(
+  Future<HttpResponse<VcardResponse>> getEtagCard(
     @Header(APIConstants.contentHeader) String contentType,
     @Header(APIConstants.authHeader) String accessToken,
-    @Queries() EtagRequest request,
+    @Queries() VcardRequest request,
     // @Path('id') String id,
   );
 }

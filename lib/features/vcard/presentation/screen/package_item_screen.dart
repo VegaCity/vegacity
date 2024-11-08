@@ -1,4 +1,4 @@
-import 'package:base/features/vcard/domain/entities/packageItem_entity.dart';
+import 'package:base/features/vcard/domain/entities/packageItems_entity.dart';
 import 'package:base/features/vcard/presentation/screen/package_item_controller.dart';
 import 'package:base/features/vcard/presentation/widget/package_item.dart';
 
@@ -92,7 +92,7 @@ class CardScreen extends HookConsumerWidget {
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
-                        hintText: 'Tìm kiếm gói dịch vụ...',
+                        hintText: 'Search user information...',
                         prefixIcon: const Icon(Icons.search),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -103,7 +103,7 @@ class CardScreen extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Tổng hợp các gói dịch vụ trong Vegacity',
+                      'Enter fully to display information',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.white,
@@ -158,8 +158,9 @@ class CardScreen extends HookConsumerWidget {
             else
               const Padding(
                 padding: EdgeInsets.only(top: 50.0),
-                child:
-                    Center(child: Text('Nhập từ khóa để tìm kiếm gói dịch vụ')),
+                child: Center(
+                    child: Text(
+                        'Enter keywords to search for users in the system')),
               ),
           ],
         ),

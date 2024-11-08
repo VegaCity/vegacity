@@ -1,5 +1,5 @@
 import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
-import 'package:base/features/vcard/domain/entities/packageItem_entity.dart';
+import 'package:base/features/vcard/domain/entities/packageItems_entity.dart';
 import 'package:base/features/vcard/domain/repositories/package_item_type_repository.dart';
 
 import 'package:base/utils/enums/enums_export.dart';

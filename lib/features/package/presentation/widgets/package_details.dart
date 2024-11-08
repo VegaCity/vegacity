@@ -74,7 +74,7 @@ class PackageDetails extends StatelessWidget {
                       const FaIcon(FontAwesomeIcons.calendarAlt, size: 18),
                       const SizedBox(width: 8),
                       Text(
-                        'Thời gian: ${package.crDate?.toLocal().toString().split(' ')[0]} - ${package.upsDate?.toLocal().toString().split(' ')[0]}',
+                        'Time: ${package.crDate?.toLocal().toString().split(' ')[0]} - ${package.upsDate?.toLocal().toString().split(' ')[0]}',
                         style: const TextStyle(fontSize: 16),
                       ),
                     ],
@@ -143,7 +143,7 @@ class ProgramRules extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Mô tả',
+          'Description',
           style: TextStyle(
             fontSize: 16,
             color: Color(0xFF0048BA),
@@ -160,7 +160,7 @@ class ProgramRules extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         const Text(
-          'Gía tiền',
+          'Price',
           style: TextStyle(
             fontSize: 16,
             color: Color(0xFF0048BA),

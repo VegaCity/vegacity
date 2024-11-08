@@ -2,7 +2,7 @@
 import 'package:base/features/vcard/data/model/request/packageItem_request.dart';
 import 'package:base/features/vcard/data/model/request/etag_request.dart';
 import 'package:base/features/vcard/data/model/response/packageItem_response.dart';
-import 'package:base/features/vcard/data/model/response/etag_response.dart';
+import 'package:base/features/vcard/data/model/response/vcard_response.dart';
 import 'package:base/features/vcard/data/remote/package_item_source.dart';
 import 'package:base/features/vcard/domain/repositories/package_item_type_repository.dart';
 
@@ -40,22 +40,22 @@ class PackageItemTypeRepositoryImpl extends RemoteBaseRepository
   }
 
   @override
-  Future<EtagResponse> getEtagCard({
+  Future<VcardResponse> getEtagCard({
     required String accessToken,
-    required String etagCode,
+    required String id,
   }) async {
     // mới
-    final etagRequest = EtagRequest(
-      etagCode: etagCode,
+    final vcardRequest = VcardRequest(
+      id: id,
     );
 
-    print('EtagcodeLog: $etagCode');
+    print('VcardcodeLog: $id');
 
     return getDataOf(
       request: () => _packageItemSource.getEtagCard(
         APIConstants.contentType,
         accessToken,
-        etagRequest,
+        vcardRequest,
       ),
     );
   }

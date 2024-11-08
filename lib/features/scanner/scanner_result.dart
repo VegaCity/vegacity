@@ -1,5 +1,5 @@
 import 'package:base/configs/routes/app_router.dart';
-import 'package:base/features/vcard/domain/entities/etag_entity.dart';
+import 'package:base/features/vcard/domain/entities/vcard_entity.dart';
 import 'package:base/features/scanner/controllers/etag_scanner_controller.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +23,9 @@ class QRResult extends HookConsumerWidget {
   });
 
   Future<void> _saveToSharedPreferences(
-      String etagCode, String cccdPassport) async {
+      String id, String cccdPassport) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('etagCode', etagCode);
+    await prefs.setString('id', id);
     await prefs.setString('cccdPassport', cccdPassport);
   }
 
@@ -34,7 +34,7 @@ class QRResult extends HookConsumerWidget {
     final size = MediaQuery.sizeOf(context);
     final state = ref.watch(etagScannerControllerProvider);
 
-    final useFetchResult = useFetchObject<EtagParentEntity>(
+    final useFetchResult = useFetchObject<VcardEntities>(
       function: (context) => ref
           .read(etagScannerControllerProvider.notifier)
           .getEtagCardData(context, code),
@@ -50,15 +50,15 @@ class QRResult extends HookConsumerWidget {
 
     // example take information from etag entity
     // field nó sẽ case là rỗng hoặc null => check null trước khi lấy
-    final etagDetail = useFetchResult.data?.etag.etagDetail;
+    final wallet = useFetchResult.data?.wallet ?? 0;
 
-    final name = etagDetail?.fullName;
-    final etag = useFetchResult.data?.etag.etagCode ?? "No etag code";
-    final dob = etagDetail?.birthday;
-    final cccdPassport = etagDetail?.cccdPassport;
+    final name = useFetchResult.data?.name ?? "No etag code";
+    final vcard = useFetchResult.data?.id ?? "No etag code";
+    final phonenumber = useFetchResult.data?.phoneNumber;
+    final cccdpassport = useFetchResult.data?.cccdpassport;
 
     // Save etagCode and cccd to SharedPreferences
-    _saveToSharedPreferences(etag, cccdPassport!);
+    _saveToSharedPreferences(vcard, cccdpassport!);
 
     return Scaffold(
       appBar: AppBar(
@@ -113,7 +113,7 @@ class QRResult extends HookConsumerWidget {
                         children: [
                           const SizedBox(height: 5),
                           Text(
-                            etag,
+                            vcard,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 24,
@@ -122,7 +122,7 @@ class QRResult extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            name!,
+                            name,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -131,8 +131,7 @@ class QRResult extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            DateFormat('dd/MM/yyyy')
-                                .format(dob!), // Convert DateTime to String
+                            phonenumber!,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 16,

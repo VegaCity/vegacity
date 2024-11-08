@@ -23,7 +23,7 @@ class APIConstants {
   // wallet
   static const wallet = '/wallet';
   // wallet etag
-  static const card = '/etag';
+  static const card = '/package-item';
   // package
   static const packages = '/packages';
   // etags

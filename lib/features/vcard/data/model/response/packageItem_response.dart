@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:base/features/vcard/domain/entities/packageItem_entity.dart';
+import 'package:base/features/vcard/domain/entities/packageItems_entity.dart';
 
 class PackageitemResponse {
   final List<PackageItemEntities> data;

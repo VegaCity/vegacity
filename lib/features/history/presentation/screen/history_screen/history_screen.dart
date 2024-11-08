@@ -106,7 +106,7 @@ class HistoryScreen extends HookConsumerWidget {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: 'Tìm kiếm gói dịch vụ...',
+                          hintText: 'Search for transaction...',
                           prefixIcon: const Icon(Icons.search),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -119,7 +119,7 @@ class HistoryScreen extends HookConsumerWidget {
                     const SizedBox(height: 8),
                     FadeInUp(
                       child: const Text(
-                        'Tổng hợp các gói dịch vụ trong Vegacity',
+                        'Summary of transaction in Vegacity',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.white,
