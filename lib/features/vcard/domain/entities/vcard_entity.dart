@@ -16,25 +16,26 @@ class VcardEntities {
   final DateTime crDate;
   final DateTime upsDate;
   final String status;
-  final String? rfid;
+  final String rfid;
   final Wallet wallet;
 
-  VcardEntities(
-      {required this.id,
-      required this.packageId,
-      required this.name,
-      required this.phoneNumber,
-      this.cccdpassport,
-      // required this.imageUrl,
-      required this.gender,
-      // required this.birthday,
-      required this.email,
-      required this.isAdult,
-      required this.crDate,
-      required this.upsDate,
-      required this.status,
-      this.rfid,
-      required this.wallet,});
+  VcardEntities({
+    required this.id,
+    required this.packageId,
+    required this.name,
+    required this.phoneNumber,
+    this.cccdpassport,
+    // required this.imageUrl,
+    required this.gender,
+    // required this.birthday,
+    required this.email,
+    required this.isAdult,
+    required this.crDate,
+    required this.upsDate,
+    required this.status,
+    required this.rfid,
+    required this.wallet,
+  });
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
@@ -72,7 +73,7 @@ class VcardEntities {
       crDate: DateTime.parse(map["crDate"] ?? '1970-01-01T00:00:00'),
       upsDate: DateTime.parse(map["upsDate"] ?? '1970-01-01T00:00:00'),
       status: map["status"] ?? '',
-      rfid: map["rfid"],
+      rfid: map["rfid"] ?? '',
       wallet: Wallet.fromMap(map["wallet"] ?? {}),
     );
   }

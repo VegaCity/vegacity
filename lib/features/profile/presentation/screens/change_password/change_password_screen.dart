@@ -78,7 +78,7 @@ class ChangePasswordScreen extends HookConsumerWidget {
                 children: [
                   Center(
                     child: Text(
-                      'Đổi mật khẩu',
+                      'Change Password',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -102,22 +102,22 @@ class ChangePasswordScreen extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Nhập thông tin để đổi mật khẩu:",
+                    "input information about your account:",
                     style: TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 20),
                   TextInput(
                     textController: email,
                     hintTextLable: "Email",
-                    hintText: 'Nhập email của bạn',
+                    hintText: 'input your email',
                     onValidate: (val) => '',
                     autoFocus: true,
                   ),
                   const SizedBox(height: 20),
                   PasswordInput(
                     textEditingController: oldPassword,
-                    hintTextLable: "Mật khẩu cũ",
-                    hintText: 'Nhập mật khẩu cũ',
+                    hintTextLable: "old password",
+                    hintText: 'input your old password',
                     // onValidate: (val) => passwordErrorText(val),
                     onValidate: (val) => '',
                     autoFocus: false,
@@ -125,8 +125,8 @@ class ChangePasswordScreen extends HookConsumerWidget {
                   const SizedBox(height: 20),
                   PasswordInput(
                     textEditingController: newPassword,
-                    hintTextLable: "Mật khẩu mới",
-                    hintText: 'Nhập mật khẩu mỡi',
+                    hintTextLable: "new password",
+                    hintText: 'Input your new password',
                     // onValidate: (val) => passwordErrorText(val),
                     onValidate: (val) => '',
                     autoFocus: false,
@@ -141,7 +141,7 @@ class ChangePasswordScreen extends HookConsumerWidget {
                       child: CustomButton(
                         width: size.width,
                         height: size.height * 0.06,
-                        content: 'Đăng nhập',
+                        content: 'Change',
                         onCallback: () {
                           submit(
                             context: context,

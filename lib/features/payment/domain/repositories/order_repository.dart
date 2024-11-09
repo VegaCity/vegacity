@@ -12,11 +12,13 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'order_repository.g.dart';
 
-
 abstract class OrderRepository {
-  Future<OrderResponse> order({required OrderRequest request, required String accessToken});
-  Future<PaymentResponse> paymentMomo({ required String accessToken, required PaymentRequest request});
-
+  Future<OrderResponse> order(
+      {required OrderRequest request, required String accessToken});
+  Future<PaymentResponse> paymentMomo(
+      {required String accessToken, required PaymentRequest request});
+  Future<PaymentResponse> paymentCash(
+      {required String accessToken, required PaymentRequest request});
 }
 
 @Riverpod(keepAlive: false)

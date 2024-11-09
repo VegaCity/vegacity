@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:base/features/auth/data/models/request/change_password_request.dart';
 import 'package:base/features/auth/data/models/request/order_request.dart';
 import 'package:base/features/auth/domain/entities/order_entities.dart';
+import 'package:base/features/payment/data/models/response/payment_response.dart';
 import 'package:base/features/payment/data/models/resquest/payment_request.dart';
 import 'package:base/features/payment/domain/repositories/order_repository.dart';
 import 'package:base/utils/constants/api_constant.dart';
@@ -41,7 +42,7 @@ class OrderController extends _$OrderController {
     required int chargeAmount,
     required String cccdPassport,
     required String paymentType,
-    // required String promoCode,
+    String promoCode = "",
     required BuildContext context,
   }) async {
     state = const AsyncLoading();
@@ -58,7 +59,7 @@ class OrderController extends _$OrderController {
       chargeAmount: chargeAmount,
       cccdPassport: cccdPassport,
       paymentType: paymentType,
-      // promoCode: promoCode,
+      promoCode: promoCode,
     );
 
     print("Request: ${request.toJson()}"); // Debugging
@@ -85,24 +86,83 @@ class OrderController extends _$OrderController {
         //payment request here
         final paymentRequest = PaymentRequest(
           invoiceId: orderResponse.data.invoiceId,
-          // balance: orderResponse.data.balance,
+          packageItemId: orderResponse.data.packageItemId,
+          packageOrderId: orderResponse.data.packageOrderId,
+          transactionChargeId: orderResponse.data.transactionChargeId,
           key: orderResponse.data.key,
           urlDirect: orderResponse.data.urlDirect,
           urlIpn: orderResponse.data.urlIpn,
         );
 
-        final paymentResponse = await orderRepository.paymentMomo(
-          accessToken: APIConstants.prefixToken + user.tokens.accessToken,
-          request: paymentRequest,
-        );
-        print("paymentResponse IN OK");
+        print("vinh log 1 ${paymentRequest.toJson()}");
+        PaymentResponse? paymentResponse;
+        switch (request.paymentType.toLowerCase()) {
+          case "cash":
+            print("thanh toán cash ");
+            paymentResponse = await orderRepository.paymentCash(
+              accessToken: APIConstants.prefixToken + user.tokens.accessToken,
+              request: paymentRequest,
+            );
 
-        await launchUrl(
-            Uri.parse(paymentResponse.data.payUrl ??
-                paymentResponse.data.vnPayResponse ??
-                paymentResponse.data.checkoutUrl ??
-                paymentResponse.data.order_url!),
-            mode: LaunchMode.externalApplication);
+            print("thanh toán cash thành công");
+            break;
+          case "momo":
+            paymentResponse = await orderRepository.paymentMomo(
+              accessToken: APIConstants.prefixToken + user.tokens.accessToken,
+              request: paymentRequest,
+            );
+
+            await launchUrl(
+                Uri.parse(paymentResponse.data.payUrl ??
+                    paymentResponse.data.vnPayResponse ??
+                    paymentResponse.data.checkoutUrl ??
+                    paymentResponse.data.order_url!),
+                mode: LaunchMode.externalApplication);
+            break;
+             case "VnPay":
+            paymentResponse = await orderRepository.paymentMomo(
+              accessToken: APIConstants.prefixToken + user.tokens.accessToken,
+              request: paymentRequest,
+            );
+
+            await launchUrl(
+                Uri.parse(paymentResponse.data.payUrl ??
+                    paymentResponse.data.vnPayResponse ??
+                    paymentResponse.data.checkoutUrl ??
+                    paymentResponse.data.order_url!),
+                mode: LaunchMode.externalApplication);
+            break;
+             case "PayOs":
+            paymentResponse = await orderRepository.paymentMomo(
+              accessToken: APIConstants.prefixToken + user.tokens.accessToken,
+              request: paymentRequest,
+            );
+
+            await launchUrl(
+                Uri.parse(paymentResponse.data.payUrl ??
+                    paymentResponse.data.vnPayResponse ??
+                    paymentResponse.data.checkoutUrl ??
+                    paymentResponse.data.order_url!),
+                mode: LaunchMode.externalApplication);
+            break;
+             case "ZaloPay":
+            paymentResponse = await orderRepository.paymentMomo(
+              accessToken: APIConstants.prefixToken + user.tokens.accessToken,
+              request: paymentRequest,
+            );
+
+            await launchUrl(
+                Uri.parse(paymentResponse.data.payUrl ??
+                    paymentResponse.data.vnPayResponse ??
+                    paymentResponse.data.checkoutUrl ??
+                    paymentResponse.data.order_url!),
+                mode: LaunchMode.externalApplication);
+            break;
+          default:
+            throw Exception("Unsupported payment type: ${request.paymentType}");
+        }
+
+        print("paymentResponse IN OK");
       },
     );
 
@@ -128,3 +188,5 @@ class OrderController extends _$OrderController {
     }
   }
 }
+
+// scan -> package -> check wallet => confirm

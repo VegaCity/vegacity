@@ -32,6 +32,8 @@ class APIConstants {
   static const trucks = '/packages';
   //PAYMENTS
   static const payment = '/payment';
+  //Cash
+  static const cash = '/order/cashier/confirm';
   //Transactions
   static const transactions = '/transactions';
 

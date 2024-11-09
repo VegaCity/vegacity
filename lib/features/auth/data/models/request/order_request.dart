@@ -5,7 +5,7 @@ class OrderRequest {
   final int? chargeAmount; // Thay đổi từ double thành int
   final String cccdPassport;
   final String paymentType;
-  // final String? promoCode;
+  final String? promoCode;
   // final String urlDirect;
 
   OrderRequest({
@@ -13,7 +13,7 @@ class OrderRequest {
     required this.chargeAmount,
     required this.cccdPassport,
     required this.paymentType,
-    // required this.promoCode,
+    required this.promoCode,
     // this.urlDirect = "vega://payment-result",
   });
 
@@ -30,9 +30,9 @@ class OrderRequest {
     result.addAll({'cccdPassport': cccdPassport});
     // result.addAll({'urlDirect': urlDirect});
     result.addAll({'paymentType': paymentType});
-    //  if (packageItemId != null) {
-    //      result.addAll({'promoCode': promoCode});
-    // }
+     if (packageItemId != null) {
+         result.addAll({'promoCode': promoCode});
+    }
  
     return result;
   }
@@ -44,7 +44,7 @@ class OrderRequest {
       cccdPassport: map['cccdPassport'] ?? '',
       // urlDirect: map['urlDirect'] ?? '',
       paymentType: map['paymentType'] ?? '',
-      // promoCode: map['promoCode'] ?? '',
+      promoCode: map['promoCode'] ?? '',
     );
   }
 

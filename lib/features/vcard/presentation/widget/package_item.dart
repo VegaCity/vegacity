@@ -138,8 +138,7 @@ class PackageItem extends HookConsumerWidget {
       child: Center(
         child: Container(
           width: 360,
-          height: 100,
-          margin: const EdgeInsets.symmetric(vertical: 10),
+          margin: const EdgeInsets.symmetric(vertical: 1),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
@@ -181,7 +180,7 @@ class PackageItem extends HookConsumerWidget {
                     Text(
                       card.name,
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),

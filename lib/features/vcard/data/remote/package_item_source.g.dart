@@ -90,7 +90,7 @@ class _PackageItemSource implements PackageItemSource {
     )
         .compose(
           _dio.options,
-          '/package-item/{id}',
+          '/package-item',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -103,6 +103,50 @@ class _PackageItemSource implements PackageItemSource {
     late VcardResponse _value;
     try {
       _value = VcardResponse.fromMap(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<VcardResponseV2>> getEtagCardV2(
+    String contentType,
+    String accessToken,
+    VcardRequest request,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(request.toMap());
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Authorization': accessToken,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<HttpResponse<VcardResponseV2>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+        .compose(
+          _dio.options,
+          '/package-item',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late VcardResponseV2 _value;
+    try {
+      _value = VcardResponseV2.fromMap(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

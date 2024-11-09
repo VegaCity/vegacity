@@ -1,6 +1,7 @@
 import 'package:base/configs/routes/app_router.dart';
 import 'package:base/features/vcard/domain/entities/vcard_entity.dart';
 import 'package:base/features/scanner/controllers/etag_scanner_controller.dart';
+import 'package:base/features/vcard/presentation/controllers/vcard_controller/vcard_controller.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,8 +23,7 @@ class QRResult extends HookConsumerWidget {
     required this.closeScreen,
   });
 
-  Future<void> _saveToSharedPreferences(
-      String id, String cccdPassport) async {
+  Future<void> _saveToSharedPreferences(String id, String cccdPassport) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('id', id);
     await prefs.setString('cccdPassport', cccdPassport);
@@ -32,12 +32,12 @@ class QRResult extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
-    final state = ref.watch(etagScannerControllerProvider);
+    final state = ref.watch(vcardControllerProvider);
 
     final useFetchResult = useFetchObject<VcardEntities>(
       function: (context) => ref
-          .read(etagScannerControllerProvider.notifier)
-          .getEtagCardData(context, code),
+          .read(vcardControllerProvider.notifier)
+          .getVCardData(context, code),
       context: context,
     );
 

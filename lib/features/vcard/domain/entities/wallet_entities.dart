@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:base/features/vcard/domain/entities/walletType_entities.dart';
+
 class Wallet {
   final String id;
   final String walletTypeId;
@@ -14,8 +16,7 @@ class Wallet {
   final DateTime endDate;
   final String? store;
   final String? user;
-  final String? walletType;
- 
+  final WalletType walletType;
 
   Wallet({
     required this.id,
@@ -31,8 +32,7 @@ class Wallet {
     required this.endDate,
     this.store,
     this.user,
-    this.walletType,
- 
+    required this.walletType,
   });
 
   Map<String, dynamic> toMap() {
@@ -50,8 +50,7 @@ class Wallet {
       "endDate": endDate.toIso8601String(),
       "store": store,
       "user": user,
-      "walletType": walletType,
-   
+      "walletType": walletType.toMap(),
     };
   }
 
@@ -70,13 +69,12 @@ class Wallet {
       endDate: DateTime.parse(map["endDate"]),
       store: map["store"],
       user: map["user"],
-      walletType: map["walletType"],
-     
+      walletType: WalletType.fromMap(map["walletType"] ?? {}),
+    
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Wallet.fromJson(String source) =>
-      Wallet.fromMap(json.decode(source));
+  factory Wallet.fromJson(String source) => Wallet.fromMap(json.decode(source));
 }

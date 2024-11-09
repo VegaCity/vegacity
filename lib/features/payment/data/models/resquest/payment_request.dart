@@ -5,6 +5,9 @@ class PaymentRequest {
   final String key;
   final String urlDirect;
   final String urlIpn;
+  final String packageItemId;
+  final String packageOrderId;
+  final String transactionChargeId;
 
   // Đặt giá trị mặc định cho urlDirect trong constructor
   PaymentRequest({
@@ -12,6 +15,9 @@ class PaymentRequest {
     required this.key,
     required this.urlDirect,
     required this.urlIpn,
+    required this.packageItemId,
+    required this.packageOrderId,
+    required this.transactionChargeId,
   });
 
   Map<String, dynamic> toMap() {
@@ -20,6 +26,9 @@ class PaymentRequest {
       'key': key,
       'urlDirect': urlDirect,
       'urlIpn': urlIpn,
+      'packageItemId': packageItemId,
+      'packageOrderId': packageOrderId,
+      'transactionChargeId': transactionChargeId,
     };
   }
 
@@ -30,6 +39,9 @@ class PaymentRequest {
       // Sử dụng giá trị mặc định nếu map không có 'urlDirect'
       urlDirect: map['urlDirect'] ?? '',
       urlIpn: map['urlIpn'] ?? '',
+      packageItemId: map['packageItemId'] ?? '',
+      packageOrderId: map['packageOrderId'] ?? '',
+      transactionChargeId: map['transactionChargeId'] ?? '',
     );
   }
 

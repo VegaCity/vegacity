@@ -7,7 +7,6 @@ import 'package:base/features/payment/data/models/resquest/payment_request.dart'
 import 'package:base/features/payment/data/remote/order_source.dart';
 import 'package:base/features/payment/domain/repositories/order_repository.dart';
 
-
 // models system
 
 // utils
@@ -29,6 +28,27 @@ class OrderRepositoriesImpl extends RemoteBaseRepository
     return getDataOf(
       request: () =>
           _orderSource.order(accessToken, APIConstants.contentType, request),
+    );
+  }
+
+  @override
+  Future<PaymentResponse> paymentCash({
+    required String accessToken,
+    required PaymentRequest request,
+  }) async {
+    print('here test ${request.toJson()}  ');
+
+    // exp key : "Momo_2024101914405513"
+    final key = request.key;
+
+    final formatPaymentType = key.split('_')[0].toLowerCase();
+    print(formatPaymentType);
+    return await getDataOf(
+      request: () => _orderSource.paymentCash(
+        accessToken,
+        APIConstants.contentType,
+        request,
+      ),
     );
   }
 

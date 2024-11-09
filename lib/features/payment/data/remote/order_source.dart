@@ -26,6 +26,13 @@ abstract class OrderSource {
     @Body() OrderRequest request,
   );
 
+  @POST(APIConstants.cash)
+  Future<HttpResponse<PaymentResponse>> paymentCash(
+    @Header(APIConstants.authHeader) String acesstoken,
+    @Header(APIConstants.contentHeader) String contentType,
+    @Body() PaymentRequest request,
+  );
+
   @POST('${APIConstants.payment}/{formatPaymentType}')
   Future<HttpResponse<PaymentResponse>> paymentMomo(
     @Header(APIConstants.authHeader) String acesstoken,

@@ -28,14 +28,14 @@ class TransferScreen extends HookConsumerWidget {
     required int chargeAmount,
     required String cccdPassport,
     required String paymentType,
-    // required String promoCode,
+    required String promoCode,
   }) async {
     await ref.read(orderControllerProvider.notifier).order(
           packageItemId: packageItemId,
           chargeAmount: chargeAmount,
           cccdPassport: cccdPassport,
           paymentType: paymentType,
-          //  promoCode: promoCode,
+          promoCode: promoCode,
           context: context,
         );
     print("Submit thành công");
@@ -49,6 +49,7 @@ class TransferScreen extends HookConsumerWidget {
     final chargeAmountController = useTextEditingController();
     final formKey = useMemoized(GlobalKey<FormState>.new);
     final paymentType = useState<String>("");
+    final promoCodeController = useTextEditingController();
 
     // useEffect(() {
     //   _loadSavedValues(cccdController, etagCodeController);
@@ -78,10 +79,19 @@ class TransferScreen extends HookConsumerWidget {
               const SizedBox(height: 20),
               _buildAmountInputSection(chargeAmountController),
               const SizedBox(height: 20),
+              _buildPromoCodeInputSection(promoCodeController),
+              const SizedBox(height: 20),
               _buildPaymentOptionButton(context, paymentType),
               const SizedBox(height: 20),
-              _buildActionButtons(context, ref, formKey, etagCodeController,
-                  chargeAmountController, cccdController, paymentType),
+              _buildActionButtons(
+                  context,
+                  ref,
+                  formKey,
+                  etagCodeController,
+                  chargeAmountController,
+                  cccdController,
+                  promoCodeController,
+                  paymentType),
             ],
           ),
         ),
@@ -115,6 +125,29 @@ class TransferScreen extends HookConsumerWidget {
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             suffixIcon: Icon(FontAwesomeIcons.idCard, color: Color(0xFF007BFF)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPromoCodeInputSection(
+      TextEditingController promoCodeController) {
+    return Center(
+      child: Container(
+        width: 350,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF0F4FF),
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: const Color(0xFFE0E0E0)),
+        ),
+        child: TextField(
+          controller: promoCodeController,
+          decoration: const InputDecoration(
+            hintText: 'Enter promo code',
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            suffixIcon: Icon(FontAwesomeIcons.tag, color: Color(0xFF007BFF)),
           ),
         ),
       ),
@@ -245,13 +278,14 @@ class TransferScreen extends HookConsumerWidget {
                   Navigator.pop(context);
                 },
               ),
-              // ListTile(
-              //   title: const Text('Cash'),
-              //   onTap: () {
-              //     paymentType.value = 'Cash';
-              //     Navigator.pop(context);
-              //   },
-              // ),
+              ListTile(
+                title:
+                    const Text('Cash', style: TextStyle(color: Colors.black)),
+                onTap: () {
+                  paymentType.value = 'Cash';
+                  Navigator.pop(context);
+                },
+              ),
             ],
           ),
         );
@@ -266,6 +300,7 @@ class TransferScreen extends HookConsumerWidget {
     TextEditingController packageItemController,
     TextEditingController chargeAmountController,
     TextEditingController cccdController,
+    TextEditingController promoCodeController,
     ValueNotifier<String> paymentType,
   ) {
     return Row(
@@ -274,13 +309,12 @@ class TransferScreen extends HookConsumerWidget {
         ElevatedButton(
           onPressed: () => Navigator.pop(context),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white, // Màu nền nút "Quay lại"
-            foregroundColor: Colors.blue, // Màu chữ
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.blue,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5), // Bo tròn
+              borderRadius: BorderRadius.circular(5),
             ),
-            padding: const EdgeInsets.symmetric(
-                horizontal: 20, vertical: 10), // Padding tùy chỉnh
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           ),
           child: const Text('Cancel'),
         ),
@@ -290,6 +324,27 @@ class TransferScreen extends HookConsumerWidget {
             final rawAmount =
                 chargeAmountController.text.replaceAll(RegExp(r'\D'), '');
             final chargeAmount = int.tryParse(rawAmount) ?? 0;
+
+            if (paymentType.value.isEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Please select a payment method.'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+              return;
+            }
+
+            if (chargeAmount <= 0) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Please enter a valid amount greater than 0.'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+              return;
+            }
+
             submit(
               context: context,
               formKey: formKey,
@@ -298,6 +353,7 @@ class TransferScreen extends HookConsumerWidget {
               chargeAmount: chargeAmount,
               cccdPassport: cccdController.text,
               paymentType: paymentType.value,
+              promoCode: promoCodeController.text,
             );
           },
           style: ElevatedButton.styleFrom(
@@ -309,7 +365,7 @@ class TransferScreen extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(
                 horizontal: 20, vertical: 10), // Padding tùy chỉnh
           ),
-          child: const Text('continue'),
+          child: const Text('Continue'),
         ),
       ],
     );

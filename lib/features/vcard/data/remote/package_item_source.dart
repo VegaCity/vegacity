@@ -2,6 +2,7 @@
 
 import 'package:base/features/vcard/data/model/request/etag_request.dart';
 import 'package:base/features/vcard/data/model/response/vcard_response.dart';
+import 'package:base/features/vcard/data/model/response/vcard_response_v2.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -27,8 +28,15 @@ abstract class PackageItemSource {
     @Queries() PackageitemRequest request,
   );
 
-  @GET('${APIConstants.card}/{id}')
+  @GET(APIConstants.card)
   Future<HttpResponse<VcardResponse>> getEtagCard(
+    @Header(APIConstants.contentHeader) String contentType,
+    @Header(APIConstants.authHeader) String accessToken,
+    @Queries() VcardRequest request,
+    // @Path('id') String id,
+  );
+  @GET(APIConstants.card)
+  Future<HttpResponse<VcardResponseV2>> getEtagCardV2(
     @Header(APIConstants.contentHeader) String contentType,
     @Header(APIConstants.authHeader) String accessToken,
     @Queries() VcardRequest request,
