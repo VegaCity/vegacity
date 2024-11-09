@@ -118,7 +118,7 @@ class AssetsConstants {
   static const transactionOut = Color(0xffE58E74);
 
   // Images
-  static const String spashImage = '';
+  static const String spashImage = 'assets/images/Logo.png';
   static const String spashLogo = '';
   static const String appLogo = 'assets/images/load.gif';
   static const String welcomeImage = '';

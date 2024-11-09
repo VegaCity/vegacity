@@ -1,3 +1,4 @@
+import 'package:base/splash_screen.dart';
 import 'package:base/utils/commons/functions/handle_deep_link.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,24 +36,24 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final showSplashScreen = useState(true);
-    useEffect(() {
-      initUniLinks(context, ref);
-      return null;
-    }, []);
+    final showSplashScreen = useState(true);
     // useEffect(() {
-    //   Future.delayed(const Duration(seconds: 3)).then((_) {
-    //     showSplashScreen.value = false;
-    //   });
+    //   initUniLinks(context, ref);
     //   return null;
     // }, []);
+    useEffect(() {
+      Future.delayed(const Duration(seconds: 3)).then((_) {
+        showSplashScreen.value = false;
+      });
+      return null;
+    }, []);
 
-    // if (showSplashScreen.value) {
-    //   return const MaterialApp(
-    //     debugShowCheckedModeBanner: false,
-    //     home: SplashScreen(),
-    //   );
-    // }
+    if (showSplashScreen.value) {
+      return const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen(),
+      );
+    }
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
