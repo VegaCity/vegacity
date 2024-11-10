@@ -51,7 +51,7 @@ class VcardController extends _$VcardController {
       if (!isValidWalletType) {
         showSnackBar(
           context: context,
-          content: "Bạn không thể nạp thẻ này",
+          content: "This vcard cannot be loaded or the vcard has expired",
           icon: AssetsConstants.iconError,
           backgroundColor: Colors.red,
           textColor: AssetsConstants.whiteColor,
@@ -61,7 +61,7 @@ class VcardController extends _$VcardController {
       } else {
         showSnackBar(
           context: context,
-          content: "Thông tin Etag hợp lệ",
+          content: "valid vcard",
           icon: AssetsConstants.iconSuccess,
           backgroundColor: Colors.green,
           textColor: AssetsConstants.whiteColor,
