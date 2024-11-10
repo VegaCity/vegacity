@@ -44,7 +44,7 @@ class SignInController extends _$SignInController {
       () async {
         
         final user = await authRepository.signIn(request: request);
-        print("user ${user}");
+        print("user $user");
         final isNotPermission =
             user.data.roleName == 'Admin' || user.data.roleName == 'CashierWeb';
         print("2");

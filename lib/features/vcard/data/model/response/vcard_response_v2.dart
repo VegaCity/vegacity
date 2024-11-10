@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:base/features/vcard/domain/entities/vcard_entity.dart';
 import 'package:base/features/vcard/domain/entities/vcard_entity_v2.dart';
 
 class VcardResponseV2 {

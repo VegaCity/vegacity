@@ -1,6 +1,4 @@
-import 'package:base/configs/routes/app_router.dart';
 import 'package:base/features/scanner/scanner_result.dart';
-import 'package:base/tab_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';

@@ -153,7 +153,7 @@ class HomeScreen extends HookConsumerWidget {
                           ),
                           FadeInUp(
                             child: Text(
-                              user!.fullName.split(' ').last,
+                              user.fullName.split(' ').last,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,

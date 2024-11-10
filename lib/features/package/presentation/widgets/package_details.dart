@@ -1,7 +1,6 @@
 import 'package:base/features/package/domain/entities/packages_entities.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 
 class PackageDetails extends StatelessWidget {
   final PackageEntities package;

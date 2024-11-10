@@ -55,7 +55,7 @@ class EtagScannerController extends _$EtagScannerController {
       //checkdate
       final now = DateTime.now();
       final expirationDate =
-          (vcardCardData?.crDate ?? DateTime.now()).add(Duration(days: 20));
+          (vcardCardData?.crDate ?? DateTime.now()).add(const Duration(days: 20));
       final isValid = now.isBefore(expirationDate);
 
       //final checkValidDate = deCodeQrCodeData(etagCardData?.qrcode ?? '');

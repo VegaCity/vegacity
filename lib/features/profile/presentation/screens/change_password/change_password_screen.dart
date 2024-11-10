@@ -1,15 +1,9 @@
-import 'package:base/configs/routes/app_router.dart';
-import 'package:base/features/payment/presentation/widgets/button.dart';
-import 'package:base/features/payment/presentation/widgets/destination.dart';
-import 'package:base/features/payment/presentation/widgets/note.dart';
-import 'package:base/features/payment/presentation/widgets/source.dart';
 import 'package:base/features/profile/presentation/screens/change_password/change_password_controller.dart';
 import 'package:base/utils/commons/widgets/widgets_common_export.dart';
 import 'package:base/utils/constants/asset_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 @RoutePage()

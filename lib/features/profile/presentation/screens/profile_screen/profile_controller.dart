@@ -1,7 +1,6 @@
 // data - domain impl
 import 'package:base/features/auth/domain/repositories/auth_repository.dart';
 import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
-import 'package:base/features/profile/domain/entities/profile_entity.dart';
 import 'package:base/features/profile/domain/entities/user_entity.dart';
 import 'package:base/features/profile/domain/repositories/profile_repository.dart';
 import 'package:base/utils/enums/enums_export.dart';

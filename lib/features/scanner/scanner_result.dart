@@ -1,16 +1,11 @@
-import 'package:base/configs/routes/app_router.dart';
 import 'package:base/features/vcard/domain/entities/vcard_entity.dart';
-import 'package:base/features/scanner/controllers/etag_scanner_controller.dart';
 import 'package:base/features/vcard/presentation/controllers/vcard_controller/vcard_controller.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'scanner_screen.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:intl/intl.dart';
 
 @RoutePage()
 class QRResult extends HookConsumerWidget {

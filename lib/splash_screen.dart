@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:auto_route/auto_route.dart';
-import 'package:base/tab_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:base/utils/constants/asset_constant.dart';
-import 'package:get/get.dart';
 
 @RoutePage()
 class SplashScreen extends StatefulWidget {

@@ -1,16 +1,10 @@
-import 'package:base/configs/routes/app_router.dart';
-import 'package:base/features/profile/domain/entities/profile_entity.dart';
 import 'package:base/features/profile/domain/entities/user_entity.dart';
 import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
-import 'package:base/features/profile/presentation/widgets/menu_item.dart';
 import 'package:base/features/profile/presentation/widgets/textInput.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
-import 'package:base/utils/commons/widgets/widgets_common_export.dart';
-import 'package:base/utils/constants/asset_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'dart:io';
