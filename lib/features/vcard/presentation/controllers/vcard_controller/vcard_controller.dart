@@ -51,11 +51,13 @@ class VcardController extends _$VcardController {
       if (!isValidWalletType) {
         showSnackBar(
           context: context,
-          content: "This vcard cannot be loaded or the vcard has expired",
+          content:
+              "This vCard is \"Specific\" and cannot be recharged or it has expired",
           icon: AssetsConstants.iconError,
           backgroundColor: Colors.red,
           textColor: AssetsConstants.whiteColor,
         );
+
         print("go here fail");
         context.router.pop();
       } else {
