@@ -1,5 +1,4 @@
 import 'package:base/features/payment/presentation/screen/order_controller.dart';
-import 'package:base/features/vcard/domain/entities/packageItems_entity.dart';
 import 'package:base/utils/commons/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,11 +7,11 @@ import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @RoutePage()
 class TransferScreen extends HookConsumerWidget {
-  final PackageItemEntities card;
-  const TransferScreen({super.key, required this.card});
+  const TransferScreen({super.key});
 
   void submit({
     required GlobalKey<FormState> formKey,
@@ -38,17 +37,17 @@ class TransferScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(orderControllerProvider);
-    final cccdController = useTextEditingController(text: card.cccdpassport);
-    final etagCodeController = useTextEditingController(text: card.id);
+    final cccdController = useTextEditingController();
+    final etagCodeController = useTextEditingController();
     final chargeAmountController = useTextEditingController();
     final formKey = useMemoized(GlobalKey<FormState>.new);
     final paymentType = useState<String>("");
     final promoCodeController = useTextEditingController();
 
-    // useEffect(() {
-    //   _loadSavedValues(cccdController, etagCodeController);
-    //   return null;
-    // }, []);
+    useEffect(() {
+      _loadSavedValues(cccdController, etagCodeController);
+      return null;
+    }, []);
 
     return LoadingOverlay(
       isLoading: state.isLoading,
@@ -93,15 +92,15 @@ class TransferScreen extends HookConsumerWidget {
     );
   }
 
-  // void _loadSavedValues(TextEditingController cccdController,
-  //     TextEditingController etagCodeController) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final savedEtagCode = prefs.getString('id') ?? '';
-  //   final savedCccd = prefs.getString('cccdPassport') ?? '';
+  void _loadSavedValues(TextEditingController cccdController,
+      TextEditingController etagCodeController) async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedEtagCode = prefs.getString('id') ?? '';
+    final savedCccd = prefs.getString('cccdPassport') ?? '';
 
-  //   etagCodeController.text = savedEtagCode;
-  //   cccdController.text = savedCccd;
-  // }
+    etagCodeController.text = savedEtagCode;
+    cccdController.text = savedCccd;
+  }
 
   Widget _buildDestinationSection(TextEditingController etagCodeController) {
     return Center(
@@ -272,14 +271,14 @@ class TransferScreen extends HookConsumerWidget {
                   Navigator.pop(context);
                 },
               ),
-              ListTile(
-                title:
-                    const Text('Cash', style: TextStyle(color: Colors.black)),
-                onTap: () {
-                  paymentType.value = 'Cash';
-                  Navigator.pop(context);
-                },
-              ),
+              // ListTile(
+              //   title:
+              //       const Text('Cash', style: TextStyle(color: Colors.black)),
+              //   onTap: () {
+              //     paymentType.value = 'Cash';
+              //     Navigator.pop(context);
+              //   },
+              // ),
             ],
           ),
         );

@@ -1,8 +1,11 @@
+import 'package:base/configs/routes/app_router.dart';
 import 'package:base/features/payment/presentation/screen/transfer_screen.dart';
 import 'package:base/features/vcard/domain/entities/packageItems_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:auto_route/auto_route.dart';
 
+@RoutePage()
 class PackageItem extends HookConsumerWidget {
   const PackageItem({
     super.key,
@@ -111,12 +114,7 @@ class PackageItem extends HookConsumerWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TransferScreen(card: card),
-                          ),
-                        );
+                        context.router.push(const TransferScreenRoute());
                       },
                       child: const Text(
                         'Deposit money',

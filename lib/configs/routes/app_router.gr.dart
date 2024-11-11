@@ -56,6 +56,17 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    // PackageItemRoute.name: (routeData) {
+    //   final args = routeData.argsAs<PackageItemRouteArgs>();
+    //   return AutoRoutePage<dynamic>(
+    //     routeData: routeData,
+    //     child: PackageItem(
+    //       key: args.key,
+    //       card: args.card,
+    //       onCallback: args.onCallback,
+    //     ),
+    //   );
+    // },
     PackageScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -154,13 +165,9 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     TransferScreenRoute.name: (routeData) {
-      final args = routeData.argsAs<TransferScreenRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: TransferScreen(
-          key: args.key,
-          card: args.card,
-        ),
+        child: const TransferScreen(),
       );
     },
     TransferSuccessRoute.name: (routeData) {
@@ -283,6 +290,49 @@ class OTPVerificationScreenRouteArgs {
   @override
   String toString() {
     return 'OTPVerificationScreenRouteArgs{key: $key, phoneNumber: $phoneNumber, verifyType: $verifyType}';
+  }
+}
+
+/// generated route for
+/// [PackageItem]
+class PackageItemRoute extends PageRouteInfo<PackageItemRouteArgs> {
+  PackageItemRoute({
+    Key? key,
+    required PackageItemEntities card,
+    required void Function() onCallback,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PackageItemRoute.name,
+          args: PackageItemRouteArgs(
+            key: key,
+            card: card,
+            onCallback: onCallback,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PackageItemRoute';
+
+  static const PageInfo<PackageItemRouteArgs> page =
+      PageInfo<PackageItemRouteArgs>(name);
+}
+
+class PackageItemRouteArgs {
+  const PackageItemRouteArgs({
+    this.key,
+    required this.card,
+    required this.onCallback,
+  });
+
+  final Key? key;
+
+  final PackageItemEntities card;
+
+  final void Function() onCallback;
+
+  @override
+  String toString() {
+    return 'PackageItemRouteArgs{key: $key, card: $card, onCallback: $onCallback}';
   }
 }
 
@@ -574,40 +624,16 @@ class TestScreenRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [TransferScreen]
-class TransferScreenRoute extends PageRouteInfo<TransferScreenRouteArgs> {
-  TransferScreenRoute({
-    Key? key,
-    required PackageItemEntities card,
-    List<PageRouteInfo>? children,
-  }) : super(
+class TransferScreenRoute extends PageRouteInfo<void> {
+  const TransferScreenRoute({List<PageRouteInfo>? children})
+      : super(
           TransferScreenRoute.name,
-          args: TransferScreenRouteArgs(
-            key: key,
-            card: card,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'TransferScreenRoute';
 
-  static const PageInfo<TransferScreenRouteArgs> page =
-      PageInfo<TransferScreenRouteArgs>(name);
-}
-
-class TransferScreenRouteArgs {
-  const TransferScreenRouteArgs({
-    this.key,
-    required this.card,
-  });
-
-  final Key? key;
-
-  final PackageItemEntities card;
-
-  @override
-  String toString() {
-    return 'TransferScreenRouteArgs{key: $key, card: $card}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

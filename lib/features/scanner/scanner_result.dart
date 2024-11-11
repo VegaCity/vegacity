@@ -245,7 +245,7 @@ class QRResult extends HookConsumerWidget {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Add your transfer logic here
+                          context.router.push(const TransferScreenRoute());
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
