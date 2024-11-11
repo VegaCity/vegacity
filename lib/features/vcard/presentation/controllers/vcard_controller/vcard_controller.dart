@@ -3,6 +3,8 @@ import 'package:base/features/auth/domain/repositories/auth_repository.dart';
 import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
 import 'package:base/features/vcard/domain/entities/vcard_entity.dart';
 import 'package:base/features/vcard/domain/repositories/package_item_type_repository.dart';
+import 'package:base/utils/commons/widgets/snack_bar.dart';
+import 'package:base/utils/constants/asset_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dio/dio.dart';
@@ -46,6 +48,31 @@ class VcardController extends _$VcardController {
       vcardCardData = response.data;
       if (vcardCardData != null) {
         _cache[id] = vcardCardData!;
+      }
+      final isValidWalletType =
+          vcardCardData?.wallet.walletType.name == "SpecificWallet";
+
+      if (isValidWalletType) {
+        showSnackBar(
+          context: context,
+          content:
+              "This vCard is \"Specific\" and cannot be recharged or it has expired",
+          icon: AssetsConstants.iconError,
+          backgroundColor: Colors.red,
+          textColor: AssetsConstants.whiteColor,
+        );
+
+        print("go here fail");
+      } else {
+        showSnackBar(
+          context: context,
+          content: "valid vcard",
+          icon: AssetsConstants.iconSuccess,
+          backgroundColor: Colors.green,
+          textColor: AssetsConstants.whiteColor,
+        );
+
+        print("go here oke");
       }
     });
 
