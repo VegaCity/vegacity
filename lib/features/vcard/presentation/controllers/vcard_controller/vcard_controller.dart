@@ -23,17 +23,22 @@ part 'vcard_controller.g.dart';
 class VcardController extends _$VcardController {
   @override
   FutureOr<void> build() {}
-
+  final _cache = <String, VcardEntities>{};
   Future<VcardEntities?> getVCardData(
     BuildContext context,
-    String id,
-  ) async {
+    String id, {
+    bool forceRefresh = false, // Thêm parameter để force refresh
+  }) async {
+    if (!forceRefresh && _cache.containsKey(id)) {
+      return _cache[id];
+    }
     VcardEntities? vcardCardData;
     state = const AsyncLoading();
     final PackageItemTypeRepository =
         ref.read(packageItemTypeRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
+    final validWalletTypes = ["StoreWallet", "UserWallet", "ServiceWallet"];
 
     // data test id: 989fe0c5-dab6-4473-ad70-f4259bdd8f13
     state = await AsyncValue.guard(() async {
@@ -41,35 +46,9 @@ class VcardController extends _$VcardController {
         accessToken: APIConstants.prefixToken + user!.tokens.accessToken,
         id: id,
       );
-
       vcardCardData = response.data;
-      print("vinh check data ${response.data.wallet.walletType.name}");
-
-      final isValidWalletType =
-          vcardCardData?.wallet.walletType.name == "ServiceWallet";
-
-      if (!isValidWalletType) {
-        showSnackBar(
-          context: context,
-          content:
-              "This vCard is \"Specific\" and cannot be recharged or it has expired",
-          icon: AssetsConstants.iconError,
-          backgroundColor: Colors.red,
-          textColor: AssetsConstants.whiteColor,
-        );
-
-        print("go here fail");
-        context.router.pop();
-      } else {
-        showSnackBar(
-          context: context,
-          content: "valid vcard",
-          icon: AssetsConstants.iconSuccess,
-          backgroundColor: Colors.green,
-          textColor: AssetsConstants.whiteColor,
-        );
-
-        print("go here oke");
+      if (vcardCardData != null) {
+        _cache[id] = vcardCardData!;
       }
     });
 
@@ -77,6 +56,7 @@ class VcardController extends _$VcardController {
       state = await AsyncValue.guard(
         () async {
           final statusCode = (state.error as DioException).onStatusDio();
+
           await handleAPIError(
             statusCode: statusCode,
             stateError: state.error!,
@@ -86,7 +66,10 @@ class VcardController extends _$VcardController {
               context,
             ),
           );
-
+          if (statusCode == 404) {
+            state = const AsyncData(null);
+            return;
+          }
           // if refresh token expired
           if (state.hasError) {
             await ref.read(signInControllerProvider.notifier).signOut(context);
@@ -96,11 +79,18 @@ class VcardController extends _$VcardController {
           if (statusCode != StatusCodeType.unauthentication.type) {
             return;
           }
-
-          await getVCardData(context, id);
         },
       );
     }
     return vcardCardData;
+  }
+
+  void clearCache() {
+    _cache.clear();
+  }
+
+  // Thêm method để remove một item khỏi cache
+  void removeFromCache(String id) {
+    _cache.remove(id);
   }
 }

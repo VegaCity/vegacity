@@ -6,20 +6,12 @@ import 'dart:async';
 import 'package:base/features/package/domain/entities/packages_entities.dart';
 import 'package:base/features/package/presentation/screens/package_screen/package_controller.dart';
 import 'package:base/features/home/presentation/widget/home_item.dart';
-import 'package:base/features/profile/domain/entities/profile_entity.dart';
 import 'package:base/features/profile/domain/entities/user_entity.dart';
 import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
-import 'package:base/features/scanner/controllers/etag_scanner_controller.dart';
-import 'package:base/features/vcard/domain/entities/vcard_entity.dart';
-import 'package:base/features/vcard/domain/entities/vcard_entity_v2.dart';
-import 'package:base/features/vcard/presentation/controllers/vcard_controller/vcard_controller.dart';
 import 'package:base/hooks/use_fetch.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:base/models/request/paging_model.dart';
-import 'package:base/utils/commons/widgets/custom_circular.dart';
-import 'package:base/utils/commons/widgets/no_more_content.dart';
 
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
@@ -28,10 +20,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 // import 'package:carousel_slider/carousel_slider.dart';
 
-import 'package:base/features/home/presentation/widget/action_button.dart';
 import 'package:base/utils/constants/asset_constant.dart';
 
-import 'package:base/features/home/presentation/widget/action_button.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 
 @RoutePage()

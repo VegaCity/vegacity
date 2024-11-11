@@ -10,7 +10,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
-import 'package:intl/intl.dart';
 
 // utils
 import 'package:base/utils/constants/asset_constant.dart';

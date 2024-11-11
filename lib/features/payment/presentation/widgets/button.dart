@@ -1,7 +1,6 @@
 import 'package:base/configs/routes/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 Widget buildButtons(BuildContext context) {
   return Padding(
