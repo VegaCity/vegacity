@@ -18,6 +18,7 @@ final searchQueryProvider = StateProvider.autoDispose<String>((ref) => '');
 
 @RoutePage()
 class CardScreen extends HookConsumerWidget {
+  
   const CardScreen({super.key});
 
   @override
@@ -129,7 +130,7 @@ class CardScreen extends HookConsumerWidget {
                     : filteredItems.isEmpty
                         ? const Align(
                             alignment: Alignment.topCenter,
-                            child: EmptyBox(title: 'Không có dữ liệu'),
+                            child: EmptyBox(title: 'no data'),
                           )
                         : GridView.builder(
                             itemCount: filteredItems

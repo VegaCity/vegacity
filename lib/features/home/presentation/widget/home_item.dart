@@ -72,6 +72,8 @@ class HomeItem extends HookConsumerWidget {
                     color: Colors.black87,
                     fontFamily: 'Inter',
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               const SizedBox(height: 5),
@@ -90,7 +92,7 @@ class HomeItem extends HookConsumerWidget {
                   child: const Text(
                     "more",
                     style: TextStyle(
-                      fontSize: 14, 
+                      fontSize: 14,
                       color: Colors.grey,
                       fontFamily: 'Inter',
                     ),

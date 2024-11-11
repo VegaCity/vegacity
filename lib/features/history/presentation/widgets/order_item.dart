@@ -59,10 +59,10 @@ class OrderItem extends HookConsumerWidget {
                   FadeInDown(
                     child: Icon(
                       history.type == 'Income'
-                          ? Icons.arrow_upward
-                          : Icons.arrow_downward,
+                          ? Icons.arrow_downward
+                          : Icons.arrow_upward,
                       color:
-                          history.type == 'Income' ? Colors.blue : Colors.red,
+                          history.type == 'Income' ? Colors.red : Colors.green,
                       size: 20,
                     ),
                   ),
@@ -73,8 +73,9 @@ class OrderItem extends HookConsumerWidget {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color:
-                            history.type == 'Income' ? Colors.blue : Colors.red,
+                        color: history.type == 'Income'
+                            ? Colors.red
+                            : Colors.green,
                       ),
                     ),
                   ),
