@@ -56,7 +56,7 @@ class VcardController extends _$VcardController {
         showSnackBar(
           context: context,
           content:
-              "This vCard is \"Specific\" and cannot be recharged or it has expired",
+              "VCard is \"Specific\" and cannot be recharged or it has expired",
           icon: AssetsConstants.iconError,
           backgroundColor: Colors.red,
           textColor: AssetsConstants.whiteColor,

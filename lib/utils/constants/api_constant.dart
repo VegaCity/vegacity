@@ -26,6 +26,8 @@ class APIConstants {
   static const card = '/package-item';
   // package
   static const packages = '/packages';
+  // promtion
+  static const promotions = '/promotions';
   // etags
   static const packageitem = '/package-items';
   // test

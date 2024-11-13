@@ -9,7 +9,7 @@ class PackageEntities {
   final int price;
   final DateTime? crDate;
   final DateTime? upsDate;
-  final String? marketZone; // Giá trị tùy chọn (nullable)
+  final String? marketZone; 
 
   PackageEntities({
     required this.id,

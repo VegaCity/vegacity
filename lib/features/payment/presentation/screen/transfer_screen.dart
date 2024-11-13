@@ -1,4 +1,7 @@
-import 'package:base/features/payment/presentation/screen/order_controller.dart';
+import 'package:animate_do/animate_do.dart';
+import 'package:base/features/payment/presentation/screen/controller/orderV2_controller.dart';
+import 'package:base/features/payment/presentation/screen/controller/order_controller.dart';
+import 'package:base/features/promotion/presentation/controller/promotion_controller.dart';
 import 'package:base/utils/commons/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -34,9 +37,29 @@ class TransferScreen extends HookConsumerWidget {
     print("Submit thành công");
   }
 
+  void submitWithoutPromotion({
+    required GlobalKey<FormState> formKey,
+    required BuildContext context,
+    required WidgetRef ref,
+    required String packageItemId,
+    required int chargeAmount,
+    required String cccdPassport,
+    required String paymentType,
+  }) async {
+    await ref.read(orderv2ControllerProvider.notifier).orderv2(
+          packageItemId: packageItemId,
+          chargeAmount: chargeAmount,
+          cccdPassport: cccdPassport,
+          paymentType: paymentType,
+          context: context,
+        );
+    print("Submit thành công");
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(orderControllerProvider);
+    final state1 = ref.watch(promotionControllerProvider);
     final cccdController = useTextEditingController();
     final etagCodeController = useTextEditingController();
     final chargeAmountController = useTextEditingController();
@@ -45,7 +68,7 @@ class TransferScreen extends HookConsumerWidget {
     final promoCodeController = useTextEditingController();
 
     useEffect(() {
-      _loadSavedValues(cccdController, etagCodeController);
+      _loadSavedValues(cccdController, etagCodeController, promoCodeController);
       return null;
     }, []);
 
@@ -53,6 +76,42 @@ class TransferScreen extends HookConsumerWidget {
       isLoading: state.isLoading,
       child: Scaffold(
         backgroundColor: const Color(0xFFF0F4FF),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(200),
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF0052CC), // Blue
+                  Color(0xFF00AAFF), // Light Blue
+                  Color.fromARGB(255, 111, 194, 208),
+                  Color.fromARGB(255, 116, 240, 231), // Pastel Light Purple
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: Column(
+              children: [
+                AppBar(
+                  backgroundColor: Colors.transparent, // AppBar trong suốt
+                  elevation: 0,
+                  centerTitle: true,
+                  title: FadeInDown(
+                    child: const Text(
+                      'Transfer',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.only(top: 48.0),
           child: Column(
@@ -60,11 +119,8 @@ class TransferScreen extends HookConsumerWidget {
             children: [
               const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Transfer money to account number',
-                  style: TextStyle(fontSize: 18, color: Color(0xFF007BFF)),
-                ),
               ),
+              _buildTitleSection(),
               const SizedBox(height: 20),
               _buildDestinationSection(etagCodeController),
               const SizedBox(height: 20),
@@ -92,14 +148,62 @@ class TransferScreen extends HookConsumerWidget {
     );
   }
 
-  void _loadSavedValues(TextEditingController cccdController,
-      TextEditingController etagCodeController) async {
+  void _loadSavedValues(
+      TextEditingController cccdController,
+      TextEditingController etagCodeController,
+      TextEditingController promoCodeController) async {
     final prefs = await SharedPreferences.getInstance();
     final savedEtagCode = prefs.getString('id') ?? '';
     final savedCccd = prefs.getString('cccdPassport') ?? '';
+    final savedPromoCode = prefs.getString('promotionCode') ?? '';
 
     etagCodeController.text = savedEtagCode;
     cccdController.text = savedCccd;
+    promoCodeController.text = savedPromoCode;
+  }
+
+  Widget _buildTitleSection() {
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Icon(FontAwesomeIcons.idCard, color: Color(0xFF007BFF)),
+          SizedBox(width: 8),
+          Text(
+            'Card ID',
+            style: TextStyle(fontSize: 16, color: Color(0xFF007BFF)),
+          ),
+          Spacer(),
+          Icon(FontAwesomeIcons.passport, color: Color(0xFF007BFF)),
+          SizedBox(width: 8),
+          Text(
+            'CCCD/Passport',
+            style: TextStyle(fontSize: 16, color: Color(0xFF007BFF)),
+          ),
+          Spacer(),
+          Icon(FontAwesomeIcons.moneyBillAlt, color: Color(0xFF007BFF)),
+          SizedBox(width: 8),
+          Text(
+            'Charge Money',
+            style: TextStyle(fontSize: 16, color: Color(0xFF007BFF)),
+          ),
+          Spacer(),
+          Icon(FontAwesomeIcons.tag, color: Color(0xFF007BFF)),
+          SizedBox(width: 8),
+          Text(
+            'Promotion',
+            style: TextStyle(fontSize: 16, color: Color(0xFF007BFF)),
+          ),
+          Spacer(),
+          Icon(FontAwesomeIcons.moneyBillAlt, color: Color(0xFF007BFF)),
+          SizedBox(width: 8),
+          Text(
+            'Payment Method',
+            style: TextStyle(fontSize: 16, color: Color(0xFF007BFF)),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildDestinationSection(TextEditingController etagCodeController) {
@@ -179,13 +283,21 @@ class TransferScreen extends HookConsumerWidget {
           borderRadius: BorderRadius.circular(5),
           border: Border.all(color: const Color(0xFFE0E0E0)),
         ),
-        child: TextField(
+        child: TextFormField(
           controller: chargeAmountController,
           keyboardType: TextInputType.number,
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
             NumberWithCurrencyFormatter(),
           ],
+          validator: (value) {
+            final rawAmount = value?.replaceAll(RegExp(r'\D'), '') ?? '';
+            final chargeAmount = int.tryParse(rawAmount) ?? 0;
+            if (chargeAmount < 50000 || chargeAmount % 10000 != 0) {
+              return 'Please enter an amount of 50,000 VND or more in increments of 10,000 VND.';
+            }
+            return null;
+          },
           decoration: const InputDecoration(
             hintText: '0 VND',
             border: InputBorder.none,
@@ -271,14 +383,6 @@ class TransferScreen extends HookConsumerWidget {
                   Navigator.pop(context);
                 },
               ),
-              // ListTile(
-              //   title:
-              //       const Text('Cash', style: TextStyle(color: Colors.black)),
-              //   onTap: () {
-              //     paymentType.value = 'Cash';
-              //     Navigator.pop(context);
-              //   },
-              // ),
             ],
           ),
         );
@@ -321,33 +425,53 @@ class TransferScreen extends HookConsumerWidget {
             if (paymentType.value.isEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Please select a payment method.'),
+                  content: Text(
+                    'Please select a payment method.',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   backgroundColor: Colors.red,
                 ),
               );
               return;
             }
 
-            if (chargeAmount <= 0) {
+            if (chargeAmount < 50000 ||
+                chargeAmount % 10000 != 0 ||
+                chargeAmount <= 0) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Please enter a valid amount greater than 0.'),
+                  content: Text(
+                    'Please enter a valid amount greater than 50.000.',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   backgroundColor: Colors.red,
                 ),
               );
               return;
             }
 
-            submit(
-              context: context,
-              formKey: formKey,
-              ref: ref,
-              packageItemId: packageItemController.text,
-              chargeAmount: chargeAmount,
-              cccdPassport: cccdController.text,
-              paymentType: paymentType.value,
-              promoCode: promoCodeController.text,
-            );
+            if (promoCodeController.text.isNotEmpty) {
+              submit(
+                context: context,
+                formKey: formKey,
+                ref: ref,
+                packageItemId: packageItemController.text,
+                chargeAmount: chargeAmount,
+                cccdPassport: cccdController.text,
+                paymentType: paymentType.value,
+                promoCode: promoCodeController.text,
+              );
+            } else {
+              submitWithoutPromotion(
+                context: context,
+                formKey: formKey,
+                ref: ref,
+                packageItemId: packageItemController.text,
+                chargeAmount: chargeAmount,
+                cccdPassport: cccdController.text,
+                paymentType: paymentType.value,
+              );
+            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue, // Màu nền nút "Tiếp tục"

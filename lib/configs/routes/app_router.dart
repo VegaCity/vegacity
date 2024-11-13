@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:base/configs/routes/guard/auth_guard.dart';
+import 'package:base/features/promotion/presentation/screen/promotion_screen.dart';
 import 'package:base/features/vcard/domain/entities/packageItems_entity.dart';
 import 'package:base/features/vcard/presentation/screen/package_item_screen.dart';
 import 'package:base/features/map/map_screen.dart';
@@ -59,7 +60,9 @@ class AppRouter extends _$AppRouter {
           page: SignInScreenRoute.page,
           initial: true,
         ),
-        AutoRoute(page: SignUpScreenRoute.page),
+        AutoRoute(
+          page: SignUpScreenRoute.page,
+        ),
         AutoRoute(page: OTPVerificationScreenRoute.page),
 
         // Màn hình Onboarding
@@ -113,6 +116,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: QRResultRoute.page,
+          // initial: true,
+        ),
+        AutoRoute(
+          page: PromotionScreenRoute.page,
           // initial: true,
         ),
         AutoRoute(

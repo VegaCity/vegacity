@@ -3,6 +3,7 @@
 import 'package:base/features/auth/data/models/request/order_request.dart';
 import 'package:base/features/auth/data/models/response/order_response.dart';
 import 'package:base/features/payment/data/models/response/payment_response.dart';
+import 'package:base/features/payment/data/models/resquest/orderV2_request.dart';
 import 'package:base/features/payment/data/models/resquest/payment_request.dart';
 import 'package:base/features/payment/data/remote/order_source.dart';
 import 'package:base/features/payment/domain/repositories/order_repository.dart';
@@ -28,6 +29,17 @@ class OrderRepositoriesImpl extends RemoteBaseRepository
     return getDataOf(
       request: () =>
           _orderSource.order(accessToken, APIConstants.contentType, request),
+    );
+  }
+
+   @override
+  Future<OrderResponse> orderv2({
+    required String accessToken,
+    required OrderV2Request request,
+  }) async {
+    return getDataOf(
+      request: () =>
+          _orderSource.orderv2(accessToken, APIConstants.contentType, request),
     );
   }
 

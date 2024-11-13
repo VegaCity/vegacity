@@ -99,6 +99,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ProfileScreen(),
       );
     },
+    PromotionScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PromotionScreen(),
+      );
+    },
     QRResultRoute.name: (routeData) {
       final args = routeData.argsAs<QRResultRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -418,6 +424,20 @@ class ProfileScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ProfileScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PromotionScreen]
+class PromotionScreenRoute extends PageRouteInfo<void> {
+  const PromotionScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          PromotionScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PromotionScreenRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

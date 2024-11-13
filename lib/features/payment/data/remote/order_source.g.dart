@@ -68,6 +68,50 @@ class _OrderSource implements OrderSource {
   }
 
   @override
+  Future<HttpResponse<OrderResponse>> orderv2(
+    String acesstoken,
+    String contentType,
+    OrderV2Request request,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      r'Authorization': acesstoken,
+      r'Content-Type': contentType,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(request?.toMap() ?? <String, dynamic>{});
+    final _options = _setStreamType<HttpResponse<OrderResponse>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+        .compose(
+          _dio.options,
+          '/package-item/charge-money',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late OrderResponse _value;
+    try {
+      _value = OrderResponse.fromMap(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
+  }
+
+  @override
   Future<HttpResponse<PaymentResponse>> paymentCash(
     String acesstoken,
     String contentType,

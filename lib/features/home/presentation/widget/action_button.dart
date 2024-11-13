@@ -54,8 +54,10 @@ class ActionButtons extends StatelessWidget {
             ),
             IconButtonWithLabel(
               imagePath: 'assets/images/dashboard.png',
-              label: 'Dashboard',
-              onPressed: () => _showUnderDevelopmentDialog(context),
+              label: 'Promotion',
+              onPressed: () {
+                context.router.push(const PromotionScreenRoute());
+              },
             ),
           ],
         ),

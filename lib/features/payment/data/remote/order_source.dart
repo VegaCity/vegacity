@@ -1,4 +1,5 @@
 import 'package:base/features/payment/data/models/response/payment_response.dart';
+import 'package:base/features/payment/data/models/resquest/orderV2_request.dart';
 import 'package:base/features/payment/data/models/resquest/payment_request.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -25,6 +26,14 @@ abstract class OrderSource {
     @Header(APIConstants.contentHeader) String contentType,
     @Body() OrderRequest request,
   );
+
+   @POST(APIConstants.order)
+  Future<HttpResponse<OrderResponse>> orderv2(
+    @Header(APIConstants.authHeader) String acesstoken,
+    @Header(APIConstants.contentHeader) String contentType,
+    @Body() OrderV2Request request,
+  );
+
 
   @POST(APIConstants.cash)
   Future<HttpResponse<PaymentResponse>> paymentCash(
