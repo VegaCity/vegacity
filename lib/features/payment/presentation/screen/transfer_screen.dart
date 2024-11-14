@@ -164,7 +164,7 @@ class TransferScreen extends HookConsumerWidget {
   Widget _buildDestinationSection(TextEditingController etagCodeController) {
     return Center(
       child: FadeInUp(
-        child: Container(
+        child: SizedBox(
           width: 350,
           child: Stack(
             children: [
@@ -226,7 +226,7 @@ class TransferScreen extends HookConsumerWidget {
       BuildContext context, TextEditingController promoCodeController) {
     return Center(
       child: FadeInUp(
-        child: Container(
+        child: SizedBox(
           width: 350,
           child: Column(
             children: [
@@ -291,7 +291,7 @@ class TransferScreen extends HookConsumerWidget {
                       // Điều hướng sang trang khác khi nhấn vào dòng chữ
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                            builder: (context) => PromotionScreen()),
+                            builder: (context) => const PromotionScreen()),
                       );
                     },
                     child: FadeInUp(
@@ -319,7 +319,7 @@ class TransferScreen extends HookConsumerWidget {
   Widget _buildCccdSection(TextEditingController cccdController) {
     return Center(
       child: FadeInUp(
-        child: Container(
+        child: SizedBox(
           width: 350,
           child: Stack(
             children: [
@@ -381,7 +381,7 @@ class TransferScreen extends HookConsumerWidget {
       TextEditingController chargeAmountController) {
     return Center(
       child: FadeInUp(
-        child: Container(
+        child: SizedBox(
           width: 350,
           child: Stack(
             children: [
@@ -457,7 +457,7 @@ class TransferScreen extends HookConsumerWidget {
       BuildContext context, ValueNotifier<String> paymentType) {
     return Center(
       child: FadeInUp(
-        child: Container(
+        child: SizedBox(
           width: 350,
           child: Stack(
             children: [
