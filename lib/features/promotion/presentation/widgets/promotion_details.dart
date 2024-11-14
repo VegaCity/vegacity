@@ -39,13 +39,13 @@ class PromotionDetails extends StatelessWidget {
                 end: Alignment.bottomRight,
               ),
             ),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Center(
                   child: Text(
-                    promotion.name,
+                    'Voucher',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -206,8 +206,7 @@ class ProgramRules extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const TransferScreen()),
+                MaterialPageRoute(builder: (context) => const TransferScreen()),
               );
             },
             style: ElevatedButton.styleFrom(

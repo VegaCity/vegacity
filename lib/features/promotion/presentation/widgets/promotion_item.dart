@@ -93,7 +93,7 @@ class PromotionItem extends HookConsumerWidget {
                       fontSize: 14,
                       color: Colors.grey[600],
                     ),
-                    maxLines: 3,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

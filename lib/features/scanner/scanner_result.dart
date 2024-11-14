@@ -420,7 +420,7 @@ class QRResult extends HookConsumerWidget {
                             width: 40, // Kích thước của logo
                             height: 40,
                             errorBuilder: (context, error, stackTrace) {
-                              return Icon(
+                              return const Icon(
                                 Icons
                                     .error, // Hiển thị icon lỗi nếu tải ảnh không thành công
                                 color: Colors.red,
