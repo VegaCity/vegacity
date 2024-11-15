@@ -24,7 +24,7 @@ class Orderv2Controller extends _$Orderv2Controller {
   Future<void> orderv2({
     required String packageItemId,
     required int chargeAmount,
-    required String cccdPassport,
+    required String cccdpassport,
     required String paymentType,
     required BuildContext context,
   }) async {
@@ -40,7 +40,7 @@ class Orderv2Controller extends _$Orderv2Controller {
     final request = OrderV2Request(
       packageItemId: packageItemId,
       chargeAmount: chargeAmount,
-      cccdPassport: cccdPassport,
+      cccdPassport: cccdpassport,
       paymentType: paymentType,
     );
 

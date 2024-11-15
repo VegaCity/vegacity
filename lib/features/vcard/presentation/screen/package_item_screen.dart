@@ -18,7 +18,6 @@ final searchQueryProvider = StateProvider.autoDispose<String>((ref) => '');
 
 @RoutePage()
 class CardScreen extends HookConsumerWidget {
-  
   const CardScreen({super.key});
 
   @override
@@ -43,7 +42,7 @@ class CardScreen extends HookConsumerWidget {
       return (item.cccdpassport.toString() ==
               searchQuery) || // Kiểm tra nếu cccd bằng searchQuery
           (item.phoneNumber.toString() == searchQuery) ||
-          (item.packageId.toString() ==
+          (item.id.toString() ==
               searchQuery); // Kiểm tra nếu etagCode bằng searchQuery
     }).toList();
 

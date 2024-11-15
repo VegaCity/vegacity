@@ -23,14 +23,14 @@ class TransferScreen extends HookConsumerWidget {
     required WidgetRef ref,
     required String packageItemId,
     required int chargeAmount,
-    required String cccdPassport,
+    required String cccdpassport,
     required String paymentType,
     required String promoCode,
   }) async {
     await ref.read(orderControllerProvider.notifier).order(
           packageItemId: packageItemId,
           chargeAmount: chargeAmount,
-          cccdPassport: cccdPassport,
+          cccdpassport: cccdpassport,
           paymentType: paymentType,
           promoCode: promoCode,
           context: context,
@@ -44,13 +44,13 @@ class TransferScreen extends HookConsumerWidget {
     required WidgetRef ref,
     required String packageItemId,
     required int chargeAmount,
-    required String cccdPassport,
+    required String cccdpassport,
     required String paymentType,
   }) async {
     await ref.read(orderv2ControllerProvider.notifier).orderv2(
           packageItemId: packageItemId,
           chargeAmount: chargeAmount,
-          cccdPassport: cccdPassport,
+          cccdpassport: cccdpassport,
           paymentType: paymentType,
           context: context,
         );
@@ -643,7 +643,7 @@ class TransferScreen extends HookConsumerWidget {
                         ref: ref,
                         packageItemId: packageItemController.text,
                         chargeAmount: chargeAmount,
-                        cccdPassport: cccdController.text,
+                        cccdpassport: cccdController.text,
                         paymentType: paymentType.value,
                         promoCode: promoCodeController.text,
                       );
@@ -654,7 +654,7 @@ class TransferScreen extends HookConsumerWidget {
                         ref: ref,
                         packageItemId: packageItemController.text,
                         chargeAmount: chargeAmount,
-                        cccdPassport: cccdController.text,
+                        cccdpassport: cccdController.text,
                         paymentType: paymentType.value,
                       );
                     }

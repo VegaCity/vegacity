@@ -33,7 +33,7 @@ class VcardController extends _$VcardController {
     }
     VcardEntities? vcardCardData;
     state = const AsyncLoading();
-    final PackageItemTypeRepository =
+    final packageItemTypeRepository =
         ref.read(packageItemTypeRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
@@ -41,7 +41,7 @@ class VcardController extends _$VcardController {
 
     // data test id: 989fe0c5-dab6-4473-ad70-f4259bdd8f13
     state = await AsyncValue.guard(() async {
-      final response = await PackageItemTypeRepository.getEtagCard(
+      final response = await packageItemTypeRepository.getEtagCard(
         accessToken: APIConstants.prefixToken + user!.tokens.accessToken,
         id: id,
       );

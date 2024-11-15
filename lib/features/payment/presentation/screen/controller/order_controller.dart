@@ -24,7 +24,7 @@ class OrderController extends _$OrderController {
   Future<void> order({
     required String packageItemId,
     required int chargeAmount,
-    required String cccdPassport,
+    required String cccdpassport,
     required String paymentType,
     String promoCode = "",
     required BuildContext context,
@@ -41,7 +41,7 @@ class OrderController extends _$OrderController {
     final request = OrderRequest(
       packageItemId: packageItemId,
       chargeAmount: chargeAmount,
-      cccdPassport: cccdPassport,
+      cccdPassport: cccdpassport,
       paymentType: paymentType,
       promoCode: promoCode,
     );
