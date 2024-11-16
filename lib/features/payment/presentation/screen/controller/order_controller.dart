@@ -22,7 +22,7 @@ class OrderController extends _$OrderController {
   FutureOr<void> build() {}
 
   Future<void> order({
-    required String packageItemId,
+    required String packageOrderId,
     required int chargeAmount,
     required String cccdpassport,
     required String paymentType,
@@ -39,7 +39,7 @@ class OrderController extends _$OrderController {
     // print("User token: ${user?.tokens.accessToken}");
 
     final request = OrderRequest(
-      packageItemId: packageItemId,
+      packageOrderId: packageOrderId,
       chargeAmount: chargeAmount,
       cccdPassport: cccdpassport,
       paymentType: paymentType,

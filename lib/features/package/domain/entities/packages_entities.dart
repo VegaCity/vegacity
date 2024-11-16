@@ -2,6 +2,7 @@ import 'dart:convert';
 
 class PackageEntities {
   final String id;
+  final String type;
   final String name;
   final String description;
   final String imageUrl;
@@ -9,10 +10,10 @@ class PackageEntities {
   final int price;
   final DateTime? crDate;
   final DateTime? upsDate;
-  final String? marketZone; 
 
   PackageEntities({
     required this.id,
+    required this.type,
     required this.name,
     required this.description,
     required this.imageUrl,
@@ -20,7 +21,6 @@ class PackageEntities {
     required this.price,
     this.crDate,
     this.upsDate,
-    this.marketZone,
   });
 
   // Chuyển đối tượng sang Map
@@ -28,12 +28,12 @@ class PackageEntities {
     return {
       'id': id,
       'name': name,
+      'type': type,
       'description': description,
       'imageUrl': imageUrl,
       'price': price,
       'crDate': crDate?.toIso8601String(),
       'upsDate': upsDate?.toIso8601String(),
-      'marketZone': marketZone, // Thêm marketZone vào Map
     };
   }
 
@@ -42,13 +42,13 @@ class PackageEntities {
     return PackageEntities(
       id: map['id'] ?? '',
       name: map['name'] ?? '',
+      type: map['type'] ?? '',
       description: map['description'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
       price: map['price']?.toInt() ?? 0,
       duration: map['duration']?.toInt() ?? 0,
       crDate: map['crDate'] != null ? DateTime.parse(map['crDate']) : null,
       upsDate: map['upsDate'] != null ? DateTime.parse(map['upsDate']) : null,
-      marketZone: map['marketZone'], // Thêm marketZone từ Map
     );
   }
 
@@ -61,6 +61,6 @@ class PackageEntities {
 
   @override
   String toString() {
-    return 'PackageEntities{id: $id, name: $name, description: $description, price: $price, imageUrl: $imageUrl, crDate: $crDate, upsDate: $upsDate,Duration: $duration, marketZone: $marketZone}';
+    return 'PackageEntities{id: $id, name: $name,type: $type,description: $description, price: $price, imageUrl: $imageUrl, crDate: $crDate, upsDate: $upsDate,Duration: $duration}';
   }
 }

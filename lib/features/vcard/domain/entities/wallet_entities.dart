@@ -16,7 +16,7 @@ class Wallet {
   // final DateTime endDate;
   // final String? store;
   // final String? user;
-  final WalletType walletType;
+  // final WalletType walletType;
 
   Wallet({
     // required this.id,
@@ -32,7 +32,7 @@ class Wallet {
     // required this.endDate,
     // this.store,
     // this.user,
-    required this.walletType,
+    // required this.walletType,
   });
 
   Map<String, dynamic> toMap() {
@@ -50,7 +50,7 @@ class Wallet {
       // "endDate": endDate.toIso8601String(),
       // "store": store,
       // "user": user,
-      "walletType": walletType.toMap(),
+      // "walletType": walletType.toMap(),
     };
   }
 
@@ -69,7 +69,7 @@ class Wallet {
       // endDate: DateTime.parse(map["endDate"]),
       // store: map["store"],
       // user: map["user"],
-      walletType: WalletType.fromMap(map["walletType"] ?? {}),
+      // walletType: WalletType.fromMap(map["walletType"] ?? {}),
     );
   }
 

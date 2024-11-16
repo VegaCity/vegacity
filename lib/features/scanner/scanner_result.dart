@@ -52,21 +52,21 @@ class QRResult extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
     final state = ref.watch(vcardControllerProvider);
-    final fetchReslut = useFetch<PromotionEntities>(
-      function: (model, context) => ref
-          .read(promotionControllerProvider.notifier)
-          .getPromotions(model, context),
-      initialPagingModel: PagingModel(
-          // ví dụ ở đây và trong widgetshowCustomButtom ở widget test floder luôn
+    // final fetchReslut = useFetch<PromotionEntities>(
+    //   function: (model, context) => ref
+    //       .read(promotionControllerProvider.notifier)
+    //       .getPromotions(model, context),
+    //   initialPagingModel: PagingModel(
+    //       // ví dụ ở đây và trong widgetshowCustomButtom ở widget test floder luôn
 
-          // filterContent: ref.read(filterSystemStatus).type
-          // filterSystemContent: ref.read(filterSystemStatus).type,
-          // filterContent: ref.read(filterPartnerStatus).type,
-          // searchDateFrom: dateFrom,
-          // searchDateTo: dateTo,
-          ),
-      context: context,
-    );
+    //       // filterContent: ref.read(filterSystemStatus).type
+    //       // filterSystemContent: ref.read(filterSystemStatus).type,
+    //       // filterContent: ref.read(filterPartnerStatus).type,
+    //       // searchDateFrom: dateFrom,
+    //       // searchDateTo: dateTo,
+    //       ),
+    //   context: context,
+    // );
 
     final useFetchResult = useFetchObject<VcardEntities>(
       function: (context) async {
@@ -189,10 +189,10 @@ class QRResult extends HookConsumerWidget {
     final wallet = useFetchResult.data?.wallet ?? 0;
     final balance = useFetchResult.data?.wallet.balance ?? 0;
     final BalanceHistory = useFetchResult.data?.wallet.balanceHistory ?? 0;
-    final name = useFetchResult.data?.name ?? "No Vcard code";
+    final name = useFetchResult.data?.cusName ?? "No name";
     final vcard = useFetchResult.data?.id ?? "No Vcard code";
     final phonenumber = useFetchResult.data?.phoneNumber;
-    final cccdpassport = useFetchResult.data?.cccdpassport;
+    final cccdpassport = useFetchResult.data?.cusCccdpassport;
     final scrollController = useScrollController();
     final animationController = useAnimationController(
       duration: const Duration(milliseconds: 500),
@@ -291,7 +291,7 @@ class QRResult extends HookConsumerWidget {
                                             const SizedBox(height: 5),
                                             FadeInLeft(
                                               child: Text(
-                                                'wallet: ${useFetchResult.data?.wallet.walletType.name ?? "No wallet"}',
+                                                'package: ${useFetchResult.data?.package.type ?? "no package"}',
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 14,
@@ -462,8 +462,8 @@ class QRResult extends HookConsumerWidget {
                         height: 60,
                         child: ElevatedButton(
                           onPressed: () {
-                            if (useFetchResult.data?.wallet.walletType.name ==
-                                "SpecificWallet") {
+                            if (useFetchResult.data?.package.type ==
+                                "SpecificPackage") {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text(
@@ -491,65 +491,65 @@ class QRResult extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Container(
-                margin: const EdgeInsets.only(left: 25.5, right: 35),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    FadeInLeft(
-                      child: const Text(
-                        "Promotion",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    FadeTransition(
-                      opacity: animation,
-                      child: FadeInLeft(
-                        child: const Text(
-                          "new",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red, // Thêm màu đỏ cho nổi bật
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   margin: const EdgeInsets.only(left: 25.5, right: 35),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     children: [
+              //       FadeInLeft(
+              //         child: const Text(
+              //           "Promotion",
+              //           style: TextStyle(
+              //             fontSize: 16,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //       ),
+              //       const SizedBox(width: 5),
+              //       FadeTransition(
+              //         opacity: animation,
+              //         child: FadeInLeft(
+              //           child: const Text(
+              //             "new",
+              //             style: TextStyle(
+              //               fontSize: 16,
+              //               fontWeight: FontWeight.bold,
+              //               color: Colors.red, // Thêm màu đỏ cho nổi bật
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               const SizedBox(height: 15),
-              Padding(
-                  padding: const EdgeInsets.only(
-                      top: 16.0, left: 12, right: 12, bottom: 10),
-                  child: FadeInUp(
-                    child: GridView.builder(
-                      itemCount: fetchReslut.items.length, // Giữ lại dòng này
-                      // physics: const AlwaysScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      controller: scrollController,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AssetsConstants.defaultPadding - 5.0,
-                      ),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // Số cột
-                        crossAxisSpacing: 8, // Khoảng cách giữa các cột
-                        mainAxisSpacing: 10, // Khoảng cách giữa các hàng
-                        childAspectRatio: 0.6, // Tỷ lệ khung hình
-                      ),
-                      itemBuilder: (context, index) {
-                        return PromotionItem(
-                          promotion: fetchReslut.items[index],
-                          onCallback: fetchReslut.refresh,
-                        );
-                      },
-                    ),
-                  )),
+              // Padding(
+              //     padding: const EdgeInsets.only(
+              //         top: 16.0, left: 12, right: 12, bottom: 10),
+              //     child: FadeInUp(
+              //       child: GridView.builder(
+              //         itemCount: fetchReslut.items.length, // Giữ lại dòng này
+              //         // physics: const AlwaysScrollableScrollPhysics(),
+              //         shrinkWrap: true,
+              //         controller: scrollController,
+              //         padding: const EdgeInsets.symmetric(
+              //           horizontal: AssetsConstants.defaultPadding - 5.0,
+              //         ),
+              //         gridDelegate:
+              //             const SliverGridDelegateWithFixedCrossAxisCount(
+              //           crossAxisCount: 2, // Số cột
+              //           crossAxisSpacing: 8, // Khoảng cách giữa các cột
+              //           mainAxisSpacing: 10, // Khoảng cách giữa các hàng
+              //           childAspectRatio: 0.6, // Tỷ lệ khung hình
+              //         ),
+              //         itemBuilder: (context, index) {
+              //           return PromotionItem(
+              //             promotion: fetchReslut.items[index],
+              //             onCallback: fetchReslut.refresh,
+              //           );
+              //         },
+              //       ),
+              //     )),
             ],
           ),
         ),

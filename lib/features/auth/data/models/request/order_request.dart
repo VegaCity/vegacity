@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class OrderRequest {
-  final String? packageItemId;
+  final String? packageOrderId;
   final int? chargeAmount; // Thay đổi từ double thành int
   final String cccdPassport;
   final String paymentType;
@@ -9,7 +9,7 @@ class OrderRequest {
   // final String urlDirect;
 
   OrderRequest({
-    required this.packageItemId,
+    required this.packageOrderId,
     required this.chargeAmount,
     required this.cccdPassport,
     required this.paymentType,
@@ -20,8 +20,8 @@ class OrderRequest {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (packageItemId != null) {
-      result.addAll({'packageItemId': packageItemId});
+    if (packageOrderId != null) {
+      result.addAll({'packageOrderId': packageOrderId});
     }
     if (chargeAmount != null) {
       result.addAll(
@@ -30,7 +30,7 @@ class OrderRequest {
     result.addAll({'cccdPassport': cccdPassport});
     // result.addAll({'urlDirect': urlDirect});
     result.addAll({'paymentType': paymentType});
-     if (packageItemId != null) {
+     if (promoCode != null) {
          result.addAll({'promoCode': promoCode});
     }
  
@@ -39,7 +39,7 @@ class OrderRequest {
 
   factory OrderRequest.fromMap(Map<String, dynamic> map) {
     return OrderRequest(
-      packageItemId: map['packageItemId'] ?? '',
+      packageOrderId: map['packageOrderId'] ?? '',
       chargeAmount: map['chargeAmount']?.toInt(), // Chuyển đổi về int
       cccdPassport: map['cccdPassport'] ?? '',
       // urlDirect: map['urlDirect'] ?? '',

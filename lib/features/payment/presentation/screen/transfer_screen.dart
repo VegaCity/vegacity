@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:base/features/payment/presentation/screen/controller/orderV2_controller.dart';
 import 'package:base/features/payment/presentation/screen/controller/order_controller.dart';
-import 'package:base/features/promotion/presentation/controller/promotion_controller.dart';
 import 'package:base/features/promotion/presentation/screen/promotion_screen.dart';
 import 'package:base/utils/commons/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
@@ -21,21 +20,20 @@ class TransferScreen extends HookConsumerWidget {
     required GlobalKey<FormState> formKey,
     required BuildContext context,
     required WidgetRef ref,
-    required String packageItemId,
+    required String packageOrderId,
     required int chargeAmount,
     required String cccdpassport,
     required String paymentType,
     required String promoCode,
   }) async {
     await ref.read(orderControllerProvider.notifier).order(
-          packageItemId: packageItemId,
+          packageOrderId: packageOrderId,
           chargeAmount: chargeAmount,
           cccdpassport: cccdpassport,
           paymentType: paymentType,
           promoCode: promoCode,
           context: context,
         );
-    print("Submit thành công");
   }
 
   void submitWithoutPromotion({
@@ -54,13 +52,12 @@ class TransferScreen extends HookConsumerWidget {
           paymentType: paymentType,
           context: context,
         );
-    print("Submit thành công");
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(orderControllerProvider);
-    final state1 = ref.watch(promotionControllerProvider);
+    // final state1 = ref.watch(promotionControllerProvider);
     final cccdController = useTextEditingController();
     final etagCodeController = useTextEditingController();
     final chargeAmountController = useTextEditingController();
@@ -641,7 +638,7 @@ class TransferScreen extends HookConsumerWidget {
                         context: context,
                         formKey: formKey,
                         ref: ref,
-                        packageItemId: packageItemController.text,
+                        packageOrderId: packageItemController.text,
                         chargeAmount: chargeAmount,
                         cccdpassport: cccdController.text,
                         paymentType: paymentType.value,

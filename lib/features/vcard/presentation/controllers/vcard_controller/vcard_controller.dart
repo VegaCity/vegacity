@@ -37,7 +37,7 @@ class VcardController extends _$VcardController {
         ref.read(packageItemTypeRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
-    final validWalletTypes = ["StoreWallet", "UserWallet", "ServiceWallet"];
+    // final validWalletTypes = ["StoreWallet", "UserWallet", "ServiceWallet"];
 
     // data test id: 989fe0c5-dab6-4473-ad70-f4259bdd8f13
     state = await AsyncValue.guard(() async {
@@ -49,10 +49,10 @@ class VcardController extends _$VcardController {
       if (vcardCardData != null) {
         _cache[id] = vcardCardData!;
       }
-      final isValidWalletType =
-          vcardCardData?.wallet.walletType.name == "SpecificWallet";
+      final isValidPackageType =
+          vcardCardData?.package.type == "SpecificPackage";
 
-      if (isValidWalletType) {
+      if (isValidPackageType) {
         showSnackBar(
           context: context,
           content:
