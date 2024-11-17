@@ -1,14 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:base/configs/routes/app_router.dart';
-import 'package:base/features/promotion/domain/entities/promotion_entities.dart';
-import 'package:base/features/promotion/presentation/controller/promotion_controller.dart';
-import 'package:base/features/promotion/presentation/widgets/promotion_item.dart';
 import 'package:base/features/vcard/domain/entities/vcard_entity.dart';
 import 'package:base/features/vcard/presentation/controllers/vcard_controller/vcard_controller.dart';
-import 'package:base/hooks/use_fetch.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
-import 'package:base/models/request/paging_model.dart';
-import 'package:base/utils/constants/asset_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -186,9 +180,9 @@ class QRResult extends HookConsumerWidget {
     }
 
     // Rest of your existing code for successful data fetch
-    final wallet = useFetchResult.data?.wallet ?? 0;
-    final balance = useFetchResult.data?.wallet.balance ?? 0;
-    final BalanceHistory = useFetchResult.data?.wallet.balanceHistory ?? 0;
+    final wallet = useFetchResult.data?.wallets ?? 0;
+    final balance = useFetchResult.data?.wallets[0].balance ?? 0;
+    final BalanceHistory = useFetchResult.data?.wallets[0].balanceHistory ?? 0;
     final name = useFetchResult.data?.cusName ?? "No name";
     final vcard = useFetchResult.data?.id ?? "No Vcard code";
     final phonenumber = useFetchResult.data?.phoneNumber;
@@ -291,7 +285,7 @@ class QRResult extends HookConsumerWidget {
                                             const SizedBox(height: 5),
                                             FadeInLeft(
                                               child: Text(
-                                                'package: ${useFetchResult.data?.package.type ?? "no package"}',
+                                                'wallet: ${useFetchResult.data?.wallets[0].walletType.name ?? "no wallet"}',
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 14,
@@ -462,8 +456,9 @@ class QRResult extends HookConsumerWidget {
                         height: 60,
                         child: ElevatedButton(
                           onPressed: () {
-                            if (useFetchResult.data?.package.type ==
-                                "SpecificPackage") {
+                            if (useFetchResult
+                                    .data?.wallets[0].walletType.name ==
+                                "SpecificWallet") {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text(

@@ -18,7 +18,7 @@ class VcardEntities {
   final DateTime upsDate;
   final String status;
   final String rfid;
-  final Wallet wallet;
+  final List<Wallet> wallets;
   final Package package;
 
   VcardEntities({
@@ -37,7 +37,7 @@ class VcardEntities {
     required this.upsDate,
     required this.status,
     required this.rfid,
-    required this.wallet,
+    required this.wallets,
     required this.package,
   });
 
@@ -58,7 +58,9 @@ class VcardEntities {
     result.addAll({"upsDate": upsDate.toIso8601String()});
     result.addAll({"status": status});
     result.addAll({"rfid": rfid});
-    result.addAll({"wallet": wallet.toMap()});
+    result.addAll({
+      "wallets": wallets.map((wallet) => wallet.toMap()).toList(),
+    });
     result.addAll({"package": package.toMap()});
     return result;
   }
@@ -80,7 +82,10 @@ class VcardEntities {
       upsDate: DateTime.parse(map["upsDate"] ?? '1970-01-01T00:00:00'),
       status: map["status"] ?? '',
       rfid: map["rfid"] ?? '',
-      wallet: Wallet.fromMap(map["wallet"] ?? {}),
+      wallets: (map["wallets"] as List<dynamic>?)
+              ?.map((wallet) => Wallet.fromMap(wallet))
+              .toList() ??
+          [],
       package: Package.fromMap(map["package"] ?? {}),
     );
   }

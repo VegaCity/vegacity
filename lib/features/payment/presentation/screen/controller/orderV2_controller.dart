@@ -22,9 +22,9 @@ class Orderv2Controller extends _$Orderv2Controller {
   FutureOr<void> build() {}
 
   Future<void> orderv2({
-    required String packageItemId,
+    required String packageOrderId,
     required int chargeAmount,
-    required String cccdpassport,
+    required String cccdPassport,
     required String paymentType,
     required BuildContext context,
   }) async {
@@ -38,9 +38,9 @@ class Orderv2Controller extends _$Orderv2Controller {
     // print("User token: ${user?.tokens.accessToken}");
 
     final request = OrderV2Request(
-      packageItemId: packageItemId,
+      packageOrderId: packageOrderId,
       chargeAmount: chargeAmount,
-      cccdPassport: cccdpassport,
+      cccdPassport: cccdPassport,
       paymentType: paymentType,
     );
 

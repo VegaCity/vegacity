@@ -50,7 +50,7 @@ class VcardController extends _$VcardController {
         _cache[id] = vcardCardData!;
       }
       final isValidPackageType =
-          vcardCardData?.package.type == "SpecificPackage";
+          vcardCardData?.wallets[0].walletType.name == "SpecificWallet";
 
       if (isValidPackageType) {
         showSnackBar(

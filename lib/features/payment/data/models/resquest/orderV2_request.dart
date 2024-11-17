@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class OrderV2Request {
-  final String? packageItemId;
+  final String? packageOrderId;
   final int? chargeAmount; // Thay đổi từ double thành int
   final String cccdPassport;
   final String paymentType;
@@ -9,7 +9,7 @@ class OrderV2Request {
   // final String urlDirect;
 
   OrderV2Request({
-    required this.packageItemId,
+    required this.packageOrderId,
     required this.chargeAmount,
     required this.cccdPassport,
     required this.paymentType,
@@ -20,8 +20,8 @@ class OrderV2Request {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (packageItemId != null) {
-      result.addAll({'packageItemId': packageItemId});
+    if (packageOrderId != null) {
+      result.addAll({'packageOrderId': packageOrderId});
     }
     if (chargeAmount != null) {
       result.addAll(
@@ -36,7 +36,7 @@ class OrderV2Request {
 
   factory OrderV2Request.fromMap(Map<String, dynamic> map) {
     return OrderV2Request(
-      packageItemId: map['packageItemId'] ?? '',
+      packageOrderId: map['packageOrderId'] ?? '',
       chargeAmount: map['chargeAmount']?.toInt(), // Chuyển đổi về int
       cccdPassport: map['cccdPassport'] ?? '',
       // urlDirect: map['urlDirect'] ?? '',
@@ -49,8 +49,8 @@ class OrderV2Request {
   factory OrderV2Request.fromJson(String source) =>
       OrderV2Request.fromMap(json.decode(source));
 
-  // @override
-  // String toString() {
-  //   return 'OrderRequest( etagCode: $etagCode, chargeAmount: $chargeAmount, cccd: $cccd, paymentType: $paymentType)';
-  // }
+  @override
+  String toString() {
+    return 'OrderV2Request( packageOrderId: $packageOrderId, chargeAmount: $chargeAmount, cccdPassport: $cccdPassport, paymentType: $paymentType)';
+  }
 }
