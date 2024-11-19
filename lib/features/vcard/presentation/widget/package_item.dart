@@ -46,7 +46,7 @@ class PackageItem extends HookConsumerWidget {
                   const SizedBox(height: 20),
                   Center(
                     child: Text(
-                      card.name,
+                      card.cusName,
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -55,19 +55,9 @@ class PackageItem extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  // Center(
-                  //   child: Text(
-                  //     card.packageId,
-                  //     style: const TextStyle(
-                  //       fontSize: 16,
-                  //       color: Colors.grey,
-                  //     ),
-                  //   ),
-                  // ),
-                  const SizedBox(height: 5),
                   Center(
                     child: Text(
-                      card.cccdpassport ?? '',
+                      card.cusCccdpassport ?? '',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
@@ -75,15 +65,26 @@ class PackageItem extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Center(
-                    child: Text(
-                      card.crDate.toIso8601String().substring(0, 10),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.redAccent,
-                        fontWeight: FontWeight.bold,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        card.walletTypeName ?? '',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
+                      Text(
+                        card.crDate.toIso8601String().substring(0, 10),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
                   Container(
@@ -113,7 +114,21 @@ class PackageItem extends HookConsumerWidget {
                         ),
                       ),
                       onPressed: () {
-                        context.router.push(const TransferScreenRoute());
+                        if (card.walletTypeName == "SpecificWallet") {
+                          // Hiển thị Snackbar hoặc Dialog cảnh báo
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "Thẻ này thuộc loại không thể nạp!",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        } else {
+                          // Điều hướng đến TransferScreenRoute
+                          context.router.push(const TransferScreenRoute());
+                        }
                       },
                       child: const Text(
                         'Deposit money',
@@ -123,7 +138,7 @@ class PackageItem extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             );
@@ -173,7 +188,7 @@ class PackageItem extends HookConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      card.name,
+                      card.cusName,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

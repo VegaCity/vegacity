@@ -3,9 +3,9 @@ import 'dart:convert';
 class PackageItemEntities {
   final String id;
   final String packageId;
-  final String name;
+  final String cusName;
   final String phoneNumber;
-  final String? cccdpassport;
+  final String? cusCccdpassport;
   // final String imageUrl;
   final String gender;
   // final DateTime birthday;
@@ -14,13 +14,14 @@ class PackageItemEntities {
   final DateTime crDate;
   final DateTime upsDate;
   final String status;
+  final String? walletTypeName;
 
   PackageItemEntities({
     required this.id,
     required this.packageId,
-    required this.name,
+    required this.cusName,
     required this.phoneNumber,
-    this.cccdpassport,
+    this.cusCccdpassport,
     // required this.imageUrl,
     required this.gender,
     // required this.birthday,
@@ -29,6 +30,7 @@ class PackageItemEntities {
     required this.crDate,
     required this.upsDate,
     required this.status,
+    this.walletTypeName,
   });
 
   Map<String, dynamic> toMap() {
@@ -36,9 +38,9 @@ class PackageItemEntities {
 
     result.addAll({"id": id});
     result.addAll({"packageId": packageId});
-    result.addAll({"name": name});
+    result.addAll({"cusName": cusName});
     result.addAll({"phoneNumber": phoneNumber});
-    result.addAll({"cccdpassport": cccdpassport});
+    result.addAll({"cusCccdpassport": cusCccdpassport});
     // result.addAll({"imageUrl": imageUrl});
     result.addAll({"gender": gender});
     // result.addAll({"birthday": birthday.toIso8601String()});
@@ -47,7 +49,7 @@ class PackageItemEntities {
     result.addAll({"crDate": crDate.toIso8601String()});
     result.addAll({"upsDate": upsDate.toIso8601String()});
     result.addAll({"status": status});
-
+    result.addAll({"walletTypeName": walletTypeName});
     return result;
   }
 
@@ -55,9 +57,9 @@ class PackageItemEntities {
     return PackageItemEntities(
       id: map["id"] ?? '',
       packageId: map["packageId"] ?? '',
-      name: map["name"] ?? '',
+      cusName: map["cusName"] ?? '',
       phoneNumber: map["phoneNumber"] ?? '',
-      cccdpassport: map["cccdpassport"],
+      cusCccdpassport: map["cusCccdpassport"],
       // imageUrl: map["imageUrl"] ?? '',
       gender: map["gender"] ?? '',
       // birthday: DateTime.parse(map["birthday"] ?? '1970-01-01T00:00:00'),
@@ -66,7 +68,7 @@ class PackageItemEntities {
       crDate: DateTime.parse(map["crDate"] ?? '1970-01-01T00:00:00'),
       upsDate: DateTime.parse(map["upsDate"] ?? '1970-01-01T00:00:00'),
       status: map["status"] ?? '',
-      // status: map["status"] ?? 0,
+      walletTypeName: map["walletTypeName"],
     );
   }
 
