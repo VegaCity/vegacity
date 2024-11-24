@@ -119,7 +119,7 @@ class PackageItem extends HookConsumerWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
-                                "Thẻ này thuộc loại không thể nạp!",
+                                "this card cannot charge!",
                                 style: TextStyle(color: Colors.white),
                               ),
                               backgroundColor: Colors.red,

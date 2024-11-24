@@ -78,7 +78,7 @@ class OrderController extends _$OrderController {
           urlIpn: orderResponse.data.urlIpn,
         );
 
-        print("vinh log 1 ${paymentRequest.toJson()}");
+        print("log 1 ${paymentRequest.toJson()}");
         PaymentResponse? paymentResponse;
         switch (request.paymentType.toLowerCase()) {
           case "cash":
@@ -132,5 +132,3 @@ class OrderController extends _$OrderController {
     }
   }
 }
-
-// scan -> package -> check wallet => confirm
