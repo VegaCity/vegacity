@@ -32,7 +32,7 @@ class ActionButtons extends StatelessWidget {
           children: [
             IconButtonWithLabel(
               imagePath: 'assets/images/id-card.png',
-              label: 'E-tag',
+              label: 'Vcard',
               onPressed: () {
                 context.router.push(const CardScreenRoute());
               },

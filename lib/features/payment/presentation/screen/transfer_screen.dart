@@ -174,6 +174,7 @@ class TransferScreen extends HookConsumerWidget {
                 ),
                 child: TextField(
                   controller: etagCodeController,
+                  readOnly: true,
                   autofocus: true,
                   decoration: const InputDecoration(
                     hintText: 'Nhập code vcard của bạn',
@@ -330,6 +331,7 @@ class TransferScreen extends HookConsumerWidget {
                 child: TextField(
                   controller: cccdController,
                   autofocus: true,
+                  readOnly: true,
                   decoration: const InputDecoration(
                     hintText: 'Nhập số CCCD hoặc Passport',
                     hintStyle: TextStyle(

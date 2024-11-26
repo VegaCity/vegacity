@@ -26,7 +26,7 @@ class VcardController extends _$VcardController {
   Future<VcardEntities?> getVCardData(
     BuildContext context,
     String id, {
-    bool forceRefresh = false, // Thêm parameter để force refresh
+    bool forceRefresh = false,
   }) async {
     if (!forceRefresh && _cache.containsKey(id)) {
       return _cache[id];

@@ -37,7 +37,7 @@ class CustomBottomBar extends HookWidget {
         ),
         buildBottomNavigationBarItem(
           icon: Icons.qr_code_outlined,
-          label: 'QR Code',
+          label: 'QR Scan',
           index: 2,
           activeIndex: tabsRouter.activeIndex,
           size: size,

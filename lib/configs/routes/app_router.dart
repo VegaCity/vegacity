@@ -59,7 +59,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           page: SignInScreenRoute.page,
           initial: true,
-        ),
+        ), 
         AutoRoute(
           page: SignUpScreenRoute.page,
         ),
