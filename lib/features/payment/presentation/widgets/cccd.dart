@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class DestinationSection extends StatelessWidget {
-  final TextEditingController etagCodeController;
+class CccdSection extends StatelessWidget {
+  final TextEditingController cccdController;
 
-  const DestinationSection({
+  const CccdSection({
     Key? key,
-    required this.etagCodeController,
+    required this.cccdController,
   }) : super(key: key);
 
   @override
@@ -26,11 +25,11 @@ class DestinationSection extends StatelessWidget {
                   border: Border.all(color: const Color(0xFFE0E0E0)),
                 ),
                 child: TextField(
-                  controller: etagCodeController,
-                  readOnly: true,
+                  controller: cccdController,
                   autofocus: true,
+                  readOnly: true,
                   decoration: const InputDecoration(
-                    hintText: 'Nhập code vcard của bạn',
+                    hintText: 'Nhập số CCCD hoặc Passport',
                     hintStyle: TextStyle(
                       color: Color(0xFF999999),
                       fontSize: 14,
@@ -41,7 +40,7 @@ class DestinationSection extends StatelessWidget {
                       horizontal: 10,
                     ),
                     suffixIcon: Icon(
-                      FontAwesomeIcons.idCard,
+                      Icons.credit_card,
                       color: Color(0xFF007BFF),
                       size: 20,
                     ),
@@ -51,12 +50,12 @@ class DestinationSection extends StatelessWidget {
               Positioned(
                 left: 10,
                 top: 2,
-                child: FadeInDown(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    color: const Color(0xFFF0F4FF),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  color: const Color(0xFFF0F4FF),
+                  child: FadeInDown(
                     child: Text(
-                      'Code Vcard',
+                      'CCCD/Passport',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[600],

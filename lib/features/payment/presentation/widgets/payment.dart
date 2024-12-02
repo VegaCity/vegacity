@@ -1,96 +1,130 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
-class PaymentMethodBottomSheet extends StatefulWidget {
-  const PaymentMethodBottomSheet({super.key});
+class PaymentOptionButton extends StatelessWidget {
+  final BuildContext context;
+  final ValueNotifier<String> paymentType;
 
-  @override
-  _PaymentMethodBottomSheetState createState() =>
-      _PaymentMethodBottomSheetState();
-}
-
-class _PaymentMethodBottomSheetState extends State<PaymentMethodBottomSheet> {
-  String? _selectedMethod; // Biến để lưu phương thức thanh toán đã chọn
+  const PaymentOptionButton({
+    Key? key,
+    required this.context,
+    required this.paymentType,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(16.0),
-      height: 400, // Chiều cao của BottomSheet
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Phương thức thanh toán',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 20),
-            RadioListTile<String>(
-              title: const Text('Momo'),
-              value: 'Momo',
-              groupValue: _selectedMethod,
-              onChanged: (value) {
-                setState(() {
-                  _selectedMethod = value; // Cập nhật phương thức đã chọn
-                });
-              },
-            ),
-            RadioListTile<String>(
-              title: const Text('VNPay'),
-              value: 'VNPay',
-              groupValue: _selectedMethod,
-              onChanged: (value) {
-                setState(() {
-                  _selectedMethod = value; // Cập nhật phương thức đã chọn
-                });
-              },
-            ),
-            RadioListTile<String>(
-              title: const Text('PayOs'),
-              value: 'PayOs',
-              groupValue: _selectedMethod,
-              onChanged: (value) {
-                setState(() {
-                  _selectedMethod = value; // Cập nhật phương thức đã chọn
-                });
-              },
-            ),
-            RadioListTile<String>(
-              title: const Text('Cash'),
-              value: 'Cash',
-              groupValue: _selectedMethod,
-              onChanged: (value) {
-                setState(() {
-                  _selectedMethod = value; // Cập nhật phương thức đã chọn
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Xử lý xác nhận phương thức thanh toán
-                  Navigator.pop(context, _selectedMethod); // Trả về phương thức đã chọn
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF007BFF),
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 12, horizontal: 30),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+    return Center(
+      child: FadeInUp(
+        child: SizedBox(
+          width: 350,
+          child: Stack(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF0F4FF),
+                  border: Border.all(color: const Color(0xFFE0E0E0)),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: GestureDetector(
+                  onTap: () => _showPaymentOptions(context),
+                  child: ValueListenableBuilder<String>(
+                    valueListenable: paymentType,
+                    builder: (context, value, child) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            value.isEmpty ? 'Select payment method' : value,
+                            style: TextStyle(
+                              color: value.isEmpty
+                                  ? const Color(0xFF999999)
+                                  : Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const Icon(
+                            Icons.payment,
+                            color: Color(0xFF007BFF),
+                            size: 20,
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
-                child: const Text('Xác nhận'),
               ),
-            ),
-          ],
+              Positioned(
+                left: 10,
+                top: 2,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  color: const Color(0xFFF0F4FF),
+                  child: FadeInDown(
+                    child: Text(
+                      'Payment Method',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  void _showPaymentOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (context) {
+        return SizedBox(
+          height: 300,
+          child: Column(
+            children: [
+              ListTile(
+                title:
+                    const Text('Momo', style: TextStyle(color: Colors.black)),
+                onTap: () {
+                  paymentType.value = 'Momo';
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title:
+                    const Text('VnPay', style: TextStyle(color: Colors.black)),
+                onTap: () {
+                  paymentType.value = 'VnPay';
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title:
+                    const Text('PayOS', style: TextStyle(color: Colors.black)),
+                onTap: () {
+                  paymentType.value = 'PayOS';
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text('ZaloPay',
+                    style: TextStyle(color: Colors.black)),
+                onTap: () {
+                  paymentType.value = 'ZaloPay';
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
