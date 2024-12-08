@@ -6,10 +6,10 @@ class PaymentOptionButton extends StatelessWidget {
   final ValueNotifier<String> paymentType;
 
   const PaymentOptionButton({
-    Key? key,
+    super.key,
     required this.context,
     required this.paymentType,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

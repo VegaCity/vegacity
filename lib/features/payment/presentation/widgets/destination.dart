@@ -6,9 +6,9 @@ class DestinationSection extends StatelessWidget {
   final TextEditingController etagCodeController;
 
   const DestinationSection({
-    Key? key,
+    super.key,
     required this.etagCodeController,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

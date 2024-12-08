@@ -229,7 +229,7 @@ class TransferScreen extends HookConsumerWidget {
                         return AlertDialog(
                           backgroundColor: Colors
                               .white, // Đặt màu nền của AlertDialog thành trắng
-                          title: Column(
+                          title: const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // Vòng tròn đếm ngược (3s)
@@ -251,17 +251,17 @@ class TransferScreen extends HookConsumerWidget {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 10),
+                              SizedBox(height: 10),
                               // Tiêu đề
-                              const Text(
+                              Text(
                                 'Xác nhận đặt đơn',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 10),
-                              const Text(
+                              SizedBox(height: 10),
+                              Text(
                                 'Bạn ơi, hãy kiểm tra thông tin lần nữa nhé!',
                                 style: TextStyle(
                                   fontSize: 14,

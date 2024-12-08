@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 class AmountInputSection extends StatelessWidget {
   final TextEditingController chargeAmountController;
 
-  const AmountInputSection({Key? key, required this.chargeAmountController}) : super(key: key);
+  const AmountInputSection({super.key, required this.chargeAmountController});
 
   @override
   Widget build(BuildContext context) {

@@ -5,9 +5,9 @@ class CccdSection extends StatelessWidget {
   final TextEditingController cccdController;
 
   const CccdSection({
-    Key? key,
+    super.key,
     required this.cccdController,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
