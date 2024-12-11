@@ -53,7 +53,7 @@ class ActionButtons extends StatelessWidget {
               },
             ),
             IconButtonWithLabel(
-              imagePath: 'assets/images/dashboard.png',
+              imagePath: 'assets/images/voucher.png',
               label: 'Promotion',
               onPressed: () {
                 context.router.push(const PromotionScreenRoute());

@@ -25,7 +25,8 @@ Widget buildListItem(
           ? Text(
               subtitle,
               style: const TextStyle(
-                color: Colors.black, // Đặt màu chữ phụ thành đen
+                color: Colors.grey,
+                fontSize: 12,
               ),
             )
           : null,

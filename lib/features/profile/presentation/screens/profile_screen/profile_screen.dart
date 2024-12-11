@@ -166,9 +166,9 @@ class ProfileScreen extends HookConsumerWidget {
                       children: [
                         buildListItem(
                           context,
-                          icon: Icons.qr_code,
-                          title: 'Code management',
-                          subtitle: 'Manage your important QR codes',
+                          icon: Icons.dashboard_outlined,
+                          title: 'Statistical',
+                          subtitle: 'Statistics on deposits for customers',
                           onTap: () {
                             context.router.push(const ScannerScreenRoute());
                           },

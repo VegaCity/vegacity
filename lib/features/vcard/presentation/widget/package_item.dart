@@ -3,6 +3,7 @@ import 'package:base/features/vcard/domain/entities/packageItems_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @RoutePage()
 class PackageItem extends HookConsumerWidget {
@@ -14,6 +15,16 @@ class PackageItem extends HookConsumerWidget {
 
   final PackageItemEntities card;
   final VoidCallback onCallback;
+
+  void _savePackageItemDetails(PackageItemEntities card) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Lưu cusCccdpassport
+    await prefs.setString('cusCccdpassport', card.cusCccdpassport ?? '');
+
+    // Lưu id (nếu có)
+    await prefs.setString('id', card.id ?? '');
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -115,7 +126,6 @@ class PackageItem extends HookConsumerWidget {
                       ),
                       onPressed: () {
                         if (card.walletTypeName == "SpecificWallet") {
-                          // Hiển thị Snackbar hoặc Dialog cảnh báo
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
@@ -126,7 +136,7 @@ class PackageItem extends HookConsumerWidget {
                             ),
                           );
                         } else {
-                          // Điều hướng đến TransferScreenRoute
+                          _savePackageItemDetails(card);
                           context.router.push(const TransferScreenRoute());
                         }
                       },

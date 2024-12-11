@@ -9,8 +9,6 @@ import 'package:base/utils/commons/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter/services.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -152,10 +150,12 @@ class TransferScreen extends HookConsumerWidget {
     final prefs = await SharedPreferences.getInstance();
     final savedEtagCode = prefs.getString('id') ?? '';
     final savedCccd = prefs.getString('cccdpassport') ?? '';
+    // final savedCusCccdpassport = prefs.getString('cusCccdpassport') ?? '';
     final savedPromoCode = prefs.getString('promotionCode') ?? '';
 
     etagCodeController.text = savedEtagCode;
     cccdController.text = savedCccd;
+    // cccdController.text = savedCusCccdpassport;
     promoCodeController.text = savedPromoCode;
   }
 
@@ -233,24 +233,24 @@ class TransferScreen extends HookConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // Vòng tròn đếm ngược (3s)
-                              Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.orange),
-                                    value: 0.8, // Tỉ lệ của vòng tròn đếm ngược
-                                  ),
-                                  Text(
-                                    '3s',
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Stack(
+                              //   alignment: Alignment.center,
+                              //   children: [
+                              //     CircularProgressIndicator(
+                              //       valueColor: AlwaysStoppedAnimation<Color>(
+                              //           Colors.orange),
+                              //       value: 0.8, // Tỉ lệ của vòng tròn đếm ngược
+                              //     ),
+                              //     Text(
+                              //       '3s',
+                              //       style: TextStyle(
+                              //         fontSize: 24,
+                              //         fontWeight: FontWeight.bold,
+                              //         color: Colors.black,
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                               SizedBox(height: 10),
                               // Tiêu đề
                               Text(
@@ -293,7 +293,10 @@ class TransferScreen extends HookConsumerWidget {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Chỉnh sửa'),
+                                  child: const Text(
+                                    'Chỉnh sửa',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
@@ -326,7 +329,10 @@ class TransferScreen extends HookConsumerWidget {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.blue, // Màu nền nút
                                   ),
-                                  child: const Text('Đặt đơn ngay'),
+                                  child: const Text(
+                                    'Đặt đơn ngay',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ],
                             ),
