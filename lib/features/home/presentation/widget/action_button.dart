@@ -49,14 +49,14 @@ class ActionButtons extends StatelessWidget {
               imagePath: 'assets/images/map.png',
               label: 'Map',
               onPressed: () {
-                context.router.push(const MapScreenRoute());
+                _showUnderDevelopmentDialog(context);
               },
             ),
             IconButtonWithLabel(
               imagePath: 'assets/images/voucher.png',
               label: 'Promotion',
               onPressed: () {
-                context.router.push(const PromotionScreenRoute());
+                _showUnderDevelopmentDialog(context);
               },
             ),
           ],
@@ -72,17 +72,17 @@ class ActionButtons extends StatelessWidget {
         return AlertDialog(
           backgroundColor: Colors.white, // Đặt nền trắng cho AlertDialog
           title: const Text(
-            'Thông báo',
+            'Notification',
             style: TextStyle(color: Colors.black), // Màu chữ tiêu đề
           ),
           content: const Text(
-            'Tính năng đang phát triển',
+            'feature in development',
             style: TextStyle(color: Colors.black87), // Màu chữ nội dung
           ),
           actions: <Widget>[
             TextButton(
               child: const Text(
-                'Đóng',
+                'Close',
                 style: TextStyle(color: Colors.blue), // Màu chữ nút Đóng
               ),
               onPressed: () {

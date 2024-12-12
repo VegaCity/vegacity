@@ -170,7 +170,11 @@ class ProfileScreen extends HookConsumerWidget {
                           title: 'Statistical',
                           subtitle: 'Statistics on deposits for customers',
                           onTap: () {
-                            context.router.push(const ScannerScreenRoute());
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Tính năng đang phát triển'),
+                              ),
+                            );
                           },
                         ),
                         Padding(
@@ -263,9 +267,14 @@ class ProfileScreen extends HookConsumerWidget {
                             title: 'Source of money',
                             showArrow: true,
                             onTap: () {
-                              // context.router.push(const ZalopayPriorityScreenRoute());
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Tính năng đang phát triển'),
+                                ),
+                              );
                             },
                           ),
+
                           Padding(
                             padding:
                                 const EdgeInsets.only(left: 16.0, right: 16.0),
