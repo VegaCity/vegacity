@@ -6,7 +6,7 @@ part of 'vcard_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$vcardControllerHash() => r'573d1a7beff7d58567c82f2899ca9061df5f640a';
+String _$vcardControllerHash() => r'2babc95bf779055f41296bb2750267b4babc9f74';
 
 /// See also [VcardController].
 @ProviderFor(VcardController)

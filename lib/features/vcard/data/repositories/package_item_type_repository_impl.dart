@@ -46,9 +46,9 @@ class PackageItemTypeRepositoryImpl extends RemoteBaseRepository
     required String accessToken,
     required String id,
   }) async {
-    // mới
+    String extractedId = id.split('/').last;
     final vcardRequest = VcardRequest(
-      id: id,
+      id: extractedId,
     );
 
     print('VcardcodeLog: $id');
@@ -61,6 +61,7 @@ class PackageItemTypeRepositoryImpl extends RemoteBaseRepository
       ),
     );
   }
+
   @override
   Future<VcardResponseV2> getEtagCardV2({
     required String accessToken,
