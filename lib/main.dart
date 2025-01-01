@@ -16,7 +16,7 @@ void main() async {
     print('Received uri: $uri');
   });
   // final user = await SharedPreferencesUtils.getInstance('user_token');
-
+  await 
   // print( user?.toJson());
 
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

@@ -11,6 +11,7 @@ import 'package:base/models/request/paging_model.dart';
 import 'package:base/utils/commons/widgets/widgets_common_export.dart';
 import 'package:base/utils/constants/asset_constant.dart';
 import 'package:base/utils/extensions/scroll_controller.dart';
+import 'package:intl/intl.dart';
 
 final searchQueryProvider = StateProvider.autoDispose<String>((ref) => '');
 
@@ -43,6 +44,9 @@ class HistoryScreen extends HookConsumerWidget {
       final formattedDate = DateTimeUtils.formatDate(item.crDate);
       return formattedDate.contains(searchQuery);
     }).toList();
+
+    // Nhóm các mục theo tháng và năm
+    final groupedHistory = _groupHistoryByMonthYear(filteredItems);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -124,10 +128,9 @@ class HistoryScreen extends HookConsumerWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 30.0, bottom: 8.0),
+        padding: const EdgeInsets.only(top: 0.0, bottom: 8.0),
         child: Column(
           children: [
-            // SizedBox(height: size.height * 0.02),
             (state.isLoading && fetchReslut.items.isEmpty)
                 ? const Center(child: HomeShimmer(amount: 4))
                 : filteredItems.isEmpty
@@ -136,26 +139,41 @@ class HistoryScreen extends HookConsumerWidget {
                         child: EmptyBox(title: 'Không có dữ liệu'),
                       )
                     : Expanded(
-                        child: GridView.builder(
-                          itemCount: filteredItems
-                              .length, // Sử dụng số lượng gói đã lọc
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          shrinkWrap: true,
+                        child: ListView.builder(
                           controller: scrollController,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AssetsConstants.defaultPadding - 5.0,
-                          ),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 1,
-                            crossAxisSpacing: 10.0,
-                            mainAxisSpacing: 10.0,
-                            childAspectRatio: 4,
-                          ),
-                          itemBuilder: (_, index) {
-                            return OrderItem(
-                              history: filteredItems[index], // Gói đã lọc
-                              onCallback: fetchReslut.refresh,
+                          itemCount: groupedHistory.length,
+                          itemBuilder: (context, index) {
+                            final monthYear =
+                                groupedHistory.keys.elementAt(index);
+                            final items = groupedHistory[monthYear]!;
+
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Tiêu đề tháng năm nổi bật
+                                FadeInLeft(
+                                  child: Container(
+                                    width: double.infinity,
+                                    color: Colors.blueAccent.withOpacity(0.1),
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Text(
+                                      monthYear,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blueAccent,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                // Danh sách các mục trong tháng năm đó
+                                ...items
+                                    .map((history) => OrderItem(
+                                          history: history,
+                                          onCallback: fetchReslut.refresh,
+                                        ))
+                                    ,
+                              ],
                             );
                           },
                         ),
@@ -164,6 +182,21 @@ class HistoryScreen extends HookConsumerWidget {
         ),
       ),
     );
+  }
+
+  Map<String, List<HistoryEntity>> _groupHistoryByMonthYear(
+      List<HistoryEntity> historyList) {
+    final Map<String, List<HistoryEntity>> groupedHistory = {};
+
+    for (var history in historyList) {
+      final monthYear = DateFormat('MMMM yyyy').format(history.crDate);
+      if (!groupedHistory.containsKey(monthYear)) {
+        groupedHistory[monthYear] = [];
+      }
+      groupedHistory[monthYear]!.add(history);
+    }
+
+    return groupedHistory;
   }
 }
 

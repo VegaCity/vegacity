@@ -32,10 +32,19 @@
 
                <!-- App Link sample -->
             <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-               <data android:scheme="https" android:host="www.VegaCity.com" />
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data 
+             android:scheme="https" 
+             android:host="VegaCity.id.vn"
+             android:pathPrefix="/" />
+    <!-- Thêm các paths cụ thể -->
+            <data android:path="/home" />
+            <data android:path="/package" />
+            <data android:path="/scanner" />
+            <data android:path="/history" />
+            <data android:path="/profile" />
             </intent-filter>
 
             <!-- Deep Link sample -->
