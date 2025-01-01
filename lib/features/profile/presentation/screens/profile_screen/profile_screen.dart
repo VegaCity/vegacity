@@ -40,7 +40,7 @@ class ProfileScreen extends HookConsumerWidget {
     print('1a: $user');
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF0F4F8),
+      backgroundColor: const Color(0x00ffffff),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(160.0),
         child: AppBar(
@@ -175,7 +175,7 @@ class ProfileScreen extends HookConsumerWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    StatisticsPage(), // Thay `StatisticsPage` bằng trang bạn muốn điều hướng đến
+                                    const StatisticsPage(), // Thay `StatisticsPage` bằng trang bạn muốn điều hướng đến
                               ),
                             );
                           },

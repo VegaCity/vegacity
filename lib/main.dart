@@ -6,11 +6,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'configs/routes/app_router.dart';
 import 'configs/theme/app_theme.dart';
 import 'utils/constants/asset_constant.dart';
+import 'package:app_links/app_links.dart';
 // import 'package:base/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  final appLinks = AppLinks();
+  final sub = appLinks.uriLinkStream.listen((uri) {
+    print('Received uri: $uri');
+  });
   // final user = await SharedPreferencesUtils.getInstance('user_token');
 
   // print( user?.toJson());

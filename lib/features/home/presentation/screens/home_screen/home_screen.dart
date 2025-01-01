@@ -116,8 +116,10 @@ class HomeScreen extends HookConsumerWidget {
                 child: Row(
                   children: [
                     FadeInLeft(
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('${user!.imageUrl}'),
+                      child: const CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          'https://storage.googleapis.com/a1aa/image/ZlZz8xYKewVVZSKLqQmruw0BPEyzE4h4PjjXuHhRcotfekMnA.jpg',
+                        ),
                         radius: 30,
                       ),
                     ),
@@ -134,7 +136,7 @@ class HomeScreen extends HookConsumerWidget {
                           ),
                           FadeInUp(
                             child: Text(
-                              user.fullName.split(' ').last,
+                              user!.fullName.split(' ').last,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,

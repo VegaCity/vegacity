@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class StatisticsPage extends StatefulWidget {
+  const StatisticsPage({super.key});
+
   @override
   _StatisticsPageState createState() => _StatisticsPageState();
 }
@@ -23,7 +25,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
         options: Options(
           headers: {
             'Authorization':
-                'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZTY3MWYxOS05MWNlLTQwOWItYWM0OC1kNGEyMDRhMjAwOTQiLCJlbWFpbCI6Imh1eWhvYW5ncnQwMDlAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FzaGllckFwcCIsIk1hcmtldFpvbmVJZCI6IjVmNzI4ZGViLWIyYzMtNGJhYy05ZDljLTQxYTExZTBhY2NjYyIsIm5iZiI6MTczNDM4MTEwNywiZXhwIjoxNzM0NDI0MzA3LCJpc3MiOiJWZWdhQ2l0eUFwcCJ9.ifJzMn_FxRTRUfKFe6tVCdOINI9r4kpBPMrnVXxIcNo',
+                'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZTY3MWYxOS05MWNlLTQwOWItYWM0OC1kNGEyMDRhMjAwOTQiLCJlbWFpbCI6Imh1eWhvYW5ncnQwMDlAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FzaGllckFwcCIsIk1hcmtldFpvbmVJZCI6IjVmNzI4ZGViLWIyYzMtNGJhYy05ZDljLTQxYTExZTBhY2NjYyIsIm5iZiI6MTczNTE5OTk4NywiZXhwIjoxNzM1MjQzMTg3LCJpc3MiOiJWZWdhQ2l0eUFwcCJ9.Ubb8lmSPlSyQzSGyer0eJHZ-J5cD0P8VmpHXmkE3gmc',
             'Content-Type': 'application/json',
           },
         ),
@@ -44,14 +46,15 @@ class _StatisticsPageState extends State<StatisticsPage> {
     }
   }
 
-  Widget buildSummaryCard(String title, String value, Color color, IconData icon) {
+  Widget buildSummaryCard(
+      String title, String value, Color color, IconData icon) {
     return Expanded(
-      child: Container(
-        height: 120,
+      child: SizedBox(
+        height: 150,
         child: Card(
           elevation: 8,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(5),
           ),
           child: Container(
             decoration: BoxDecoration(
@@ -60,7 +63,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 end: Alignment.bottomRight,
                 colors: [color, color.withOpacity(0.7)],
               ),
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(5),
             ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -68,20 +71,20 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(icon, color: Colors.white, size: 30),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     value,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -99,7 +102,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   Widget buildDetailCard(Map<String, dynamic> data) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -118,13 +121,20 @@ class _StatisticsPageState extends State<StatisticsPage> {
             child: Column(
               children: [
                 _buildDetailRow('Total Order', '${data['totalOrder']}'),
-                _buildDetailRow('Total Amount Order', '${data['totalAmountOrder']}'),
-                _buildDetailRow('Total Order Cash', '${data['totalOrderCash']}'),
-                _buildDetailRow('Total Amount Cash Order', '${data['totalAmountCashOrder']}'),
-                _buildDetailRow('Total Order Online Methods', '${data['totalOrderOnlineMethods']}'),
-                _buildDetailRow('Total Amount Online Methods', '${data['totalAmountOrderOnlineMethod']}'),
-                _buildDetailRow('Total Order Fee Charge', '${data['totalOrderFeeCharge']}'),
-_buildDetailRow('Total Amount Fee Charge', '${data['totalAmountOrderFeeCharge']}'),
+                _buildDetailRow(
+                    'Total Amount Order', '${data['totalAmountOrder']}'),
+                _buildDetailRow(
+                    'Total Order Cash', '${data['totalOrderCash']}'),
+                _buildDetailRow('Total Amount Cash Order',
+                    '${data['totalAmountCashOrder']}'),
+                _buildDetailRow('Total Order Online Methods',
+                    '${data['totalOrderOnlineMethods']}'),
+                _buildDetailRow('Total Amount Online Methods',
+                    '${data['totalAmountOrderOnlineMethod']}'),
+                _buildDetailRow(
+                    'Total Order Fee Charge', '${data['totalOrderFeeCharge']}'),
+                _buildDetailRow('Total Amount Fee Charge',
+                    '${data['totalAmountOrderFeeCharge']}'),
               ],
             ),
           ),
@@ -148,7 +158,7 @@ _buildDetailRow('Total Amount Fee Charge', '${data['totalAmountOrderFeeCharge']}
           ),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
@@ -164,7 +174,7 @@ _buildDetailRow('Total Amount Fee Charge', '${data['totalAmountOrderFeeCharge']}
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text(
+        title: const Text(
           'Dashboard Overview',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
@@ -187,7 +197,7 @@ _buildDetailRow('Total Amount Fee Charge', '${data['totalAmountOrderFeeCharge']}
                           Colors.green,
                           Icons.account_balance_wallet,
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         buildSummaryCard(
                           'Balance History',
                           '${dashboardData['cashierAppBalanceHistory']}',
@@ -199,10 +209,11 @@ _buildDetailRow('Total Amount Fee Charge', '${data['totalAmountOrderFeeCharge']}
                   ),
                   Expanded(
                     child: ListView.builder(
-                      padding: EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.only(top: 8),
                       itemCount: dashboardData['groupedStaticsAdmin'].length,
                       itemBuilder: (context, index) {
-                        final data = dashboardData['groupedStaticsAdmin'][index];
+                        final data =
+                            dashboardData['groupedStaticsAdmin'][index];
                         return buildDetailCard(data);
                       },
                     ),
@@ -210,7 +221,7 @@ _buildDetailRow('Total Amount Fee Charge', '${data['totalAmountOrderFeeCharge']}
                 ],
               ),
             )
-          : Center(
+          : const Center(
               child: CircularProgressIndicator(),
             ),
     );
