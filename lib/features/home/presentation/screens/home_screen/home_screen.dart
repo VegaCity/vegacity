@@ -224,7 +224,7 @@ class HomeScreen extends HookConsumerWidget {
                       opacity: animation,
                       child: FadeInLeft(
                         child: const Text(
-                          "new",
+                          "New",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

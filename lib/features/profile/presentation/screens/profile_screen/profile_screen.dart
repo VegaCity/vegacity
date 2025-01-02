@@ -70,7 +70,7 @@ class ProfileScreen extends HookConsumerWidget {
                     child: const Text(
                       'Account',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -146,69 +146,11 @@ class ProfileScreen extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildSection(
-              title: '',
+              title: 'About',
               children: [
                 FadeInDown(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white, // Màu nền của Container
-                      borderRadius: BorderRadius.circular(4), // Độ cong góc
-                      boxShadow: [
-                        BoxShadow(
-                          color:
-                              Colors.black.withOpacity(0.1), // Màu của bóng mờ
-                          spreadRadius: 1,
-                          blurRadius: 3,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        buildListItem(
-                          context,
-                          icon: Icons.dashboard_outlined,
-                          title: 'Statistical',
-                          subtitle: 'Statistics on deposits for customers',
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const StatisticsPage(), // Thay `StatisticsPage` bằng trang bạn muốn điều hướng đến
-                              ),
-                            );
-                          },
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 16.0, right: 16.0),
-                          child: Divider(
-                            height: 1,
-                            color: Colors.grey[300],
-                          ),
-                        ),
-                        buildListItem(
-                          context,
-                          icon: Icons.lock_outline,
-                          title: 'Change Password',
-                          subtitle: 'Change your password',
-                          onTap: () {
-                            context.router
-                                .push(const ChangePasswordScreenRoute());
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            FadeInLeft(
-              child: buildSection(
-                title: 'policy',
-                children: [
-                  FadeInDown(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white, // Màu nền của Container
@@ -227,16 +169,80 @@ class ProfileScreen extends HookConsumerWidget {
                         children: [
                           buildListItem(
                             context,
-                            icon: Icons.security,
-                            title: 'policies and terms',
-                            showArrow: true,
+                            icon: Icons.dashboard_outlined,
+                            title: 'Statistical',
+                            subtitle: 'Statistics on deposits for customers',
                             onTap: () {
-                              // // Chuyển đến trang Zalopay Priority mới hoàn toàn
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const StatisticsPage(), // Thay `StatisticsPage` bằng trang bạn muốn điều hướng đến
+                                ),
+                              );
+                            },
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 16.0, right: 16.0),
+                            child: Divider(
+                              height: 1,
+                              color: Colors.grey[300],
+                            ),
+                          ),
+                          buildListItem(
+                            context,
+                            icon: Icons.lock_outline,
+                            title: 'Change Password',
+                            subtitle: 'Change your password',
+                            onTap: () {
                               context.router
-                                  .push(const PolicyPrivacyScreenRoute());
+                                  .push(const ChangePasswordScreenRoute());
                             },
                           ),
                         ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            FadeInLeft(
+              child: buildSection(
+                title: 'policy',
+                children: [
+                  FadeInDown(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Màu nền của Container
+                          borderRadius: BorderRadius.circular(4), // Độ cong góc
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black
+                                  .withOpacity(0.1), // Màu của bóng mờ
+                              spreadRadius: 1,
+                              blurRadius: 3,
+                              offset: const Offset(0, 1),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            buildListItem(
+                              context,
+                              icon: Icons.security,
+                              title: 'policies and terms',
+                              showArrow: true,
+                              onTap: () {
+                                // // Chuyển đến trang Zalopay Priority mới hoàn toàn
+                                context.router
+                                    .push(const PolicyPrivacyScreenRoute());
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -248,62 +254,65 @@ class ProfileScreen extends HookConsumerWidget {
                 title: 'Financial management',
                 children: [
                   FadeInDown(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white, // Màu nền của Container
-                        borderRadius: BorderRadius.circular(4), // Độ cong góc
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black
-                                .withOpacity(0.1), // Màu của bóng mờ
-                            spreadRadius: 1,
-                            blurRadius: 3,
-                            offset: const Offset(0, 1),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          buildListItem(
-                            context,
-                            icon: Icons.account_balance_wallet,
-                            title: 'Source of money',
-                            showArrow: true,
-                            onTap: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Tính năng đang phát triển'),
-                                ),
-                              );
-                            },
-                          ),
-
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 16.0, right: 16.0),
-                            child: Divider(
-                              height: 1,
-                              color: Colors.grey[300],
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Màu nền của Container
+                          borderRadius: BorderRadius.circular(4), // Độ cong góc
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black
+                                  .withOpacity(0.1), // Màu của bóng mờ
+                              spreadRadius: 1,
+                              blurRadius: 3,
+                              offset: const Offset(0, 1),
                             ),
-                          ),
-                          // buildListItem(
-                          //   context,
-                          //   icon: Icons.wallet_giftcard,
-                          //   title: 'My wallet',
-                          //   subtitle: '********',
-                          //   showArrow: true,
-                          //   onTap: () {
-                          //     // context.router.push(const ZalopayPriorityScreenRoute());
-                          //   },
-                          // ),
-                        ],
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            buildListItem(
+                              context,
+                              icon: Icons.account_balance_wallet,
+                              title: 'Source of money',
+                              showArrow: true,
+                              onTap: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Tính năng đang phát triển'),
+                                  ),
+                                );
+                              },
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 16.0, right: 16.0),
+                              child: Divider(
+                                height: 1,
+                                color: Colors.grey[300],
+                              ),
+                            ),
+                            // buildListItem(
+                            //   context,
+                            //   icon: Icons.wallet_giftcard,
+                            //   title: 'My wallet',
+                            //   subtitle: '********',
+                            //   showArrow: true,
+                            //   onTap: () {
+                            //     // context.router.push(const ZalopayPriorityScreenRoute());
+                            //   },
+                            // ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 100),
             buildSection(
               title: '',
               children: [
