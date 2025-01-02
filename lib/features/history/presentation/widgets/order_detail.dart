@@ -54,14 +54,14 @@ class OrderDetails extends StatelessWidget {
             children: [
               const Text(
                 'Transaction ID:',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.blueAccent,
                 ),
               ),
               Text(
-                '${history.id}',
+                history.id,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,

@@ -73,10 +73,10 @@ class HomeScreen extends HookConsumerWidget {
         Tween<double>(begin: 0.0, end: 1.0).animate(animationController);
 
     final List<String> imgList = [
+      'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/seaShorePackage.jpeg?alt=media&token=cd560f6e-1cf4-4107-86e0-562b43e5d624',
       'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/LandZone.png?alt=media&token=3af3be23-314f-4b67-8c62-625b223b66b9',
       'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/SeaSidePackage.jpeg?alt=media&token=e867cade-ebb1-4a2f-b1f6-05fa2994ce02',
       'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/adventurePackage.jpeg?alt=media&token=f9612f33-cf76-4ac2-bdb9-459d9e87061e',
-      'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/seaShorePackage.jpeg?alt=media&token=cd560f6e-1cf4-4107-86e0-562b43e5d624',
       'https://firebasestorage.googleapis.com/v0/b/vegacity-utility-card.appspot.com/o/landPackage.jpeg?alt=media&token=5419b0d2-1fbc-4903-b2cc-967b7dc35acf',
       'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
     ];

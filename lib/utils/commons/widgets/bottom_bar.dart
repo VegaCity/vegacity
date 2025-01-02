@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -17,7 +19,7 @@ class CustomBottomBar extends HookWidget {
     return Stack(
       children: [
         Container(
-          height: size.height * 0.1,
+          height: size.height * 0.09,
           decoration: BoxDecoration(
             color: AssetsConstants.whiteColor,
             boxShadow: [
@@ -78,36 +80,27 @@ class CustomBottomBar extends HookWidget {
         ),
         // Center QR Scan Button
         Positioned(
-          left: 0,
-          right: 0,
-          top: -size.height * 0,
+          top: 10,
+          left: (size.width - 55) / 2, // Căn giữa bằng cách tính toán thủ công
           child: GestureDetector(
             onTap: () => tabsRouter.setActiveIndex(2),
-            child: Container(
-              width: 54,
-              height: 54,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 2,
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
+            child: SizedBox(
+              width: 55, // Chiều rộng nhỏ hơn
+              height: 55, // Chiều cao nhỏ hơn
+              child: CustomPaint(
+                painter: DashedBorderPainter(),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.circular(8), // Bo góc nhẹ
                   ),
-                ],
-              ),
-              child: Container(
-                margin: const EdgeInsets.all(2),
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AssetsConstants.blue2,
-                ),
-                child: const Icon(
-                  Icons.qr_code_outlined,
-                  color: Colors.white,
-                  size: 30,
+                  child: const Center(
+                    child: Icon(
+                      Icons.qr_code_outlined,
+                      color: AssetsConstants.blue2,
+                      size: 28,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -166,4 +159,47 @@ class CustomBottomBar extends HookWidget {
       ),
     );
   }
+}
+
+class DashedBorderPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = AssetsConstants.blue2
+      ..strokeWidth = 4 // Độ dày viền tăng lên
+      ..style = PaintingStyle.stroke;
+
+    const double dashLength = 10;
+
+    final Path path = Path();
+
+    // Cạnh trên
+    path.moveTo(0, 0);
+    path.lineTo(size.width / 2 - dashLength / 2, 0);
+    path.moveTo(size.width / 2 + dashLength / 2, 0);
+    path.lineTo(size.width, 0);
+
+    // Cạnh phải
+    path.moveTo(size.width, 0);
+    path.lineTo(size.width, size.height / 2 - dashLength / 2);
+    path.moveTo(size.width, size.height / 2 + dashLength / 2);
+    path.lineTo(size.width, size.height);
+
+    // Cạnh dưới
+    path.moveTo(size.width, size.height);
+    path.lineTo(size.width / 2 + dashLength / 2, size.height);
+    path.moveTo(size.width / 2 - dashLength / 2, size.height);
+    path.lineTo(0, size.height);
+
+    // Cạnh trái
+    path.moveTo(0, size.height);
+    path.lineTo(0, size.height / 2 + dashLength / 2);
+    path.moveTo(0, size.height / 2 - dashLength / 2);
+    path.lineTo(0, 0);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

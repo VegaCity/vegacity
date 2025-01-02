@@ -9,7 +9,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:base/hooks/use_fetch.dart';
 import 'package:base/models/request/paging_model.dart';
 import 'package:base/utils/commons/widgets/widgets_common_export.dart';
-import 'package:base/utils/constants/asset_constant.dart';
 import 'package:base/utils/extensions/scroll_controller.dart';
 import 'package:intl/intl.dart';
 
