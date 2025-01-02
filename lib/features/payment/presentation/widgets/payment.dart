@@ -87,43 +87,53 @@ class PaymentOptionButton extends StatelessWidget {
       builder: (context) {
         return SizedBox(
           height: 300,
-          child: Column(
-            children: [
-              ListTile(
-                title:
-                    const Text('Momo', style: TextStyle(color: Colors.black)),
-                onTap: () {
-                  paymentType.value = 'Momo';
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title:
-                    const Text('VnPay', style: TextStyle(color: Colors.black)),
-                onTap: () {
-                  paymentType.value = 'VnPay';
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title:
-                    const Text('PayOS', style: TextStyle(color: Colors.black)),
-                onTap: () {
-                  paymentType.value = 'PayOS';
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: const Text('ZaloPay',
-                    style: TextStyle(color: Colors.black)),
-                onTap: () {
-                  paymentType.value = 'ZaloPay';
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30.0),
+            child: Column(
+              children: [
+                _buildPaymentOption(
+                  context,
+                  'Momo',
+                  'assets/images/momo.png', // Path to Momo icon
+                ),
+                _buildPaymentOption(
+                  context,
+                  'VnPay',
+                  'assets/images/vnpay.png', // Path to VnPay icon
+                ),
+                _buildPaymentOption(
+                  context,
+                  'PayOS',
+                  'assets/images/payos.png', // Path to PayOS icon
+                ),
+                _buildPaymentOption(
+                  context,
+                  'ZaloPay',
+                  'assets/images/zalopay.png', // Path to ZaloPay icon
+                ),
+              ],
+            ),
           ),
         );
+      },
+    );
+  }
+
+  Widget _buildPaymentOption(
+      BuildContext context, String name, String iconPath) {
+    return ListTile(
+      leading: Image.asset(
+        iconPath,
+        width: 40,
+        height: 40,
+      ),
+      title: Text(
+        name,
+        style: const TextStyle(color: Colors.black),
+      ),
+      onTap: () {
+        paymentType.value = name;
+        Navigator.pop(context);
       },
     );
   }
