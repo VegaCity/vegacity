@@ -1,19 +1,19 @@
-import 'package:base/features/history/domain/entities/history_entity.dart';
+import 'package:base/features/history/domain/entities/transaction_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class OrderDetails extends StatelessWidget {
-  final HistoryEntity history;
+  final TransactionEntity transaction;
   final currencyFormatter = NumberFormat('#,##0', 'vi_VN');
   final dateFormatter = DateFormat('dd/MM/yyyy');
 
-  OrderDetails({super.key, required this.history});
+  OrderDetails({super.key, required this.transaction});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Transaction Details'),
+        title: const Text('History Details', style: TextStyle(fontSize: 18)),
         backgroundColor: Colors.blueAccent,
       ),
       body: SingleChildScrollView(
@@ -44,8 +44,11 @@ class OrderDetails extends StatelessWidget {
       child: Row(
         children: [
           Icon(
-            history.status == 'Success' ? Icons.check_circle : Icons.cancel,
-            color: history.status == 'Success' ? Colors.green : Colors.red,
+            transaction.status == 'COMPLETED'
+                ? Icons.check_circle
+                : Icons.cancel,
+            color:
+                transaction.status == 'COMPLETED' ? Colors.green : Colors.red,
             size: 40,
           ),
           const SizedBox(width: 16),
@@ -53,15 +56,15 @@ class OrderDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Transaction ID:',
+                'Payment:',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.blueAccent,
                 ),
               ),
               Text(
-                history.id,
+                transaction.invoiceId,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -70,7 +73,7 @@ class OrderDetails extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Text(
-                'Date: ${dateFormatter.format(history.crDate)}',
+                'Date: ${dateFormatter.format(transaction.crDate)}',
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black54,
@@ -100,7 +103,7 @@ class OrderDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildInfoRow('Status', history.status),
+          _buildInfoRow('Status:', transaction.status),
           const SizedBox(height: 5),
           const Divider(
             color: Colors.black26, // Màu mờ hơn, điều chỉnh opacity tại đây
@@ -108,8 +111,16 @@ class OrderDetails extends StatelessWidget {
             height: 1, // Chiều cao của Divider
           ),
           const SizedBox(height: 5),
-          _buildInfoRow(
-              'Amount', '${currencyFormatter.format(history.amount)} VND'),
+          _buildInfoRow('Amount:',
+              '${currencyFormatter.format(transaction.totalAmount)} VND'),
+          const SizedBox(height: 5),
+          const Divider(
+            color: Colors.black26, // Màu mờ hơn, điều chỉnh opacity tại đây
+            thickness: 0.5, // Độ dày mỏng hơn
+            height: 1, // Chiều cao của Divider
+          ),
+          const SizedBox(height: 5),
+          _buildInfoRow(' PaymentType:', transaction.paymentType),
         ],
       ),
     );
@@ -131,15 +142,11 @@ class OrderDetails extends StatelessWidget {
           ),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: value.toLowerCase() == 'success'
-                  ? Colors.green
-                  : value.toLowerCase() == 'cancel'
-                      ? Colors.red
-                      : Colors
-                          .green, // Default color if status is neither Success nor Cancel
+              color: Colors
+                  .blueAccent, // Default color if status is neither Success nor Cancel
             ),
           ),
         ],
@@ -175,7 +182,7 @@ class OrderDetails extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            history.description,
+            transaction.name,
             style: TextStyle(
               fontSize: 16,
               height: 1.5,

@@ -25,7 +25,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
         options: Options(
           headers: {
             'Authorization':
-                'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZTY3MWYxOS05MWNlLTQwOWItYWM0OC1kNGEyMDRhMjAwOTQiLCJlbWFpbCI6Imh1eWhvYW5ncnQwMDlAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FzaGllckFwcCIsIk1hcmtldFpvbmVJZCI6IjVmNzI4ZGViLWIyYzMtNGJhYy05ZDljLTQxYTExZTBhY2NjYyIsIm5iZiI6MTczNTczNzQzMiwiZXhwIjoxNzM1NzgwNjMyLCJpc3MiOiJWZWdhQ2l0eUFwcCJ9.d65LmXUabnQYJTaguNs0kmgZwxj_SF55HfovE81Payk',
+                'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4YWQzNDFiNy0wNDNiLTRjMmItYmE3ZS0wOWY3ZDlkNjIzMGQiLCJlbWFpbCI6Imh1eWhvYW5ncnQwMDlAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FzaGllckFwcCIsIk1hcmtldFpvbmVJZCI6IjVmNzI4ZGViLWIyYzMtNGJhYy05ZDljLTQxYTExZTBhY2NjYyIsIm5iZiI6MTczNjIyMzk3NSwiZXhwIjoxNzM2MjY3MTc1LCJpc3MiOiJWZWdhQ2l0eUFwcCJ9.23UCcC8Uo6_nBSGJB0l0I63h0tJkHMlgvZBaBhqiZnk',
             'Content-Type': 'application/json',
           },
         ),
@@ -102,6 +102,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   Widget buildDetailCard(Map<String, dynamic> data) {
     return Card(
+      color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       elevation: 4,
       shape: RoundedRectangleBorder(

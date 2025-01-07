@@ -30,7 +30,7 @@ class AmountInputSection extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
-                    NumberWithCurrencyFormatter(),
+                    NumberWithCurrencyFormatter(context: context),
                   ],
                   validator: (value) {
                     final rawAmount =
@@ -88,6 +88,10 @@ class AmountInputSection extends StatelessWidget {
 
 class NumberWithCurrencyFormatter extends TextInputFormatter {
   final NumberFormat _formatter = NumberFormat('#,###');
+  final int _maxAmount = 5000000;
+  final BuildContext context;
+
+  NumberWithCurrencyFormatter({required this.context});
 
   @override
   TextEditingValue formatEditUpdate(
@@ -97,7 +101,14 @@ class NumberWithCurrencyFormatter extends TextInputFormatter {
     if (cleanedText.isEmpty) return newValue.copyWith(text: '');
 
     final int? value = int.tryParse(cleanedText);
-    if (value == null) return oldValue;
+    if (value == null || value > _maxAmount) {
+      if (value != null && value > _maxAmount) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Amount cannot exceed 5,000,000 VND')),
+        );
+      }
+      return oldValue;
+    }
 
     final newText = _formatter.format(value);
     return newValue.copyWith(

@@ -38,7 +38,8 @@ class APIConstants {
   static const cash = '/order/cashier/confirm';
   //Transactions
   static const transactions = '/transactions';
-
+  //History
+  static const historys = '/orders';
   // error
   static const Map<String, String> errorTrans = {
     'Email is already registered.': 'Email này đã được đăng kí',

@@ -22,7 +22,7 @@ import 'package:base/features/auth/presentation/screens/sign_up/sign_up_screen.d
 import 'package:base/features/auth/presentation/screens/privacy_term/privacy_screen.dart';
 import 'package:base/features/auth/presentation/screens/privacy_term/term_screen.dart';
 import 'package:base/features/auth/presentation/screens/otp_verification/otp_verification_screen.dart';
-import 'package:base/features/history/presentation/screen/history_screen/history_screen.dart';
+import 'package:base/features/history/presentation/screen/screen/history_screen.dart';
 import 'package:base/features/profile/presentation/screens/profile_detail_screen/profile_detail_screen.dart';
 import 'package:base/features/scanner1/manage_scanner_screen.dart';
 
@@ -58,6 +58,7 @@ class AppRouter extends _$AppRouter {
         // auth
         AutoRoute(
           page: SignInScreenRoute.page,
+          initial: true,
         ),
         AutoRoute(
           page: SignUpScreenRoute.page,
@@ -70,7 +71,6 @@ class AppRouter extends _$AppRouter {
         // Màn hình chính
         AutoRoute(
           page: TabViewScreenRoute.page,
-          initial: true,
           guards: [
             // OnboardingGuard(ref: _ref),
             AuthGuard(ref: _ref),
