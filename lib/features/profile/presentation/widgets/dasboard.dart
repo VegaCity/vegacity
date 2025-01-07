@@ -1,3 +1,4 @@
+import 'package:base/features/profile/presentation/widgets/item/detailPage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
         options: Options(
           headers: {
             'Authorization':
-                'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4YWQzNDFiNy0wNDNiLTRjMmItYmE3ZS0wOWY3ZDlkNjIzMGQiLCJlbWFpbCI6Imh1eWhvYW5ncnQwMDlAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FzaGllckFwcCIsIk1hcmtldFpvbmVJZCI6IjVmNzI4ZGViLWIyYzMtNGJhYy05ZDljLTQxYTExZTBhY2NjYyIsIm5iZiI6MTczNjIyMzk3NSwiZXhwIjoxNzM2MjY3MTc1LCJpc3MiOiJWZWdhQ2l0eUFwcCJ9.23UCcC8Uo6_nBSGJB0l0I63h0tJkHMlgvZBaBhqiZnk',
+                'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4YWQzNDFiNy0wNDNiLTRjMmItYmE3ZS0wOWY3ZDlkNjIzMGQiLCJlbWFpbCI6Imh1eWhvYW5ncnQwMDlAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FzaGllckFwcCIsIk1hcmtldFpvbmVJZCI6IjVmNzI4ZGViLWIyYzMtNGJhYy05ZDljLTQxYTExZTBhY2NjYyIsIm5iZiI6MTczNjI1NDM3NiwiZXhwIjoxNzM2Mjk3NTc2LCJpc3MiOiJWZWdhQ2l0eUFwcCJ9.ilIigtYJ0opw_MHo1fjn-BAtCfdk27OT81S3p7GdlzA',
             'Content-Type': 'application/json',
           },
         ),
@@ -210,7 +211,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      padding: const EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.only(
+                          top: 8, bottom: 80), // Add bottom padding for FAB
                       itemCount: dashboardData['groupedStaticsAdmin'].length,
                       itemBuilder: (context, index) {
                         final data =
@@ -225,6 +227,26 @@ class _StatisticsPageState extends State<StatisticsPage> {
           : const Center(
               child: CircularProgressIndicator(),
             ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 16.0),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: FloatingActionButton.extended(
+            onPressed: () {
+              // Add your navigation logic here
+              // For example:
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const DetailPage()));
+            },
+            backgroundColor: Colors.blue,
+            label: const Text(
+              'Transaction History',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
