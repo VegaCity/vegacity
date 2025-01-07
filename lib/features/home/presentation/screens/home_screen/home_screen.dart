@@ -7,7 +7,7 @@ import 'package:base/features/package/domain/entities/packages_entities.dart';
 import 'package:base/features/package/presentation/screens/package_screen/package_controller.dart';
 import 'package:base/features/home/presentation/widget/home_item.dart';
 import 'package:base/features/profile/domain/entities/user_entity.dart';
-import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
+import 'package:base/features/profile/presentation/controller/profile_controller.dart';
 import 'package:base/hooks/use_fetch.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:base/models/request/paging_model.dart';

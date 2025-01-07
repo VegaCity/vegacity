@@ -1,5 +1,5 @@
 import 'package:base/features/profile/domain/entities/user_entity.dart';
-import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
+import 'package:base/features/profile/presentation/controller/profile_controller.dart';
 import 'package:base/features/profile/presentation/widgets/textInput.dart';
 import 'package:base/hooks/use_fetch_obj.dart';
 import 'package:flutter/material.dart';

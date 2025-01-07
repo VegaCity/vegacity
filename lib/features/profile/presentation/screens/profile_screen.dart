@@ -2,7 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:base/configs/routes/app_router.dart';
 
 import 'package:base/features/profile/domain/entities/user_entity.dart';
-import 'package:base/features/profile/presentation/screens/profile_screen/profile_controller.dart';
+import 'package:base/features/profile/presentation/controller/profile_controller.dart';
 import 'package:base/features/profile/presentation/widgets/dasboard.dart';
 import 'package:base/features/profile/presentation/widgets/item/listsection.dart';
 import 'package:base/features/profile/presentation/widgets/item/section.dart';
@@ -278,11 +278,7 @@ class ProfileScreen extends HookConsumerWidget {
                               title: 'Source of money',
                               showArrow: true,
                               onTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Tính năng đang phát triển'),
-                                  ),
-                                );
+                                context.router.push(const WalletScreenRoute());
                               },
                             ),
 

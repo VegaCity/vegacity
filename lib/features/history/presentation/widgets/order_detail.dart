@@ -184,7 +184,7 @@ class OrderDetails extends StatelessWidget {
           Text(
             transaction.name,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               height: 1.5,
               color: Colors.grey.shade700,
             ),

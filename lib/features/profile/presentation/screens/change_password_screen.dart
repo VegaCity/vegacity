@@ -1,4 +1,4 @@
-import 'package:base/features/profile/presentation/screens/change_password/change_password_controller.dart';
+import 'package:base/features/profile/presentation/controller/change_password_controller.dart';
 import 'package:base/utils/commons/widgets/widgets_common_export.dart';
 import 'package:base/utils/constants/asset_constant.dart';
 import 'package:flutter/material.dart';

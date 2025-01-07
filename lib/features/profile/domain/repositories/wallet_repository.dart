@@ -1,6 +1,7 @@
 import 'package:base/features/profile/data/models/response/wallet_response.dart';
 import 'package:base/features/profile/data/remote/wallet_source.dart';
 import 'package:base/features/profile/data/repositories/wallet_repository_impl.dart';
+import 'package:base/models/request/paging_model.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,6 +10,7 @@ part 'wallet_repository.g.dart';
 abstract class WalletRepository {
   Future<WalletResponse> getWallet({
     required String accessToken,
+    required PagingModel request,
   });
 }
 

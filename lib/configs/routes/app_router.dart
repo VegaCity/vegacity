@@ -1,15 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:base/configs/routes/guard/auth_guard.dart';
+import 'package:base/features/profile/presentation/screens/wallet_screen.dart';
 import 'package:base/features/promotion/presentation/screen/promotion_screen.dart';
 import 'package:base/features/vcard/domain/entities/packageItems_entity.dart';
 import 'package:base/features/vcard/presentation/screen/package_item_screen.dart';
 import 'package:base/features/map/map_screen.dart';
 import 'package:base/features/payment/presentation/screen/transfer_screen.dart';
 import 'package:base/features/payment/presentation/screen/transfer_success_screen.dart';
-import 'package:base/features/profile/presentation/screens/change_password/change_password_screen.dart';
+import 'package:base/features/profile/presentation/screens/change_password_screen.dart';
 import 'package:base/features/scanner/scanner_result.dart';
 import 'package:base/features/scanner/scanner_screen.dart';
-import 'package:base/features/profile/presentation/screens/privacy_policy/policy_privacy_screen.dart';
+import 'package:base/features/profile/presentation/screens/policy_privacy_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,12 +24,12 @@ import 'package:base/features/auth/presentation/screens/privacy_term/privacy_scr
 import 'package:base/features/auth/presentation/screens/privacy_term/term_screen.dart';
 import 'package:base/features/auth/presentation/screens/otp_verification/otp_verification_screen.dart';
 import 'package:base/features/history/presentation/screen/screen/history_screen.dart';
-import 'package:base/features/profile/presentation/screens/profile_detail_screen/profile_detail_screen.dart';
+import 'package:base/features/profile/presentation/screens/profile_detail_screen.dart';
 import 'package:base/features/scanner1/manage_scanner_screen.dart';
 
 // screen-home
 import 'package:base/features/home/presentation/screens/home_screen/home_screen.dart';
-import 'package:base/features/profile/presentation/screens/profile_screen/profile_screen.dart';
+import 'package:base/features/profile/presentation/screens/profile_screen.dart';
 
 // screen-test
 import 'package:base/features/test/presentation/screens/test_screen/test_screen.dart';
@@ -104,6 +105,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: MapScreenRoute.page,
+          // initial: true,
+        ),
+        AutoRoute(
+          page: WalletScreenRoute.page,
           // initial: true,
         ),
         AutoRoute(

@@ -27,9 +27,11 @@ class _WalletSource implements WalletSource {
   Future<HttpResponse<WalletResponse>> getWallet(
     String contentType,
     String accessToken,
+    WalletRequest request,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(request.toMap());
     final _headers = <String, dynamic>{
       r'Content-Type': contentType,
       r'Authorization': accessToken,
@@ -44,7 +46,7 @@ class _WalletSource implements WalletSource {
     )
         .compose(
           _dio.options,
-          '/wallet',
+          '/wallet/end-day-check',
           queryParameters: queryParameters,
           data: _data,
         )

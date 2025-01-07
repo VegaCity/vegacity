@@ -1,5 +1,5 @@
-
-  // rest API
+// rest API
+import 'package:base/features/profile/data/models/request/wallet_request.dart';
 import 'package:base/features/profile/data/models/response/wallet_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -21,8 +21,8 @@ abstract class WalletSource {
   Future<HttpResponse<WalletResponse>> getWallet(
     @Header(APIConstants.contentHeader) String contentType,
     @Header(APIConstants.authHeader) String accessToken,
+    @Queries() WalletRequest request,
   );
-
 }
 
 @riverpod

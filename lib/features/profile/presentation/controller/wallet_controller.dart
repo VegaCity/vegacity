@@ -1,19 +1,19 @@
-// data - domain impl
-
-import 'package:base/features/auth/domain/repositories/auth_repository.dart';
 import 'package:base/features/auth/presentation/screens/sign_in/sign_in_controller.dart';
-
 import 'package:base/features/profile/domain/entities/wallet_entity.dart';
 import 'package:base/features/profile/domain/repositories/wallet_repository.dart';
 import 'package:base/utils/enums/enums_export.dart';
-
-// system
 import 'package:flutter/material.dart';
+
+import 'package:base/models/request/paging_model.dart';
 import 'package:base/utils/commons/functions/shared_preference_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dio/dio.dart';
 
-// utils
+
+import 'package:base/features/auth/domain/repositories/auth_repository.dart';
+
+
+
 import 'package:base/utils/commons/functions/api_utils.dart';
 import 'package:base/utils/extensions/extensions_export.dart';
 import 'package:base/utils/constants/api_constant.dart';
@@ -25,31 +25,29 @@ class WalletController extends _$WalletController {
   @override
   FutureOr<void> build() {}
 
-  Future<WalletEntity?> getWallet(
+  Future<List<WalletEntity>> getWallet(
+    PagingModel request,
     BuildContext context,
   ) async {
-    WalletEntity? wallet;
+    List<WalletEntity> wallet = [];
 
     state = const AsyncLoading();
-    final walletRepository = ref.read(walletRepositoryProvider);
+    final walletReponsitory = ref.read(walletRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(() async {
-      final response = await walletRepository.getWallet(
+      final response = await walletReponsitory.getWallet(
         accessToken: APIConstants.prefixToken + user!.tokens.accessToken,
+        request: request,
       );
-      
       wallet = response.data;
-
     });
-    print('wallet1: $wallet');
 
     if (state.hasError) {
       state = await AsyncValue.guard(
         () async {
           final statusCode = (state.error as DioException).onStatusDio();
-          
           await handleAPIError(
             statusCode: statusCode,
             stateError: state.error!,
@@ -70,11 +68,14 @@ class WalletController extends _$WalletController {
             return;
           }
 
-          await getWallet(context);
+          await getWallet(request, context);
         },
       );
     }
 
+
+
     return wallet;
   }
 }
+

@@ -56,17 +56,6 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    // PackageItemRoute.name: (routeData) {
-    //   final args = routeData.argsAs<PackageItemRouteArgs>();
-    //   return AutoRoutePage<dynamic>(
-    //     routeData: routeData,
-    //     child: PackageItem(
-    //       key: args.key,
-    //       card: args.card,
-    //       onCallback: args.onCallback,
-    //     ),
-    //   );
-    // },
     PackageScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -180,6 +169,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const TransferSuccess(),
+      );
+    },
+    WalletScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const WalletScreen(),
       );
     },
   };
@@ -666,6 +661,20 @@ class TransferSuccessRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'TransferSuccessRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WalletScreen]
+class WalletScreenRoute extends PageRouteInfo<void> {
+  const WalletScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          WalletScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WalletScreenRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

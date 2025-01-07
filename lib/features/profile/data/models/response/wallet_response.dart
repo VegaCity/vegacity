@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:base/features/profile/domain/entities/wallet_entity.dart';
 
-
-
 class WalletResponse {
-  final WalletEntity data;
+  final List<WalletEntity> data;
 
   WalletResponse({
     required this.data,
@@ -13,15 +11,14 @@ class WalletResponse {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-
-    result.addAll({'data': data});
-
+    result.addAll({'data': data.map((x) => x.toMap()).toList()});
     return result;
   }
 
   factory WalletResponse.fromMap(Map<String, dynamic> map) {
     return WalletResponse(
-      data: WalletEntity.fromMap(map['data']),
+      data: List<WalletEntity>.from(
+          map['data']?.map((x) => WalletEntity.fromMap(x))),
     );
   }
 
