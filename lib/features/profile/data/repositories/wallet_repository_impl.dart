@@ -1,7 +1,5 @@
 // import local
 
-import 'package:base/features/history/data/remote/history_source.dart';
-import 'package:base/features/history/domain/repositories/history_repository.dart';
 import 'package:base/features/profile/data/models/request/wallet_request.dart';
 import 'package:base/features/profile/data/models/response/wallet_response.dart';
 import 'package:base/features/profile/data/remote/wallet_source.dart';

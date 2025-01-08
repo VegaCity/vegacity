@@ -104,7 +104,7 @@ class WalletItem extends HookConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Current Balance',
+                            'Balance',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.white70,
@@ -135,7 +135,7 @@ class WalletItem extends HookConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
-                                'History Balance',
+                                'Virtual Currency',
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.white70,
@@ -160,7 +160,7 @@ class WalletItem extends HookConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               const Text(
-                                'Last Check',
+                                'Date Check',
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.white70,

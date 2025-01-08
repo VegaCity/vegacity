@@ -104,7 +104,7 @@ class NumberWithCurrencyFormatter extends TextInputFormatter {
     if (value == null || value > _maxAmount) {
       if (value != null && value > _maxAmount) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Amount cannot exceed 5,000,000 VND')),
+          const SnackBar(content: Text('Amount cannot exceed 5,000,000 VND')),
         );
       }
       return oldValue;

@@ -111,7 +111,7 @@ class HistoryScreen extends HookConsumerWidget {
                     const SizedBox(height: 8),
                     FadeInUp(
                       child: const Text(
-                        'Summary of transaction in Vegacity',
+                        'Summary of payment history at Vegacity',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.white,
@@ -166,12 +166,10 @@ class HistoryScreen extends HookConsumerWidget {
                                   ),
                                 ),
                                 // Danh sách các mục trong tháng năm đó
-                                ...items
-                                    .map((transaction) => OrderItem(
-                                          transaction: transaction,
-                                          onCallback: fetchReslut.refresh,
-                                        ))
-                                    ,
+                                ...items.map((transaction) => OrderItem(
+                                      transaction: transaction,
+                                      onCallback: fetchReslut.refresh,
+                                    )),
                               ],
                             );
                           },

@@ -275,7 +275,7 @@ class ProfileScreen extends HookConsumerWidget {
                             buildListItem(
                               context,
                               icon: Icons.account_balance_wallet,
-                              title: 'Source of money',
+                              title: 'Balance Check',
                               showArrow: true,
                               onTap: () {
                                 context.router.push(const WalletScreenRoute());

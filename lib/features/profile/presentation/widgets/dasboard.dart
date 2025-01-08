@@ -26,7 +26,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
         options: Options(
           headers: {
             'Authorization':
-                'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4YWQzNDFiNy0wNDNiLTRjMmItYmE3ZS0wOWY3ZDlkNjIzMGQiLCJlbWFpbCI6Imh1eWhvYW5ncnQwMDlAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FzaGllckFwcCIsIk1hcmtldFpvbmVJZCI6IjVmNzI4ZGViLWIyYzMtNGJhYy05ZDljLTQxYTExZTBhY2NjYyIsIm5iZiI6MTczNjI1NDM3NiwiZXhwIjoxNzM2Mjk3NTc2LCJpc3MiOiJWZWdhQ2l0eUFwcCJ9.ilIigtYJ0opw_MHo1fjn-BAtCfdk27OT81S3p7GdlzA',
+                'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4YWQzNDFiNy0wNDNiLTRjMmItYmE3ZS0wOWY3ZDlkNjIzMGQiLCJlbWFpbCI6Imh1eWhvYW5ncnQwMDlAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FzaGllckFwcCIsIk1hcmtldFpvbmVJZCI6IjVmNzI4ZGViLWIyYzMtNGJhYy05ZDljLTQxYTExZTBhY2NjYyIsIm5iZiI6MTczNjMyMjQ5OCwiZXhwIjoxNzM2MzY1Njk4LCJpc3MiOiJWZWdhQ2l0eUFwcCJ9.iEA21T2UO6RpHc2x0MX5U_ijtbqmiVNuaKo9syqSn6g',
             'Content-Type': 'application/json',
           },
         ),
@@ -125,13 +125,13 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 _buildDetailRow('Total Order', '${data['totalOrder']}'),
                 _buildDetailRow(
                     'Total Amount Order', '${data['totalAmountOrder']}'),
-                _buildDetailRow(
-                    'Total Order Cash', '${data['totalOrderCash']}'),
-                _buildDetailRow('Total Amount Cash Order',
-                    '${data['totalAmountCashOrder']}'),
-                _buildDetailRow('Total Order Online Methods',
+                // _buildDetailRow(
+                //     'Total Order Cash', '${data['totalOrderCash']}'),
+                // _buildDetailRow('Total Amount Cash Order',
+                //     '${data['totalAmountCashOrder']}'),
+                _buildDetailRow('Total Order Methods',
                     '${data['totalOrderOnlineMethods']}'),
-                _buildDetailRow('Total Amount Online Methods',
+                _buildDetailRow('Total Amount Methods',
                     '${data['totalAmountOrderOnlineMethod']}'),
                 _buildDetailRow(
                     'Total Order Fee Charge', '${data['totalOrderFeeCharge']}'),
@@ -201,7 +201,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                         ),
                         const SizedBox(width: 16),
                         buildSummaryCard(
-                          'Balance History',
+                          'Virtual Currency',
                           '${dashboardData['cashierAppBalanceHistory']}',
                           Colors.blue,
                           Icons.history,

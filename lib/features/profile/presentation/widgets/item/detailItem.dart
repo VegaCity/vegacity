@@ -1,5 +1,4 @@
 import 'package:base/features/history/domain/entities/history_entity.dart';
-import 'package:base/features/history/presentation/widgets/order_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:animate_do/animate_do.dart';
