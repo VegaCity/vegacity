@@ -33,7 +33,7 @@ class PolicyPrivacyScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'privacy policy',
+                        'Privacy Policy',
                         style: TextStyle(
                           fontSize: 24,
                           color: Color(0xFF007BFF),

@@ -233,7 +233,7 @@ class ProfileScreen extends HookConsumerWidget {
                             buildListItem(
                               context,
                               icon: Icons.security,
-                              title: 'policies and terms',
+                              title: 'Policies and Terms',
                               showArrow: true,
                               onTap: () {
                                 // // Chuyển đến trang Zalopay Priority mới hoàn toàn
