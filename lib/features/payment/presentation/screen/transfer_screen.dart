@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:base/configs/routes/app_router.dart';
 import 'package:base/features/payment/presentation/screen/controller/orderV2_controller.dart';
 import 'package:base/features/payment/presentation/screen/controller/order_controller.dart';
 import 'package:base/features/payment/presentation/widgets/cccd.dart';
@@ -16,7 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class TransferScreen extends HookConsumerWidget {
   const TransferScreen({super.key});
 
-  void submit({
+  Future<void> submit({
     required GlobalKey<FormState> formKey,
     required BuildContext context,
     required WidgetRef ref,
@@ -26,14 +27,65 @@ class TransferScreen extends HookConsumerWidget {
     required String paymentType,
     required String promoCode,
   }) async {
-    await ref.read(orderControllerProvider.notifier).order(
-          packageOrderId: packageOrderId,
-          chargeAmount: chargeAmount,
-          cccdpassport: cccdpassport,
-          paymentType: paymentType,
-          promoCode: promoCode,
-          context: context,
+    // Show processing dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 20),
+              Text('Đang xử lý thanh toán...'),
+            ],
+          ),
         );
+      },
+    );
+
+    try {
+      await ref.read(orderControllerProvider.notifier).order(
+            packageOrderId: packageOrderId,
+            chargeAmount: chargeAmount,
+            cccdpassport: cccdpassport,
+            paymentType: paymentType,
+            promoCode: promoCode,
+            context: context,
+          );
+
+      // Close processing dialog
+      Navigator.of(context).pop();
+
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Bạn đã nạp thành công!'),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      // Close the confirmation dialog
+      Navigator.of(context).pop();
+
+      // Navigate to payment page after a short delay
+      Future.delayed(const Duration(seconds: 2), () {
+        context.router.push(const TabViewScreenRoute());
+      });
+    } catch (e) {
+      // Close processing dialog
+      Navigator.of(context).pop();
+
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Có lỗi xảy ra: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   void submitWithoutPromotion({
@@ -52,6 +104,17 @@ class TransferScreen extends HookConsumerWidget {
           paymentType: paymentType,
           context: context,
         );
+
+    // Hiển thị thông báo nạp thành công
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Bạn đã nạp thành công!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    // Đóng AlertDialog
+    Navigator.pop(context);
   }
 
   @override

@@ -1,181 +1,241 @@
-import 'package:base/features/package/domain/entities/packages_entities.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:base/features/package/domain/entities/packages_entities.dart';
 
 class HomeDetails extends StatelessWidget {
   final PackageEntities package;
+  final currencyFormatter = NumberFormat('#,##0', 'vi_VN');
+  final dateFormatter = DateFormat('dd/MM/yyyy');
+  HomeDetails({super.key, required this.package});
 
-  const HomeDetails({super.key, required this.package});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50.0),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          flexibleSpace: Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFF0052CC),
-                  Color(0xFF00AAFF),
-                  Color.fromARGB(255, 111, 194, 208),
-                  Color.fromARGB(255, 116, 240, 231),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+      body: CustomScrollView(
+        slivers: [
+          // Custom App Bar với ảnh sản phẩm làm background
+          _buildSliverAppBar(context),
+
+          // Nội dung chi tiết sản phẩm
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                transform: Matrix4.translationValues(0, -30, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildProductHeader(),
+                    _buildDateSection(),
+                    _buildDescriptionSection(),
+                  ],
+                ),
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Center(
-                  child: Text(
-                    package.name,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ),
-        ),
+        ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      bottomNavigationBar: _buildBottomBar(context),
+    );
+  }
+
+  Widget _buildSliverAppBar(BuildContext context) {
+    return SliverAppBar(
+      expandedHeight: 300,
+      pinned: true,
+      stretch: true,
+      backgroundColor: Colors.transparent,
+      flexibleSpace: FlexibleSpaceBar(
+        background: Stack(
+          fit: StackFit.expand,
           children: [
-            _buildBanner(context),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    package.name,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Color(0xFF0048BA),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const FaIcon(FontAwesomeIcons.calendarAlt, size: 18),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Time: ${package.crDate?.toLocal().toString().split(' ')[0]} - ${package.upsDate?.toLocal().toString().split(' ')[0]}',
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  ProgramRules(
-                    package: package,
-                  ),
-                  const SizedBox(height: 20),
-                ],
+            // Ảnh sản phẩm
+            Image.network(
+              package.imageUrl.isNotEmpty
+                  ? package.imageUrl
+                  : 'https://storage.googleapis.com/a1aa/image/default.jpg',
+              fit: BoxFit.cover,
+            ),
+            // Gradient overlay
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                    Colors.black.withOpacity(0.5),
+                  ],
+                ),
               ),
             ),
           ],
         ),
       ),
+      leading: Container(
+        margin: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.9),
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black87),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
     );
   }
 
-  Widget _buildBanner(BuildContext context) {
-    return Stack(
-      children: [
-        Image.network(
-          package.imageUrl.isNotEmpty
-              ? package.imageUrl
-              : 'https://storage.googleapis.com/a1aa/image/jCeQ5BWBaYW2VqCp9dQ2q4YIfbPdqTZqCfHtEMnxxj2C6yKnA.jpg',
-          width: MediaQuery.of(context).size.width,
-          height: 300,
-          fit: BoxFit.cover,
-        ),
-        // const Positioned(
-        //   top: 100,
-        //   left: 20,
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       const Text(
-        //         'Mời bạn mới dùng Zalopay',
-        //         style: TextStyle(
-        //           fontSize: 24,
-        //           color: Colors.white,
-        //           fontWeight: FontWeight.bold,
-        //         ),
-        //       ),
-        //       const SizedBox(height: 5),
-        //       const Text(
-        //         'Nhận Xu không giới hạn',
-        //         style: TextStyle(fontSize: 18, color: Colors.white),
-        //       ),
-        //       const SizedBox(height: 10),
-        //     ],
-        //   ),
-        // ),
-      ],
+  Widget _buildProductHeader() {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            package.name,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF1A237E),
+            ),
+          ),
+          const SizedBox(height: 10),
+          // Row(
+          //   children: [
+          //     Container(
+          //       padding:
+          //           const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          //       decoration: BoxDecoration(
+          //         color: Colors.blue.shade50,
+          //         borderRadius: BorderRadius.circular(20),
+          //       ),
+          //       child: Row(
+          //         children: [
+          //           Icon(Icons.star, color: Colors.amber.shade700, size: 18),
+          //           const SizedBox(width: 4),
+          //           const Text('4.5',
+          //               style: TextStyle(fontWeight: FontWeight.bold)),
+          //         ],
+          //       ),
+          //     ),
+          //     const SizedBox(width: 10),
+          //     Text(
+          //       '1.2k Reviews',
+          //       style: TextStyle(color: Colors.grey.shade600),
+          //     ),
+          //   ],
+          // ),
+        ],
+      ),
     );
   }
-}
 
-class ProgramRules extends StatelessWidget {
-  final PackageEntities package;
+  Widget _buildDateSection() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.blue.shade50,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        children: [
+          const FaIcon(
+            FontAwesomeIcons.calendarAlt,
+            color: Color(0xFF1A237E),
+            size: 20,
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              'Available: ${dateFormatter.format(package.crDate!)} - ${dateFormatter.format(package.upsDate!)}',
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-  const ProgramRules({super.key, required this.package});
+  Widget _buildDescriptionSection() {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Description',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF1A237E),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            package.description,
+            style: TextStyle(
+              fontSize: 16,
+              height: 1.5,
+              color: Colors.grey.shade700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Description',
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xFF0048BA),
-            fontWeight: FontWeight.bold,
+  Widget _buildBottomBar(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 10,
+            offset: const Offset(0, -5),
           ),
+        ],
+      ),
+      child: Container(
+        margin: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade50,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Colors.grey.shade200),
         ),
-        const SizedBox(height: 10),
-        Text(
-          package.description,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Price',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              '${currencyFormatter.format(package.price)} đ',
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFE53935),
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 5),
-        const Text(
-          'Price',
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xFF0048BA),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          package.price.toString(),
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.red,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

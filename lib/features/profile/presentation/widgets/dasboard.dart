@@ -1,6 +1,7 @@
 import 'package:base/features/profile/presentation/widgets/item/detailPage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class StatisticsPage extends StatefulWidget {
   const StatisticsPage({super.key});
@@ -26,7 +27,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
         options: Options(
           headers: {
             'Authorization':
-                'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4YWQzNDFiNy0wNDNiLTRjMmItYmE3ZS0wOWY3ZDlkNjIzMGQiLCJlbWFpbCI6Imh1eWhvYW5ncnQwMDlAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FzaGllckFwcCIsIk1hcmtldFpvbmVJZCI6IjVmNzI4ZGViLWIyYzMtNGJhYy05ZDljLTQxYTExZTBhY2NjYyIsIm5iZiI6MTczNjUyMDAxMywiZXhwIjoxNzM2NTYzMjEzLCJpc3MiOiJWZWdhQ2l0eUFwcCJ9.taPFGMFtcH1G6bXOcyl70okMs3p9ZfUilH5xm0DVTds',
+                'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4YWQzNDFiNy0wNDNiLTRjMmItYmE3ZS0wOWY3ZDlkNjIzMGQiLCJlbWFpbCI6Imh1eWhvYW5ncnQwMDlAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FzaGllckFwcCIsIk1hcmtldFpvbmVJZCI6IjVmNzI4ZGViLWIyYzMtNGJhYy05ZDljLTQxYTExZTBhY2NjYyIsIm5iZiI6MTczNjY3ODEyOSwiZXhwIjoxNzM2NzIxMzI5LCJpc3MiOiJWZWdhQ2l0eUFwcCJ9.0_ZB_112p_ci9SQ4Q_bhWV-XwuaFPl4Cx8OLOTZ9xio',
             'Content-Type': 'application/json',
           },
         ),
@@ -102,6 +103,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   Widget buildDetailCard(Map<String, dynamic> data) {
+    final NumberFormat currencyFormat = NumberFormat.decimalPattern();
     return Card(
       color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -123,20 +125,22 @@ class _StatisticsPageState extends State<StatisticsPage> {
             child: Column(
               children: [
                 _buildDetailRow('Total Order', '${data['totalOrder']}'),
-                _buildDetailRow(
-                    'Total Amount Order', '${data['totalAmountOrder']}'),
+                _buildDetailRow('Total Amount Order',
+                    currencyFormat.format(data['totalAmountOrder'])),
                 _buildDetailRow(
                     'Total Order Cash', '${data['totalOrderCash']}'),
                 _buildDetailRow('Total Amount Cash Order',
-                    '${data['totalAmountCashOrder']}'),
-                _buildDetailRow('totalOrderOnlineMethods',
+                    currencyFormat.format(data['totalAmountCashOrder'])),
+                _buildDetailRow('TotalOrderOnlineMethods',
                     '${data['totalOrderOnlineMethods']}'),
-                _buildDetailRow('otalAmountOrderOnlineMethod',
-                    '${data['totalAmountOrderOnlineMethod']}'),
+                _buildDetailRow(
+                    'TotalAmountOrderOnlineMethod',
+                    currencyFormat
+                        .format(data['totalAmountOrderOnlineMethod'])),
                 _buildDetailRow(
                     'Total Order Fee Charge', '${data['totalOrderFeeCharge']}'),
                 _buildDetailRow('Total Amount Fee Charge',
-                    '${data['totalAmountOrderFeeCharge']}'),
+                    currencyFormat.format(data['totalAmountOrderFeeCharge'])),
               ],
             ),
           ),
@@ -173,6 +177,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   @override
   Widget build(BuildContext context) {
+    NumberFormat currencyFormat = NumberFormat.decimalPattern();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -195,14 +200,16 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       children: [
                         buildSummaryCard(
                           'Balance',
-                          '${dashboardData['cashierAppBalance']}',
+                          currencyFormat
+                              .format(dashboardData['cashierAppBalance']),
                           Colors.green,
                           Icons.account_balance_wallet,
                         ),
                         const SizedBox(width: 16),
                         buildSummaryCard(
                           'Virtual Currency',
-                          '${dashboardData['cashierAppBalanceHistory']}',
+                          currencyFormat.format(
+                              dashboardData['cashierAppBalanceHistory']),
                           Colors.blue,
                           Icons.history,
                         ),

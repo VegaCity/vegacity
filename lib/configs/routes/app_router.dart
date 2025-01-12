@@ -59,7 +59,6 @@ class AppRouter extends _$AppRouter {
         // auth
         AutoRoute(
           page: SignInScreenRoute.page,
-          initial: true,
         ),
         AutoRoute(
           page: SignUpScreenRoute.page,
@@ -72,6 +71,7 @@ class AppRouter extends _$AppRouter {
         // Màn hình chính
         AutoRoute(
           page: TabViewScreenRoute.page,
+          initial: true,
           guards: [
             // OnboardingGuard(ref: _ref),
             AuthGuard(ref: _ref),
